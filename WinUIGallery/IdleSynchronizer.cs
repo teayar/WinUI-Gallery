@@ -40,6 +40,21 @@ namespace WinUIGallery
         private bool m_isRS2OrHigherInitialized = false;
         private bool m_isRS2OrHigher = false;
 
+        public string Log { get; set; }
+        public int TickCountBegin { get; set; }
+
+        private IdleSynchronizer(DispatcherQueue dispatcherQueue)
+        {
+            m_dispatcherQueue = dispatcherQueue;
+            m_hasAnimationsHandle = OpenNamedEvent(m_dispatcherQueue, s_hasAnimationsHandleName);
+            m_animationsCompleteHandle = OpenNamedEvent(m_dispatcherQueue, s_animationsCompleteHandleName);
+            m_hasDeferredAnimationOperationsHandle = OpenNamedEvent(m_dispatcherQueue, s_hasDeferredAnimationOperationsHandleName);
+            m_deferredAnimationOperationsCompleteHandle = OpenNamedEvent(m_dispatcherQueue, s_deferredAnimationOperationsCompleteHandleName);
+            m_rootVisualResetHandle = OpenNamedEvent(m_dispatcherQueue, s_rootVisualResetHandleName);
+            m_imageDecodingIdleHandle = OpenNamedEvent(m_dispatcherQueue, s_imageDecodingIdleHandleName);
+            m_fontDownloadsIdleHandle = OpenNamedEvent(m_dispatcherQueue, s_fontDownloadsIdleHandleName);
+        }
+
         private Handle OpenNamedEvent(uint processId, uint threadId, string eventNamePrefix)
         {
             string eventName = string.Format("{0}.{1}.{2}", eventNamePrefix, processId, threadId);
@@ -110,21 +125,6 @@ namespace WinUIGallery
 
                 return instance;
             }
-        }
-
-        public string Log { get; set; }
-        public int TickCountBegin { get; set; }
-
-        private IdleSynchronizer(DispatcherQueue dispatcherQueue)
-        {
-            m_dispatcherQueue = dispatcherQueue;
-            m_hasAnimationsHandle = OpenNamedEvent(m_dispatcherQueue, s_hasAnimationsHandleName);
-            m_animationsCompleteHandle = OpenNamedEvent(m_dispatcherQueue, s_animationsCompleteHandleName);
-            m_hasDeferredAnimationOperationsHandle = OpenNamedEvent(m_dispatcherQueue, s_hasDeferredAnimationOperationsHandleName);
-            m_deferredAnimationOperationsCompleteHandle = OpenNamedEvent(m_dispatcherQueue, s_deferredAnimationOperationsCompleteHandleName);
-            m_rootVisualResetHandle = OpenNamedEvent(m_dispatcherQueue, s_rootVisualResetHandleName);
-            m_imageDecodingIdleHandle = OpenNamedEvent(m_dispatcherQueue, s_imageDecodingIdleHandleName);
-            m_fontDownloadsIdleHandle = OpenNamedEvent(m_dispatcherQueue, s_fontDownloadsIdleHandleName);
         }
 
         public static void Init()
