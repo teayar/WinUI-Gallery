@@ -17,16 +17,16 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ItemsRepeaterPage : ItemsPageBase
     {
-        private Random random = new Random();
-        private int MaxLength = 425;
+        Random random = new Random();
+        int MaxLength = 425;
 
         public ObservableCollection<Bar> BarItems;
         public MyItemsSource filteredRecipeData = new MyItemsSource(null);
         public List<Recipe> staticRecipeData;
-        private bool IsSortDescending = false;
+        bool IsSortDescending;
 
-        private Button LastSelectedColorButton;
-        private int PreviouslyFocusedAnimatedScrollRepeaterIndex = -1;
+        Button LastSelectedColorButton;
+        int PreviouslyFocusedAnimatedScrollRepeaterIndex = -1;
 
         public ItemsRepeaterPage()
         {
@@ -35,7 +35,7 @@ namespace WinUIGallery.ControlPages
             repeater2.ItemsSource = Enumerable.Range(0, 500);
         }
 
-        public List<String> ColorList = new List<String>()
+        public List<string> ColorList = new List<string>()
         {
                 "Blue",
                 "BlueViolet",
@@ -58,15 +58,16 @@ namespace WinUIGallery.ControlPages
                 "Firebrick",
                 "DarkKhaki"
         };
-        private void InitializeData()
+        void InitializeData()
         {
             if (BarItems == null)
             {
                 BarItems = new ObservableCollection<Bar>();
             }
-            BarItems.Add(new Bar(300, this.MaxLength));
-            BarItems.Add(new Bar(25, this.MaxLength));
-            BarItems.Add(new Bar(175, this.MaxLength));
+
+            BarItems.Add(new Bar(300, MaxLength));
+            BarItems.Add(new Bar(25, MaxLength));
+            BarItems.Add(new Bar(175, MaxLength));
 
             List<object> basicData = new List<object>
             {
@@ -80,6 +81,7 @@ namespace WinUIGallery.ControlPages
                 "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
                 1024
             };
+
             MixedTypeRepeater.ItemsSource = basicData;
 
             List<NestedCategory> nestedCategories = new List<NestedCategory>
@@ -89,7 +91,6 @@ namespace WinUIGallery.ControlPages
                 new NestedCategory("Grains", GetGrains()),
                 new NestedCategory("Proteins", GetProteins())
             };
-
 
             outerRepeater.ItemsSource = nestedCategories;
 
@@ -106,7 +107,6 @@ namespace WinUIGallery.ControlPages
             SampleCodeLayout2.Value = @"<common:ActivityFeedLayout x:Key=""MyFeedLayout"" ColumnSpacing=""12""
                           RowSpacing=""12"" MinItemSize=""80, 108""/>";
 
-
             animatedScrollRepeater.ItemsSource = ColorList;
 
             animatedScrollRepeater.ElementPrepared += OnElementPrepared;
@@ -117,23 +117,22 @@ namespace WinUIGallery.ControlPages
             // Save a static copy to compare to while filtering
             staticRecipeData = RecipeList;
             VariedImageSizeRepeater.ItemsSource = filteredRecipeData;
-
         }
 
-        private ObservableCollection<string> GetFruits()
+        ObservableCollection<string> GetFruits()
         {
             return new ObservableCollection<string> { "Apricots", "Bananas", "Grapes", "Strawberries", "Watermelon", "Plums", "Blueberries" };
         }
 
-        private ObservableCollection<string> GetVegetables()
+        ObservableCollection<string> GetVegetables()
         {
             return new ObservableCollection<string> { "Broccoli", "Spinach", "Sweet potato", "Cauliflower", "Onion", "Brussels sprouts", "Carrots" };
         }
-        private ObservableCollection<string> GetGrains()
+        ObservableCollection<string> GetGrains()
         {
             return new ObservableCollection<string> { "Rice", "Quinoa", "Pasta", "Bread", "Farro", "Oats", "Barley" };
         }
-        private ObservableCollection<string> GetProteins()
+        ObservableCollection<string> GetProteins()
         {
             return new ObservableCollection<string> { "Steak", "Chicken", "Tofu", "Salmon", "Pork", "Chickpeas", "Eggs" };
         }
@@ -141,17 +140,18 @@ namespace WinUIGallery.ControlPages
         // ==========================================================================
         // Basic, non-interactive ItemsRepeater
         // ==========================================================================
-        private void AddBtn_Click(object sender, RoutedEventArgs e)
+        void AddBtn_Click(object sender, RoutedEventArgs e)
         {
-            BarItems.Add(new Bar(random.Next(this.MaxLength), this.MaxLength));
+            BarItems.Add(new Bar(random.Next(MaxLength), MaxLength));
             DeleteBtn.IsEnabled = true;
         }
 
-        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
             if (BarItems.Count > 0)
             {
                 BarItems.RemoveAt(0);
+
                 if (BarItems.Count == 0)
                 {
                     DeleteBtn.IsEnabled = false;
@@ -159,15 +159,17 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void RadioBtn_Click(object sender, SelectionChangedEventArgs e)
+        void RadioBtn_Click(object sender, SelectionChangedEventArgs e)
         {
             string itemTemplateKey = string.Empty;
             var selected = (sender as Microsoft.UI.Xaml.Controls.RadioButtons).SelectedItem;
+
             if (selected == null)
             {
                 // No point in continuing if selected element is null
                 return;
             }
+
             var layoutKey = ((FrameworkElement)selected).Tag as string;
 
             if (layoutKey.Equals(nameof(this.VerticalStackLayout))) // we used x:Name in the resources which both acts as the x:Key value and creates a member field by the same name
@@ -217,6 +219,7 @@ namespace WinUIGallery.ControlPages
     </Grid>
 </DataTemplate>";
             }
+
             repeater.Layout = Resources[layoutKey] as Microsoft.UI.Xaml.Controls.VirtualizingLayout;
             repeater.ItemTemplate = Resources[itemTemplateKey] as DataTemplate;
             repeater.ItemsSource = BarItems;
@@ -227,7 +230,7 @@ namespace WinUIGallery.ControlPages
         // ==========================================================================
         // Virtualizing, scrollable list of items laid out by ItemsRepeater
         // ==========================================================================
-        private void LayoutBtn_Click(object sender, RoutedEventArgs e)
+        void LayoutBtn_Click(object sender, RoutedEventArgs e)
         {
             string layoutKey = ((FrameworkElement)sender).Tag as string;
 
@@ -251,7 +254,7 @@ namespace WinUIGallery.ControlPages
         // Animated Scrolling ItemsRepeater with Content Sample
         // ==========================================================================
 
-        private void OnAnimatedItemGotFocus(object sender, RoutedEventArgs e)
+        void OnAnimatedItemGotFocus(object sender, RoutedEventArgs e)
         {
             var item = sender as FrameworkElement;
 
@@ -265,11 +268,12 @@ namespace WinUIGallery.ControlPages
                 AnimationDesired = true,
             });
         }
-        private void OnAnimatedScrollRepeaterGettingFocus(UIElement sender, GettingFocusEventArgs args)
+        void OnAnimatedScrollRepeaterGettingFocus(UIElement sender, GettingFocusEventArgs args)
         {
             // If we have a previously focused index and focus moving from outside the repeater to inside,
             // then we can pick the previously focused index and land on that item again.
             var lastFocus = args.OldFocusedElement as UIElement;
+
             if (PreviouslyFocusedAnimatedScrollRepeaterIndex != -1 &&
                 lastFocus != null && animatedScrollRepeater.GetElementIndex(lastFocus) == -1)
             {
@@ -278,7 +282,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void OnAnimatedItemClicked(object sender, RoutedEventArgs e)
+        void OnAnimatedItemClicked(object sender, RoutedEventArgs e)
         {
             // Update corresponding rectangle with selected color
             Button senderBtn = sender as Button;
@@ -288,10 +292,9 @@ namespace WinUIGallery.ControlPages
             SetUIANamesForSelectedEntry(senderBtn);
         }
 
-
         /* This function occurs each time an element is made ready for use.
          * This is necessary for virtualization. */
-        private void OnElementPrepared(Microsoft.UI.Xaml.Controls.ItemsRepeater sender, Microsoft.UI.Xaml.Controls.ItemsRepeaterElementPreparedEventArgs args)
+        void OnElementPrepared(Microsoft.UI.Xaml.Controls.ItemsRepeater sender, Microsoft.UI.Xaml.Controls.ItemsRepeaterElementPreparedEventArgs args)
         {
             var item = ElementCompositionPreview.GetElementVisual(args.Element);
             var svVisual = ElementCompositionPreview.GetElementVisual(Animated_ScrollViewer);
@@ -314,7 +317,7 @@ namespace WinUIGallery.ControlPages
             item.StartAnimation("CenterPoint", centerPointExpression);
         }
 
-        private void SetUIANamesForSelectedEntry(Button selectedItem)
+        void SetUIANamesForSelectedEntry(Button selectedItem)
         {
             if (LastSelectedColorButton != null && LastSelectedColorButton.Content is string content)
             {
@@ -325,14 +328,14 @@ namespace WinUIGallery.ControlPages
             LastSelectedColorButton = selectedItem;
         }
 
-
         // ==========================================================================
         // VariedImageSize Layout with Filtering/Sorting
         // ==========================================================================
-        private List<Recipe> GetRecipeList()
+        List<Recipe> GetRecipeList()
         {
             // Initialize list of recipes for varied image size layout sample
             var rnd = new Random();
+
             List<Recipe> tempList = new List<Recipe>(
                                         Enumerable.Range(0, 1000).Select(k =>
                                             new Recipe
@@ -358,7 +361,7 @@ namespace WinUIGallery.ControlPages
 
             return tempList;
         }
-        private void OnEnableAnimationsChanged(object sender, RoutedEventArgs e)
+        void OnEnableAnimationsChanged(object sender, RoutedEventArgs e)
         {
 #if WINUI_PRERELEASE
             VariedImageSizeRepeater.Animator = EnableAnimations.IsChecked.GetValueOrDefault() ? new DefaultElementAnimator() : null;
@@ -370,7 +373,7 @@ namespace WinUIGallery.ControlPages
             UpdateSortAndFilter();
         }
 
-        private void OnSortAscClick(object sender, RoutedEventArgs e)
+        void OnSortAscClick(object sender, RoutedEventArgs e)
         {
             if (IsSortDescending == true)
             {
@@ -379,7 +382,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void OnSortDesClick(object sender, RoutedEventArgs e)
+        void OnSortDesClick(object sender, RoutedEventArgs e)
         {
             if (!IsSortDescending == true)
             {
@@ -388,7 +391,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void UpdateSortAndFilter()
+        void UpdateSortAndFilter()
         {
             // Find all recipes that ingredients include what was typed into the filtering text box
             var filteredTypes = staticRecipeData.Where(i => i.Ingredients.Contains(FilterRecipes.Text, StringComparison.InvariantCultureIgnoreCase));
@@ -404,11 +407,12 @@ namespace WinUIGallery.ControlPages
             peer.RaiseNotificationEvent(AutomationNotificationKind.Other, AutomationNotificationProcessing.ImportantMostRecent, $"Filtered recipes, {sortedFilteredTypes.Count()} results.", "RecipesFilteredNotificationActivityId");
         }
 
-        private void OnAnimatedScrollRepeaterKeyDown(object sender, KeyRoutedEventArgs e)
+        void OnAnimatedScrollRepeaterKeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Handled != true)
             {
                 var targetIndex = -1;
+
                 if (e.Key == Windows.System.VirtualKey.Home)
                 {
                     targetIndex = PreviouslyFocusedAnimatedScrollRepeaterIndex != 0 ? 0 : -1;
@@ -441,7 +445,6 @@ namespace WinUIGallery.ControlPages
         }
     }
 
-
     public class MyDataTemplateSelector : DataTemplateSelector
     {
         public DataTemplate Normal { get; set; }
@@ -449,14 +452,8 @@ namespace WinUIGallery.ControlPages
 
         protected override DataTemplate SelectTemplateCore(object item)
         {
-            if ((int)item % 2 == 0)
-            {
-                return Normal;
-            }
-            else
-            {
-                return Accent;
-            }
+            if ((int)item % 2 == 0) return Normal;
+            else return Accent;
         }
     }
 
@@ -516,13 +513,7 @@ namespace WinUIGallery.ControlPages
         public List<string> IngList { get; set; }
         public string Name { get; set; }
         public string Color { get; set; }
-        public int NumIngredients
-        {
-            get
-            {
-                return IngList.Count();
-            }
-        }
+        public int NumIngredients => IngList.Count();
 
         public void RandomizeIngredients()
         {
@@ -538,32 +529,31 @@ namespace WinUIGallery.ControlPages
                                                          "Feta Cheese",
                                                          "Parmesan Cheese",
                                                          "Breadcrumbs"};
+
             for (int i = 0; i < rndNum.Next(0, 4); i++)
             {
                 string newIng = extras[rndIng.Next(0, 6)];
+
                 if (!IngList.Contains(newIng))
                 {
                     Ingredients += "\n" + newIng;
                     IngList.Add(newIng);
                 }
             }
-
         }
     }
 
     // Custom data source class that assigns elements unique IDs, making filtering easier
     public class MyItemsSource : IList, Microsoft.UI.Xaml.Controls.IKeyIndexMapping, INotifyCollectionChanged
     {
-        private List<Recipe> inner = new List<Recipe>();
+        List<Recipe> inner = new List<Recipe>();
 
-        public MyItemsSource(IEnumerable<Recipe> collection)
-        {
-            InitializeCollection(collection);
-        }
+        public MyItemsSource(IEnumerable<Recipe> collection) => InitializeCollection(collection);
 
         public void InitializeCollection(IEnumerable<Recipe> collection)
         {
             inner.Clear();
+
             if (collection != null)
             {
                 inner.AddRange(collection);
@@ -573,7 +563,7 @@ namespace WinUIGallery.ControlPages
         }
 
         #region IReadOnlyList<T>
-        public int Count => this.inner != null ? this.inner.Count : 0;
+        public int Count => inner != null ? inner.Count : 0;
 
         public object this[int index]
         {
@@ -588,7 +578,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        public IEnumerator<Recipe> GetEnumerator() => this.inner.GetEnumerator();
+        public IEnumerator<Recipe> GetEnumerator() => inner.GetEnumerator();
 
         #endregion
 
@@ -598,10 +588,7 @@ namespace WinUIGallery.ControlPages
         #endregion
 
         #region IKeyIndexMapping
-        public string KeyFromIndex(int index)
-        {
-            return inner[index].Num.ToString();
-        }
+        public string KeyFromIndex(int index) => inner[index].Num.ToString();
 
         public int IndexFromKey(string key)
         {
@@ -612,6 +599,7 @@ namespace WinUIGallery.ControlPages
                     return inner.IndexOf(item);
                 }
             }
+
             return -1;
         }
 

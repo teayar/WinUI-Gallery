@@ -17,12 +17,9 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ContentDialogPage : Page
     {
-        public ContentDialogPage()
-        {
-            this.InitializeComponent();
-        }
+        public ContentDialogPage() => this.InitializeComponent();
 
-        private async void ShowDialog_Click(object sender, RoutedEventArgs e)
+        async void ShowDialog_Click(object sender, RoutedEventArgs e)
         {
             ContentDialogExample dialog = new ContentDialogExample();
 

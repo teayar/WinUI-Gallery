@@ -17,10 +17,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class MediaPlayerElementPage : Page
     {
-        public MediaPlayerElementPage()
-        {
-            this.InitializeComponent();
-        }
+        public MediaPlayerElementPage() => this.InitializeComponent();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

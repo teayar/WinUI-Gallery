@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,12 +27,9 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ProgressRingPage : Page
     {
-        public ProgressRingPage()
-        {
-            this.InitializeComponent();
-        }
+        public ProgressRingPage() => this.InitializeComponent();
 
-        private void ProgressValue_ValueChanged(Microsoft.UI.Xaml.Controls.NumberBox sender, Microsoft.UI.Xaml.Controls.NumberBoxValueChangedEventArgs args)
+        void ProgressValue_ValueChanged(Microsoft.UI.Xaml.Controls.NumberBox sender, Microsoft.UI.Xaml.Controls.NumberBoxValueChangedEventArgs args)
         {
             if (!sender.Value.IsNaN())
             {
@@ -44,12 +41,13 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void Background_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void Background_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var progressRing = (ComboBox)sender == BackgroundComboBox1 ? ProgressRing1 : ProgressRing2;
             var revealBackgroundProperty = (ComboBox)sender == BackgroundComboBox1 ? RevealBackgroundProperty1 : RevealBackgroundProperty2;
             string colorName = e.AddedItems[0].ToString();
             bool showBackgroundProperty = false;
+
             switch (colorName)
             {
                 case "Transparent":
@@ -63,8 +61,8 @@ namespace WinUIGallery.ControlPages
                 default:
                     throw new Exception($"Invalid argument: {colorName}");
             }
+
             revealBackgroundProperty.IsEnabled = showBackgroundProperty;
         }
-
     }
 }

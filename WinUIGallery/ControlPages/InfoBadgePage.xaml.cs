@@ -6,10 +6,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class InfoBadgePage : Page
     {
-        public InfoBadgePage()
-        {
-            this.InitializeComponent();
-        }
+        public InfoBadgePage() => this.InitializeComponent();
         public double InfoBadgeOpacity
         {
             get { return (double)GetValue(InfoBadgeOpacityProperty); }
@@ -42,7 +39,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void ToggleInfoBadgeOpacity_Toggled(object sender, RoutedEventArgs e)
+        void ToggleInfoBadgeOpacity_Toggled(object sender, RoutedEventArgs e)
         {
             InfoBadgeOpacity = (InfoBadgeOpacity == 0.0) ? 1.0 : 0.0;
         }
@@ -79,7 +76,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void ValueNumberBox_ValueChanged(Microsoft.UI.Xaml.Controls.NumberBox sender, Microsoft.UI.Xaml.Controls.NumberBoxValueChangedEventArgs args)
+        void ValueNumberBox_ValueChanged(Microsoft.UI.Xaml.Controls.NumberBox sender, Microsoft.UI.Xaml.Controls.NumberBoxValueChangedEventArgs args)
         {
             if ((int)args.NewValue >= -1)
             {

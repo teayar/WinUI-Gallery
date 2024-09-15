@@ -13,9 +13,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class NavigationViewPage : Page
     {
-        public static bool CameFromToggle = false;
-
-        public static bool CameFromGridChange = false;
+        public static bool CameFromToggle, CameFromGridChange;
 
         public VirtualKey ArrowKey;
 
@@ -51,13 +49,14 @@ namespace WinUIGallery.ControlPages
             if (toggleOn)
             {
                 return Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.Left;
-            } else
+            }
+            else
             {
                 return Microsoft.UI.Xaml.Controls.NavigationViewPaneDisplayMode.Top;
             }
         }
 
-        private void NavigationView_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        void NavigationView_SelectionChanged(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
             {
@@ -66,6 +65,7 @@ namespace WinUIGallery.ControlPages
             else
             {
                 var selectedItem = (Microsoft.UI.Xaml.Controls.NavigationViewItem)args.SelectedItem;
+
                 if (selectedItem != null)
                 {
                     string selectedItemTag = ((string)selectedItem.Tag);
@@ -77,7 +77,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void NavigationView_SelectionChanged2(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        void NavigationView_SelectionChanged2(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
             if (!CameFromGridChange)
             {
@@ -98,7 +98,7 @@ namespace WinUIGallery.ControlPages
             CameFromGridChange = false;
         }
 
-        private void NavigationView_SelectionChanged4(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        void NavigationView_SelectionChanged4(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
             {
@@ -117,8 +117,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-
-        private void NavigationView_SelectionChanged5(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        void NavigationView_SelectionChanged5(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
             {
@@ -134,7 +133,7 @@ namespace WinUIGallery.ControlPages
                 contentFrame5.Navigate(pageType);
             }
         }
-        private void NavigationView_SelectionChanged6(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        void NavigationView_SelectionChanged6(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
             {
@@ -149,7 +148,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void NavigationView_SelectionChanged7(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        void NavigationView_SelectionChanged7(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
             {
@@ -165,7 +164,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void NavigationView_SelectionChanged8(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        void NavigationView_SelectionChanged8(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
             /* NOTE: for this function to work, every NavigationView must follow the same naming convention: nvSample# (i.e. nvSample3),
             and every corresponding content frame must follow the same naming convention: contentFrame# (i.e. contentFrame3) */
@@ -189,7 +188,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void NavigationView_SelectionChanged9(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
+        void NavigationView_SelectionChanged9(Microsoft.UI.Xaml.Controls.NavigationView sender, Microsoft.UI.Xaml.Controls.NavigationViewSelectionChangedEventArgs args)
         {
             var selectedItem = (Microsoft.UI.Xaml.Controls.NavigationViewItem)args.SelectedItem;
             string pageName = "WinUIGallery.SamplePages." + ((string)selectedItem.Tag);
@@ -198,17 +197,17 @@ namespace WinUIGallery.ControlPages
             contentFrame9.Navigate(pageType, null, args.RecommendedNavigationTransitionInfo);
         }
 
-        private void headerCheck_Click(object sender, RoutedEventArgs e)
+        void headerCheck_Click(object sender, RoutedEventArgs e)
         {
             nvSample.AlwaysShowHeader = (sender as CheckBox).IsChecked == true ? true : false;
         }
 
-        private void settingsCheck_Click(object sender, RoutedEventArgs e)
+        void settingsCheck_Click(object sender, RoutedEventArgs e)
         {
             nvSample.IsSettingsVisible = (sender as CheckBox).IsChecked == true ? true : false;
         }
 
-        private void visibleCheck_Click(object sender, RoutedEventArgs e)
+        void visibleCheck_Click(object sender, RoutedEventArgs e)
         {
             if ((sender as CheckBox).IsChecked == true)
             {
@@ -220,12 +219,12 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void enableCheck_Click(object sender, RoutedEventArgs e)
+        void enableCheck_Click(object sender, RoutedEventArgs e)
         {
             nvSample.IsBackEnabled = (sender as CheckBox).IsChecked == true ? true : false;
         }
 
-        private void autoSuggestCheck_Click(object sender, RoutedEventArgs e)
+        void autoSuggestCheck_Click(object sender, RoutedEventArgs e)
         {
             if ((sender as CheckBox).IsChecked == true)
             {
@@ -242,12 +241,12 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void setASBSubstitutionString()
+        void setASBSubstitutionString()
         {
             navViewASB.Value = "\r\n    <NavigationView.AutoSuggestBox> \r\n        <AutoSuggestBox QueryIcon=\"Find\" AutomationProperties.Name=\"Search\" /> \r\n    <" + "/" + "NavigationView.AutoSuggestBox> \r\n";
         }
 
-        private void panemc_Check_Click(object sender, RoutedEventArgs e)
+        void panemc_Check_Click(object sender, RoutedEventArgs e)
         {
             if ((sender as CheckBox).IsChecked == true)
             {
@@ -259,7 +258,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void paneFooterCheck_Click(object sender, RoutedEventArgs e)
+        void paneFooterCheck_Click(object sender, RoutedEventArgs e)
         {
             if ((sender as CheckBox).IsChecked == true)
             {
@@ -271,7 +270,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void panePositionLeft_Checked(object sender, RoutedEventArgs e)
+        void panePositionLeft_Checked(object sender, RoutedEventArgs e)
         {
             if ((sender as RadioButton).IsChecked == true)
             {
@@ -294,8 +293,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-
-        private void panePositionTop_Checked(object sender, RoutedEventArgs e)
+        void panePositionTop_Checked(object sender, RoutedEventArgs e)
         {
             if ((sender as RadioButton).IsChecked == true)
             {
@@ -318,7 +316,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void panePositionLeftCompact_Checked(object sender, RoutedEventArgs e)
+        void panePositionLeftCompact_Checked(object sender, RoutedEventArgs e)
         {
             if ((sender as RadioButton).IsChecked == true)
             {
@@ -330,7 +328,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void sffCheck_Click(object sender, RoutedEventArgs e)
+        void sffCheck_Click(object sender, RoutedEventArgs e)
         {
             if ((sender as CheckBox).IsChecked == true)
             {
@@ -342,7 +340,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void suppressselectionCheck_Checked_Click(object sender, RoutedEventArgs e)
+        void suppressselectionCheck_Checked_Click(object sender, RoutedEventArgs e)
         {
             SamplePage2Item.SelectsOnInvoked = (sender as CheckBox).IsChecked == true ? false : true;
         }

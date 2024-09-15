@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System;
 using System.Collections.Generic;
 using Microsoft.UI.Xaml;
@@ -24,7 +24,7 @@ namespace WinUIGallery.ControlPages
             this.Loaded += MapControlPage_Loaded;
         }
 
-        private void MapControlPage_Loaded(object sender, RoutedEventArgs e)
+        void MapControlPage_Loaded(object sender, RoutedEventArgs e)
         {
             var myLandmarks = new List<MapElement>();
 
@@ -52,14 +52,14 @@ namespace WinUIGallery.ControlPages
             map1.Layers.Add(LandmarksLayer);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        void Button_Click(object sender, RoutedEventArgs e)
         {
             map1.MapServiceToken = MapToken.Password;
         }
 
-        private void MapToken_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+        void MapToken_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-            if(e.Key == Windows.System.VirtualKey.Enter)
+            if (e.Key == Windows.System.VirtualKey.Enter)
             {
                 map1.MapServiceToken = MapToken.Password;
             }

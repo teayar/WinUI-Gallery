@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -23,27 +23,28 @@ namespace WinUIGallery.ControlPages
             Loaded += OnPageLoaded;
         }
 
-        private void OnPageLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        void OnPageLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             MappingModeComboBox.SelectionChanged += OnMappingModeChanged;
             SpreadMethodComboBox.SelectionChanged += OnSpreadMethodChanged;
             InitializeSliders();
         }
 
-        private void OnSpreadMethodChanged(object sender, SelectionChangedEventArgs e)
+        void OnSpreadMethodChanged(object sender, SelectionChangedEventArgs e)
         {
             RadialGradientBrushExample.SpreadMethod = Enum.Parse<GradientSpreadMethod>(SpreadMethodComboBox.SelectedValue.ToString());
         }
 
-        private void OnMappingModeChanged(object sender, SelectionChangedEventArgs e)
+        void OnMappingModeChanged(object sender, SelectionChangedEventArgs e)
         {
             RadialGradientBrushExample.MappingMode = Enum.Parse<BrushMappingMode>(MappingModeComboBox.SelectedValue.ToString());
             InitializeSliders();
         }
 
-        private void InitializeSliders()
+        void InitializeSliders()
         {
             var rectSize = Rect.ActualSize.ToSize();
+
             if (RadialGradientBrushExample.MappingMode == BrushMappingMode.Absolute)
             {
                 CenterXSlider.Maximum = RadiusXSlider.Maximum = OriginXSlider.Maximum = rectSize.Width;
@@ -68,7 +69,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void OnSliderValueChanged(object sender, Microsoft.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        void OnSliderValueChanged(object sender, Microsoft.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
             RadialGradientBrushExample.Center = new Point(CenterXSlider.Value, CenterYSlider.Value);
             RadialGradientBrushExample.RadiusX = RadiusXSlider.Value;

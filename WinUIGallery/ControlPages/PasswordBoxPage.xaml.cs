@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -14,12 +14,9 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class PasswordBoxPage : Page
     {
-        public PasswordBoxPage()
-        {
-            this.InitializeComponent();
-        }
+        public PasswordBoxPage() => this.InitializeComponent();
 
-        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             if (sender is PasswordBox pb)
             {
@@ -37,7 +34,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void RevealModeCheckbox_Changed(object sender, RoutedEventArgs e)
+        void RevealModeCheckbox_Changed(object sender, RoutedEventArgs e)
         {
             if (revealModeCheckBox.IsChecked == true)
             {

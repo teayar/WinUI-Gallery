@@ -48,11 +48,9 @@ namespace WinUIGallery.Helper
             if (element.XamlRoot != null && element.XamlRoot.Content != null)
             {
                 var ele = (element.XamlRoot.Content as FrameworkElement).FindName(name);
-                if (ele != null)
-                {
-                    return ele as UIElement;
-                }
+                if (ele != null) return ele as UIElement;
             }
+
             return null;
         }
 
@@ -60,6 +58,7 @@ namespace WinUIGallery.Helper
         static public void AnnounceActionForAccessibility(UIElement ue, string annoucement, string activityID)
         {
             var peer = FrameworkElementAutomationPeer.FromElement(ue);
+
             peer.RaiseNotificationEvent(AutomationNotificationKind.ActionCompleted,
                                         AutomationNotificationProcessing.ImportantMostRecent, annoucement, activityID);
         }

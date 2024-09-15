@@ -29,7 +29,7 @@ namespace WinUIGallery.ControlPages
             ThemeExampleGrid.BackgroundTransition = new BrushTransition();
         }
 
-        private void OpacityButton_Click(object sender, RoutedEventArgs e)
+        void OpacityButton_Click(object sender, RoutedEventArgs e)
         {
             // If the implicit animation API is not present, simply no-op. 
             if (!(ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 7))) return;
@@ -39,7 +39,7 @@ namespace WinUIGallery.ControlPages
             // announce visual change to automation
             UIHelper.AnnounceActionForAccessibility(OpacityBtn, $"Rectangle opacity changed by {OpacityValue.Value} points", "RectangleChangedNotificationActivityId");
         }
-        private void RotationButton_Click(object sender, RoutedEventArgs e)
+        void RotationButton_Click(object sender, RoutedEventArgs e)
         {
             RotationRectangle.CenterPoint = new System.Numerics.Vector3((float)RotationRectangle.ActualWidth / 2, (float)RotationRectangle.ActualHeight / 2, 0f);
 
@@ -47,7 +47,7 @@ namespace WinUIGallery.ControlPages
             // announce visual change to automation
             UIHelper.AnnounceActionForAccessibility(RotateBtn, $"Rectangle rotated by {RotationNumberBox.Value} degrees", "RectangleChangedNotificationActivityId");
         }
-        private void ScaleButton_Click(object sender, RoutedEventArgs e)
+        void ScaleButton_Click(object sender, RoutedEventArgs e)
         {
             var _scaleTransition = ScaleRectangle.ScaleTransition;
 
@@ -72,7 +72,7 @@ namespace WinUIGallery.ControlPages
             UIHelper.AnnounceActionForAccessibility(ScaleBtn, $"Rectangle scaled by {ScaleValue.Value} points", "RectangleChangedNotificationActivityId");
         }
 
-        private void TranslateButton_Click(object sender, RoutedEventArgs e)
+        void TranslateButton_Click(object sender, RoutedEventArgs e)
         {
             var _translationTransition = TranslateRectangle.TranslationTransition;
 
@@ -81,6 +81,7 @@ namespace WinUIGallery.ControlPages
                                          ((TranslateZ.IsChecked == true) ? Vector3TransitionComponents.Z : 0);
 
             float customValue;
+
             if (sender != null && (sender as Button).Tag != null)
             {
                 customValue = (float)Convert.ToDouble((sender as Button).Tag);
@@ -96,7 +97,7 @@ namespace WinUIGallery.ControlPages
             UIHelper.AnnounceActionForAccessibility(TranslateBtn, $"Rectangle translated by {TranslationValue.Value} points", "RectangleChangedNotificationActivityId");
         }
 
-        private void NumberBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        void NumberBox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter)
             {
@@ -104,14 +105,17 @@ namespace WinUIGallery.ControlPages
                 {
                     OpacityButton_Click(null, null);
                 }
+
                 if ((string)(sender as NumberBox).Header == "Rotation (0.0 to 360.0)")
                 {
                     RotationButton_Click(null, null);
                 }
+
                 if ((string)(sender as NumberBox).Header == "Scale (0.0 to 5.0)")
                 {
                     ScaleButton_Click(null, null);
                 }
+
                 if ((string)(sender as NumberBox).Header == "Translation (0.0 to 200.0)")
                 {
                     TranslateButton_Click(null, null);
@@ -119,9 +123,8 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void BackgroundButton_Click(object sender, RoutedEventArgs e)
+        void BackgroundButton_Click(object sender, RoutedEventArgs e)
         {
-
             if ((BrushPresenter.Background as SolidColorBrush).Color == Microsoft.UI.Colors.Blue)
             {
                 BrushPresenter.Background = new SolidColorBrush(Microsoft.UI.Colors.Yellow);
@@ -134,19 +137,19 @@ namespace WinUIGallery.ControlPages
                 // announce visual change to automation
                 UIHelper.AnnounceActionForAccessibility(BgColorBtn, "Rectangle color changed to Blue", "RectangleChangedNotificationActivityId");
             }
-
         }
 
-        private float EnsureValueIsNumber(NumberBox numberBox)
+        float EnsureValueIsNumber(NumberBox numberBox)
         {
-            if(double.IsNaN(numberBox.Value))
+            if (double.IsNaN(numberBox.Value))
             {
                 numberBox.Value = 0;
             }
+
             return (float)numberBox.Value;
         }
 
-        private void ThemeButton_Click(object sender, RoutedEventArgs e)
+        void ThemeButton_Click(object sender, RoutedEventArgs e)
         {
             ThemeExampleGrid.RequestedTheme = ThemeExampleGrid.RequestedTheme == ElementTheme.Dark ? ElementTheme.Light : ElementTheme.Dark;
             // announce visual change to automation

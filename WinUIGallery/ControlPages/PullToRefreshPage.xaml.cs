@@ -19,23 +19,22 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class PullToRefreshPage : Page
     {
-        private ObservableCollection<string> items1 = new ObservableCollection<string>();
-        private ObservableCollection<string> items2 = new ObservableCollection<string>();
-        private DispatcherTimer timer1 = new DispatcherTimer();
-        private DispatcherTimer timer2 = new DispatcherTimer();
-        private Visual visualizerContentVisual;
-        private static RefreshContainer rc2;
-        private RefreshVisualizer rv2;
+        ObservableCollection<string> items1 = new ObservableCollection<string>();
+        ObservableCollection<string> items2 = new ObservableCollection<string>();
+        DispatcherTimer timer1 = new DispatcherTimer();
+        DispatcherTimer timer2 = new DispatcherTimer();
+        Visual visualizerContentVisual;
+        static RefreshContainer rc2;
+        RefreshVisualizer rv2;
 
-        private int items1AddedCount = 0;
-        private int items2AddedCount = 0;
+        int items1AddedCount, items2AddedCount;
 
-        private Deferral RefreshCompletionDeferral1
+        Deferral RefreshCompletionDeferral1
         {
             get;
             set;
         }
-        private Deferral RefreshCompletionDeferral2
+        Deferral RefreshCompletionDeferral2
         {
             get;
             set;
@@ -48,17 +47,19 @@ namespace WinUIGallery.ControlPages
             if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 6))
             {
                 rc2 = new RefreshContainer();
+
                 rc2.RefreshRequested +=
                     new TypedEventHandler<RefreshContainer, RefreshRequestedEventArgs>(rc2_RefreshRequested);
 
                 rv2 = new RefreshVisualizer();
+
                 rv2.RefreshStateChanged +=
                     new TypedEventHandler<RefreshVisualizer, RefreshStateChangedEventArgs>(rv2_RefreshStateChanged);
 
                 Image ptrImage = new Image();
                 AccessibilitySettings accessibilitySettings = new AccessibilitySettings();
                 // Checking light theme
-                if ((ThemeHelper.RootTheme == ElementTheme.Light || Application.Current.RequestedTheme == ApplicationTheme.Light) 
+                if ((ThemeHelper.RootTheme == ElementTheme.Light || Application.Current.RequestedTheme == ApplicationTheme.Light)
                     && !accessibilitySettings.HighContrast)
                 {
                     ptrImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/SunBlack.png"));
@@ -72,7 +73,6 @@ namespace WinUIGallery.ControlPages
                 else
                 {
                     ptrImage.Source = new BitmapImage(new Uri("ms-appx:///Assets/SunWhite.png"));
-
                 }
 
                 ptrImage.Width = 35;
@@ -90,7 +90,6 @@ namespace WinUIGallery.ControlPages
                     BorderBrush = (Brush)Application.Current.Resources["TextControlBorderBrush"]
                 };
 
-
                 rc2.Content = lv2;
 
                 Ex2Grid.Children.Add(rc2);
@@ -105,25 +104,28 @@ namespace WinUIGallery.ControlPages
 
                 foreach (var c in @"AcrylicBrush ColorPicker NavigationView ParallaxView PersonPicture PullToRefreshPage RatingsControl RevealBrush TreeView".Split(' '))
                     items1.Add(c);
+
                 lv.ItemsSource = items1;
 
                 foreach (var c in @"Mike Ben Barbra Claire Justin Shawn Drew Lili".Split(' '))
                     items2.Add(c);
+
                 lv2.ItemsSource = items2;
 
                 this.Loaded += PullToRefreshPage_Loaded;
             }
         }
 
-        private void PullToRefreshPage_Loaded(object sender, RoutedEventArgs e)
+        void PullToRefreshPage_Loaded(object sender, RoutedEventArgs e)
         {
             visualizerContentVisual = ElementCompositionPreview.GetElementVisual(rv2.Content);
             this.Loaded -= PullToRefreshPage_Loaded;
         }
 
-        private void Timer1_Tick(object sender, object e)
+        void Timer1_Tick(object sender, object e)
         {
             DispatcherQueue disp = rc.DispatcherQueue;
+
             if (disp.HasThreadAccess)
             {
                 Timer1_TickImpl();
@@ -137,9 +139,10 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void Timer2_Tick(object sender, object e)
+        void Timer2_Tick(object sender, object e)
         {
             DispatcherQueue disp = rc2.DispatcherQueue;
+
             if (disp.HasThreadAccess)
             {
                 Timer2_TickImpl();
@@ -153,27 +156,29 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void Timer1_TickImpl()
+        void Timer1_TickImpl()
         {
             items1.Insert(0, "NewControl " + items1AddedCount++);
             timer1.Stop();
-            if (this.RefreshCompletionDeferral1 != null)
+
+            if (RefreshCompletionDeferral1 != null)
             {
-                this.RefreshCompletionDeferral1.Complete();
-                this.RefreshCompletionDeferral1.Dispose();
-                this.RefreshCompletionDeferral1 = null;
+                RefreshCompletionDeferral1.Complete();
+                RefreshCompletionDeferral1.Dispose();
+                RefreshCompletionDeferral1 = null;
             }
         }
 
-        private void Timer2_TickImpl()
+        void Timer2_TickImpl()
         {
             items2.Insert(0, "New Friend " + items2AddedCount++);
             timer2.Stop();
-            if (this.RefreshCompletionDeferral2 != null)
+
+            if (RefreshCompletionDeferral2 != null)
             {
-                this.RefreshCompletionDeferral2.Complete();
-                this.RefreshCompletionDeferral2.Dispose();
-                this.RefreshCompletionDeferral2 = null;
+                RefreshCompletionDeferral2.Complete();
+                RefreshCompletionDeferral2.Dispose();
+                RefreshCompletionDeferral2 = null;
             }
         }
 
@@ -184,20 +189,20 @@ namespace WinUIGallery.ControlPages
             timer2.Stop();
         }
 
-        private void rc_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
+        void rc_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
         {
-            this.RefreshCompletionDeferral1 = args.GetDeferral();
-            //Do some work to show new content!
+            RefreshCompletionDeferral1 = args.GetDeferral();
+            // Do some work to show new content!
             timer1.Start();
         }
-        private void rc2_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
+        void rc2_RefreshRequested(RefreshContainer sender, RefreshRequestedEventArgs args)
         {
-            this.RefreshCompletionDeferral2 = args.GetDeferral();
-            //Do some work to show new content!
+            RefreshCompletionDeferral2 = args.GetDeferral();
+            // Do some work to show new content!
             timer2.Start();
         }
 
-        private void rv2_RefreshStateChanged(RefreshVisualizer sender, RefreshStateChangedEventArgs args)
+        void rv2_RefreshStateChanged(RefreshVisualizer sender, RefreshStateChangedEventArgs args)
         {
             visualizerContentVisual.StopAnimation("RotationAngle");
         }

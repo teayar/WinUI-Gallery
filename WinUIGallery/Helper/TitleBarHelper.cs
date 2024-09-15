@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using WinUIGallery.Helper;
 using Windows.Storage;
 using Windows.Storage.Pickers;
@@ -19,7 +18,6 @@ using WinUIGallery;
 
 namespace WinUIGallery.DesktopWap.Helper
 {
-
     internal class TitleBarHelper
     {
         // workaround as Appwindow titlebar doesn't update caption button colors correctly when changed while app is running
@@ -28,6 +26,7 @@ namespace WinUIGallery.DesktopWap.Helper
         {
             var frame = (Application.Current as WinUIGallery.App).GetRootFrame() as FrameworkElement;
             Windows.UI.Color color;
+
             if (frame.ActualTheme == ElementTheme.Dark)
             {
                 color = Colors.White;
@@ -36,7 +35,8 @@ namespace WinUIGallery.DesktopWap.Helper
             {
                 color = Colors.Black;
             }
-            SetCaptionButtonColors(window,color);
+
+            SetCaptionButtonColors(window, color);
             return color;
         }
 

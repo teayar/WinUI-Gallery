@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -43,7 +43,7 @@ namespace WinUIGallery.ControlPages
             BaseExample.Loaded += BaseExample_Loaded;
         }
 
-        private void BaseExample_Loaded(object sender, RoutedEventArgs e)
+        void BaseExample_Loaded(object sender, RoutedEventArgs e)
         {
             // Set focus so the first item of the listview has focus
             // instead of some item which is not visible on page load
@@ -78,14 +78,15 @@ namespace WinUIGallery.ControlPages
             FilteredListView.ItemsSource = contacts3Filtered;
         }
 
-        //===================================================================================================================
+        // ===================================================================================================================
         // Selection Modes Example
-        //===================================================================================================================
-        private void SelectionModeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        // ===================================================================================================================
+        void SelectionModeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (Control2 != null)
             {
                 string selectionMode = e.AddedItems[0].ToString();
+
                 switch (selectionMode)
                 {
                     case "None":
@@ -104,41 +105,43 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        //===================================================================================================================
+        // ===================================================================================================================
         // Drag/Drop Example
-        //===================================================================================================================
+        // ===================================================================================================================
 
-        private void Source_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+        void Source_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
         {
             // Prepare a string with one dragged item per line
             StringBuilder items = new StringBuilder();
+
             foreach (Contact item in e.Items)
             {
-                if (items.Length > 0) { items.AppendLine(); }
+                if (items.Length > 0) items.AppendLine();
+
                 if (item.ToString() != null)
                 {
                     // Append name from contact object onto data string
                     items.Append(item.ToString() + " " + item.Company);
                 }
             }
+
             // Set the content of the DataPackage
             e.Data.SetText(items.ToString());
 
             e.Data.RequestedOperation = DataPackageOperation.Move;
-
         }
 
-        private void Target_DragOver(object sender, DragEventArgs e)
+        void Target_DragOver(object sender, DragEventArgs e)
         {
             e.AcceptedOperation = DataPackageOperation.Move;
         }
 
-        private void Source_DragOver(object sender, DragEventArgs e)
+        void Source_DragOver(object sender, DragEventArgs e)
         {
             e.AcceptedOperation = DataPackageOperation.Move;
         }
 
-        private async void ListView_Drop(object sender, DragEventArgs e)
+        async void ListView_Drop(object sender, DragEventArgs e)
         {
             ListView target = (ListView)sender;
 
@@ -147,9 +150,9 @@ namespace WinUIGallery.ControlPages
                 DragOperationDeferral def = e.GetDeferral();
                 string s = await e.DataView.GetTextAsync();
                 string[] items = s.Split('\n');
+
                 foreach (string item in items)
                 {
-
                     // Create Contact object from string, add to existing target ListView
                     string[] info = item.Split(" ", 3);
                     Contact temp = new Contact(info[0], info[1], info[2]);
@@ -160,6 +163,7 @@ namespace WinUIGallery.ControlPages
                     // If the target ListView has items in it, use the height of the first item
                     //      to find the insertion index.
                     int index = 0;
+
                     if (target.Items.Count != 0)
                     {
                         // Get a reference to the first item in the ListView
@@ -178,10 +182,7 @@ namespace WinUIGallery.ControlPages
                         //      top of, increment the insertion index so the dropped item is inserted
                         //      below instead of above the item being dropped on top of.
                         Windows.Foundation.Point positionInItem = e.GetPosition(targetItem);
-                        if (positionInItem.Y > itemHeight / 2)
-                        {
-                            index++;
-                        }
+                        if (positionInItem.Y > itemHeight / 2) index++;
 
                         // Don't go out of bounds
                         index = Math.Min(target.Items.Count, index);
@@ -194,7 +195,7 @@ namespace WinUIGallery.ControlPages
                     {
                         // Find the ItemsSource for the target ListView and insert
                         contacts1.Insert(index, temp);
-                        //Go through source list and remove the items that are being moved
+                        // Go through source list and remove the items that are being moved
                         foreach (Contact contact in DragDropListView2.Items)
                         {
                             if (contact.FirstName == temp.FirstName && contact.LastName == temp.LastName && contact.Company == temp.Company)
@@ -207,6 +208,7 @@ namespace WinUIGallery.ControlPages
                     else if (target.Name == "DragDropListView2")
                     {
                         contacts2.Insert(index, temp);
+
                         foreach (Contact contact in DragDropListView.Items)
                         {
                             if (contact.FirstName == temp.FirstName && contact.LastName == temp.LastName && contact.Company == temp.Company)
@@ -223,7 +225,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void Target_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
+        void Target_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
         {
             if (e.Items.Count == 1)
             {
@@ -235,16 +237,16 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void Target_DragEnter(object sender, DragEventArgs e)
+        void Target_DragEnter(object sender, DragEventArgs e)
         {
             // We don't want to show the Move icon
             e.DragUIOverride.IsGlyphVisible = false;
         }
 
-        //===================================================================================================================
+        // ===================================================================================================================
         // Grouped Headers Example
-        //===================================================================================================================
-        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        // ===================================================================================================================
+        void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             if (StickySwitch != null)
             {
@@ -259,15 +261,15 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void StackPanel_loaded(object sender, RoutedEventArgs e)
+        void StackPanel_loaded(object sender, RoutedEventArgs e)
         {
             stackPanelObj = sender as ItemsStackPanel;
         }
 
-        //===================================================================================================================
+        // ===================================================================================================================
         // Filtered List Example
-        //===================================================================================================================
-        private void Remove_NonMatching(IEnumerable<Contact> filteredData)
+        // ===================================================================================================================
+        void Remove_NonMatching(IEnumerable<Contact> filteredData)
         {
             for (int i = contacts3Filtered.Count - 1; i >= 0; i--)
             {
@@ -280,7 +282,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void AddBack_Contacts(IEnumerable<Contact> filteredData)
+        void AddBack_Contacts(IEnumerable<Contact> filteredData)
         // When a user hits backspace, more contacts may need to be added back into the list
         {
             foreach (var item in filteredData)
@@ -293,7 +295,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void OnFilterChanged(object sender, TextChangedEventArgs args)
+        void OnFilterChanged(object sender, TextChangedEventArgs args)
         {
             // Linq query that selects only items that return True after being passed through Filter function
             var filtered = contacts3.Where(contact => Filter(contact));
@@ -301,7 +303,7 @@ namespace WinUIGallery.ControlPages
             AddBack_Contacts(filtered);
         }
 
-        private bool Filter(Contact contact)
+        bool Filter(Contact contact)
         {
             // When the text in any filter is changed, contact list is ran through all three filters to make sure
             // they can properly interact with each other (i.e. they can all be applied at the same time).
@@ -311,29 +313,31 @@ namespace WinUIGallery.ControlPages
                    contact.Company.Contains(FilterByCompany.Text, StringComparison.InvariantCultureIgnoreCase);
         }
 
-        //===================================================================================================================
+        // ===================================================================================================================
         // Inverted List Example
-        //===================================================================================================================
+        // ===================================================================================================================
 
-        private void AddItemToEnd()
+        void AddItemToEnd()
         {
-            InvertedListView.Items.Add(
+            InvertedListView.Items
+                .Add(
                 new Message("Message " + ++messageNumber, DateTime.Now, HorizontalAlignment.Right)
                 );
         }
 
-        private void MessageReceived(object sender, RoutedEventArgs e)
+        void MessageReceived(object sender, RoutedEventArgs e)
         {
-            InvertedListView.Items.Add(
+            InvertedListView.Items
+                .Add(
                 new Message("Message " + ++messageNumber, DateTime.Now, HorizontalAlignment.Left)
                 );
         }
 
-        //===================================================================================================================
+        // ===================================================================================================================
         // ListView with Images Sample
-        //===================================================================================================================
+        // ===================================================================================================================
 
-        private void TextBlock_IsTextTrimmedChanged(TextBlock sender, IsTextTrimmedChangedEventArgs args)
+        void TextBlock_IsTextTrimmedChanged(TextBlock sender, IsTextTrimmedChangedEventArgs args)
         {
             var textBlock = sender as TextBlock;
             var text = textBlock.IsTextTrimmed ? textBlock.Text : string.Empty;
@@ -341,12 +345,11 @@ namespace WinUIGallery.ControlPages
             ToolTipService.SetToolTip(textBlock, text);
         }
 
-
-        //===================================================================================================================
+        // ===================================================================================================================
         // ListView with context menu
-        //===================================================================================================================
+        // ===================================================================================================================
 
-        private void ContactDeleteMenuyItem_Click(object sender, RoutedEventArgs e)
+        void ContactDeleteMenuyItem_Click(object sender, RoutedEventArgs e)
         {
             var item = (sender as FrameworkElement).DataContext;
             var contact = item as Contact;
@@ -366,10 +369,7 @@ namespace WinUIGallery.ControlPages
             MsgAlignment = align;
         }
 
-        public override string ToString()
-        {
-            return MsgDateTime.ToString() + " " + MsgText;
-        }
+        public override string ToString() => MsgDateTime.ToString() + " " + MsgText;
     }
 
     public class Contact
@@ -395,10 +395,9 @@ namespace WinUIGallery.ControlPages
 
             ObservableCollection<Contact> contacts = new ObservableCollection<Contact>();
 
-            for (int i = 0; i < lines.Count-2; i += 3)
-            {
+            for (int i = 0; i < lines.Count - 2; i += 3)
                 contacts.Add(new Contact(lines[i], lines[i + 1], lines[i + 2]));
-            }
+            
 
             return contacts;
         }
@@ -413,10 +412,7 @@ namespace WinUIGallery.ControlPages
             return new ObservableCollection<GroupInfoList>(query);
         }
 
-        public override string ToString()
-        {
-            return $"{Name}, {Company}";
-        }
+        public override string ToString() => $"{Name}, {Company}";
         #endregion
     }
 
@@ -427,9 +423,6 @@ namespace WinUIGallery.ControlPages
         }
         public object Key { get; set; }
 
-        public override string ToString()
-        {
-            return "Group " + Key.ToString();
-        }
+        public override string ToString() => "Group " + Key.ToString();
     }
 }

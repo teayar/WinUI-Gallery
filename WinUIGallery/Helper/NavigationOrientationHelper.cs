@@ -2,25 +2,25 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Windows.Storage;
 
-
 namespace WinUIGallery.Helper
 {
     public static class NavigationOrientationHelper
     {
-
-        private const string IsLeftModeKey = "NavigationIsOnLeftMode";
-        private static bool _isLeftMode = true;
+        const string IsLeftModeKey = "NavigationIsOnLeftMode";
+        static bool _isLeftMode = true;
 
         public static bool IsLeftMode()
         {
             if (NativeHelper.IsAppPackaged)
             {
                 var valueFromSettings = ApplicationData.Current.LocalSettings.Values[IsLeftModeKey];
+
                 if (valueFromSettings == null)
                 {
                     ApplicationData.Current.LocalSettings.Values[IsLeftModeKey] = true;
                     valueFromSettings = true;
                 }
+
                 return (bool)valueFromSettings;
             }
             else
@@ -32,6 +32,7 @@ namespace WinUIGallery.Helper
         public static void IsLeftModeForElement(bool isLeftMode, UIElement element)
         {
             UpdateNavigationViewForElement(isLeftMode, element);
+
             if (NativeHelper.IsAppPackaged)
             {
                 ApplicationData.Current.LocalSettings.Values[IsLeftModeKey] = isLeftMode;
@@ -45,6 +46,7 @@ namespace WinUIGallery.Helper
         public static void UpdateNavigationViewForElement(bool isLeftMode, UIElement element)
         {
             NavigationView _navView = NavigationRootPage.GetForElement(element).NavigationView;
+
             if (isLeftMode)
             {
                 _navView.PaneDisplayMode = NavigationViewPaneDisplayMode.Auto;
@@ -56,6 +58,5 @@ namespace WinUIGallery.Helper
                 Grid.SetRow(_navView, 1);
             }
         }
-        
     }
 }

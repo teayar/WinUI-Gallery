@@ -19,13 +19,9 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class FilePickerPage : Page
     {
+        public FilePickerPage() => this.InitializeComponent();
 
-        public FilePickerPage()
-        {
-            this.InitializeComponent();
-        }
-
-        private async void PickAFileButton_Click(object sender, RoutedEventArgs e)
+        async void PickAFileButton_Click(object sender, RoutedEventArgs e)
         {
             // Clear previous returned file name, if it exists, between iterations of this scenario
             PickAFileOutputTextBlock.Text = "";
@@ -46,6 +42,7 @@ namespace WinUIGallery.ControlPages
 
             // Open the picker for the user to pick a file
             var file = await openPicker.PickSingleFileAsync();
+
             if (file != null)
             {
                 // Creating the text for the Texblock
@@ -57,7 +54,7 @@ namespace WinUIGallery.ControlPages
                 Run run2 = new Run();
                 run2.FontWeight = Microsoft.UI.Text.FontWeights.Bold;
                 run2.Text = file.Name;
-                
+
                 span.Inlines.Add(run1);
                 span.Inlines.Add(run2);
                 PickAFileOutputTextBlock.Inlines.Add(span);
@@ -69,7 +66,7 @@ namespace WinUIGallery.ControlPages
 
             UIHelper.AnnounceActionForAccessibility(sender as Button, PickAFileOutputTextBlock.Text, "FilePickedNotificationId");
         }
-        private async void PickAPhotoButton_Click(object sender, RoutedEventArgs e)
+        async void PickAPhotoButton_Click(object sender, RoutedEventArgs e)
         {
             // Clear previous returned file name, if it exists, between iterations of this scenario
             PickAPhotoOutputTextBlock.Text = "";
@@ -93,6 +90,7 @@ namespace WinUIGallery.ControlPages
 
             // Open the picker for the user to pick a file
             var file = await openPicker.PickSingleFileAsync();
+
             if (file != null)
             {
                 // Creating the text for the Texblock
@@ -117,7 +115,7 @@ namespace WinUIGallery.ControlPages
             UIHelper.AnnounceActionForAccessibility(sender as Button, PickAPhotoOutputTextBlock.Text, "PhotoPickedNotificationId");
         }
 
-        private async void PickFilesButton_Click(object sender, RoutedEventArgs e)
+        async void PickFilesButton_Click(object sender, RoutedEventArgs e)
         {
             // Clear previous returned file name, if it exists, between iterations of this scenario
             PickFilesOutputTextBlock.Text = "";
@@ -139,6 +137,7 @@ namespace WinUIGallery.ControlPages
 
             // Open the picker for the user to pick a file
             IReadOnlyList<StorageFile> files = await openPicker.PickMultipleFilesAsync();
+
             if (files.Count > 0)
             {
                 // Creating the text for the Texblock
@@ -167,7 +166,7 @@ namespace WinUIGallery.ControlPages
             UIHelper.AnnounceActionForAccessibility(sender as Button, PickFilesOutputTextBlock.Text, "FilesPickedNotificationId");
         }
 
-        private async void PickFolderButton_Click(object sender, RoutedEventArgs e)
+        async void PickFolderButton_Click(object sender, RoutedEventArgs e)
         {
             // Clear previous returned file name, if it exists, between iterations of this scenario
             PickFolderOutputTextBlock.Text = "";
@@ -188,6 +187,7 @@ namespace WinUIGallery.ControlPages
 
             // Open the picker for the user to pick a folder
             StorageFolder folder = await openPicker.PickSingleFolderAsync();
+
             if (folder != null)
             {
                 StorageApplicationPermissions.FutureAccessList.AddOrReplace("PickedFolderToken", folder);
@@ -214,7 +214,7 @@ namespace WinUIGallery.ControlPages
             UIHelper.AnnounceActionForAccessibility(sender as Button, PickFolderOutputTextBlock.Text, "FolderPickedNotificationId");
         }
 
-        private async void SaveFileButton_Click(object sender, RoutedEventArgs e)
+        async void SaveFileButton_Click(object sender, RoutedEventArgs e)
         {
             // Clear previous returned file name, if it exists, between iterations of this scenario
             SaveFileOutputTextBlock.Text = "";
@@ -236,10 +236,12 @@ namespace WinUIGallery.ControlPages
             // Default file name if the user does not type one in or select a file to replace
             var enteredFileName = ((sender as Button).Parent as StackPanel)
             .FindName("FileNameTextBox") as TextBox;
+
             savePicker.SuggestedFileName = enteredFileName.Text;
 
             // Open the picker for the user to pick a file
-            StorageFile file= await savePicker.PickSaveFileAsync();
+            StorageFile file = await savePicker.PickSaveFileAsync();
+
             if (file != null)
             {
                 // Prevent updates to the remote version of the file until we finish making changes and call CompleteUpdatesAsync.
@@ -247,19 +249,20 @@ namespace WinUIGallery.ControlPages
 
                 // write to file
                 var textBox = ((sender as Button).Parent as StackPanel).FindName("FileContentTextBox") as TextBox;
+
                 using (var stream = await file.OpenStreamForWriteAsync())
                 {
                     using (var tw = new StreamWriter(stream))
-                    {
                         tw.WriteLine(textBox?.Text);
-                    }
+                    
                 }
                 // Another way to write a string to the file is to use this instead:
                 // await FileIO.WriteTextAsync(file, "Example file contents.");
-                
+
                 // Let Windows know that we're finished changing the file so the other app can update the remote version of the file.
                 // Completing updates may require Windows to ask for user input.
                 FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
+
                 if (status == FileUpdateStatus.Complete)
                 {
                     SaveFileOutputTextBlock.Text = "File " + file.Name + " was saved.";

@@ -18,7 +18,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class PageTransitionPage : Page
     {
-        private NavigationTransitionInfo _transitionInfo = null;
+        NavigationTransitionInfo _transitionInfo;
 
         public PageTransitionPage()
         {
@@ -27,9 +27,8 @@ namespace WinUIGallery.ControlPages
             ContentFrame.Navigate(typeof(SamplePages.SamplePage1));
         }
 
-        private void ForwardButton1_Click(object sender, RoutedEventArgs e)
+        void ForwardButton1_Click(object sender, RoutedEventArgs e)
         {
-
             var pageToNavigateTo = ContentFrame.BackStackDepth % 2 == 1 ? typeof(SamplePages.SamplePage1) : typeof(SamplePages.SamplePage2);
 
             if (_transitionInfo == null)
@@ -44,7 +43,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void BackwardButton1_Click(object sender, RoutedEventArgs e)
+        void BackwardButton1_Click(object sender, RoutedEventArgs e)
         {
             if (ContentFrame.BackStackDepth > 0)
             {
@@ -52,11 +51,12 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void TransitionRadioButton_Checked(object sender, RoutedEventArgs e)
+        void TransitionRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             var pageTransitionString = "";
 
             var senderTransitionString = (sender as RadioButton).Content.ToString();
+
             if (senderTransitionString != "Default")
             {
                 pageTransitionString = ", new " + senderTransitionString + "NavigationTransitionInfo()";

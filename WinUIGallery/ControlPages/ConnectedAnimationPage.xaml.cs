@@ -21,17 +21,14 @@ namespace WinUIGallery.ControlPages
 
             // For 3rd sample
             ContentFrame.Navigate(typeof(SamplePage1));
-            
         }
 
-        private ConnectedAnimationConfiguration GetConfiguration()
+        ConnectedAnimationConfiguration GetConfiguration()
         {
-            if(this.ConfigurationPanel == null)
-            {
-                return null;
-            }
-            
+            if (this.ConfigurationPanel == null) return null;
+
             var selectedName = (ConfigurationPanel.SelectedItem as RadioButton).Content.ToString();
+
             switch (selectedName)
             {
                 case "Gravity":
@@ -45,7 +42,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void NavigateButton_Click(object sender, RoutedEventArgs e)
+        void NavigateButton_Click(object sender, RoutedEventArgs e)
         {
             var currentContent = ContentFrame.Content;
 
@@ -91,6 +88,7 @@ namespace WinUIGallery.ControlPages
             Random rand = new Random();
             int numberOfLocations = includeAllItems ? 13 : 8;
             List<CustomDataObject> objects = new List<CustomDataObject>();
+
             for (int i = 0; i < numberOfLocations; i++)
             {
                 objects.Add(new CustomDataObject()
@@ -105,6 +103,5 @@ namespace WinUIGallery.ControlPages
 
             return objects;
         }
-
     }
 }

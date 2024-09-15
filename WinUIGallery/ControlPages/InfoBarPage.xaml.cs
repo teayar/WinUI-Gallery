@@ -6,10 +6,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class InfoBarPage : Page
     {
-        public InfoBarPage()
-        {
-            this.InitializeComponent();
-        }
+        public InfoBarPage() => this.InitializeComponent();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -17,7 +14,7 @@ namespace WinUIGallery.ControlPages
             DisplayButton.Value = string.Empty;
         }
 
-        private void SeverityComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void SeverityComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string severityName = e.AddedItems[0].ToString();
 
@@ -42,7 +39,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void MessageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void MessageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (TestInfoBar2 == null) return;
 
@@ -59,7 +56,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void ActionButtonComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void ActionButtonComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (TestInfoBar2 == null) return;
 
@@ -76,7 +73,6 @@ namespace WinUIGallery.ControlPages
                 DisplayButton.Value = @"<InfoBar.ActionButton>
             <Button Content=""Action"" Click=""InfoBarButton_Click"" />
     </InfoBar.ActionButton> ";
-
             }
             else if (ActionButtonComboBox.SelectedIndex == 2) // hyperlink
             {
@@ -90,6 +86,4 @@ namespace WinUIGallery.ControlPages
             }
         }
     }
-
-    
 }

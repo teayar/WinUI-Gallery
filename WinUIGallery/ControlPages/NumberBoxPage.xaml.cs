@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using Windows.Globalization.NumberFormatting;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -21,7 +21,7 @@ namespace WinUIGallery.ControlPages
             SetNumberBoxNumberFormatter();
         }
 
-        private void SetNumberBoxNumberFormatter()
+        void SetNumberBoxNumberFormatter()
         {
             IncrementNumberRounder rounder = new IncrementNumberRounder
             {
@@ -35,10 +35,11 @@ namespace WinUIGallery.ControlPages
                 FractionDigits = 2,
                 NumberRounder = rounder
             };
+
             FormattedNumberBox.NumberFormatter = formatter;
         }
 
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is RadioButton rb && NumberBoxSpinButtonPlacementExample != null)
             {

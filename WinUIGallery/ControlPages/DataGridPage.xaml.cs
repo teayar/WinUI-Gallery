@@ -4,15 +4,12 @@ using Microsoft.UI.Xaml.Controls;
 using Windows.System;
 
 namespace WinUIGallery.ControlPages
-{ 
+{
     public sealed partial class DataGridPage : Page
     {
-        public DataGridPage()
-        {
-            this.InitializeComponent();
-        }
+        public DataGridPage() => this.InitializeComponent();
 
-        private async void LaunchToolkitButton_Click(object sender, RoutedEventArgs e)
+        async void LaunchToolkitButton_Click(object sender, RoutedEventArgs e)
         {
             // Either open the app if already instealled or the Microsoft Store
 

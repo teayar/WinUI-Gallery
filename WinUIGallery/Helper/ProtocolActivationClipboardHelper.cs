@@ -11,8 +11,8 @@ namespace WinUIGallery.Helper
     /// </summary>
     public static class ProtocolActivationClipboardHelper
     {
-        private const string ShowCopyLinkTeachingTipKey = "ShowCopyLinkTeachingTip";
-        private static bool _showCopyLinkTeachingTip = true;
+        const string ShowCopyLinkTeachingTipKey = "ShowCopyLinkTeachingTip";
+        static bool _showCopyLinkTeachingTip = true;
 
         public static bool ShowCopyLinkTeachingTip
         {
@@ -21,11 +21,13 @@ namespace WinUIGallery.Helper
                 if (NativeHelper.IsAppPackaged)
                 {
                     object valueFromSettings = ApplicationData.Current.LocalSettings.Values[ShowCopyLinkTeachingTipKey];
+
                     if (valueFromSettings == null)
                     {
                         ApplicationData.Current.LocalSettings.Values[ShowCopyLinkTeachingTipKey] = true;
                         valueFromSettings = true;
                     }
+
                     return (bool)valueFromSettings;
                 }
                 else
@@ -39,7 +41,6 @@ namespace WinUIGallery.Helper
                 if (NativeHelper.IsAppPackaged)
                 {
                     ApplicationData.Current.LocalSettings.Values[ShowCopyLinkTeachingTipKey] = value;
-
                 }
                 else
                 {
@@ -60,7 +61,7 @@ namespace WinUIGallery.Helper
             ProtocolActivationClipboardHelper.Copy(uri, $"{Package.Current.DisplayName} - {group.Title} Samples");
         }
 
-        private static void Copy(Uri uri, string displayName)
+        static void Copy(Uri uri, string displayName)
         {
             string htmlFormat = HtmlFormatHelper.CreateHtmlFormat($"<a href='{uri}'>{displayName}</a>");
 

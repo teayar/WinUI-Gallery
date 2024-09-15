@@ -10,17 +10,15 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ColorPage : Page
     {
-        int previousSelectedIndex = 0;
+        int previousSelectedIndex;
 
-        public ColorPage()
-        {
-            this.InitializeComponent();
-        }
+        public ColorPage() => this.InitializeComponent();
 
-        private void PageSelector_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+        void PageSelector_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
         {
             SelectorBarItem selectedItem = sender.SelectedItem;
             int currentSelectedIndex = sender.Items.IndexOf(selectedItem);
+
             Type pageType = currentSelectedIndex switch
             {
                 0 => typeof(TextSection),
@@ -31,6 +29,7 @@ namespace WinUIGallery.ControlPages
                 5 => typeof(HighContrastSection),
                 _ => typeof(TextSection),
             };
+
             var slideNavigationTransitionEffect = currentSelectedIndex - previousSelectedIndex > 0 ? SlideNavigationTransitionEffect.FromRight : SlideNavigationTransitionEffect.FromLeft;
 
             NavigationFrame.Navigate(pageType, null, new SlideNavigationTransitionInfo() { Effect = slideNavigationTransitionEffect });
@@ -38,7 +37,7 @@ namespace WinUIGallery.ControlPages
             previousSelectedIndex = currentSelectedIndex;
         }
 
-        private void PageSelector_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        void PageSelector_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             PageSelector.SelectedItem = PageSelector.Items[0];
         }

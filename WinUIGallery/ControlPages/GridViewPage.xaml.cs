@@ -1,4 +1,4 @@
-﻿//*********************************************************
+﻿// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -44,12 +44,12 @@ namespace WinUIGallery.ControlPages
            AutomationProperties.Name = '{x:Bind Title}' Width = '190' Height = '130' 
            AutomationProperties.AccessibilityView = 'Raw'/>
 </DataTemplate> ";
-
         }
 
-        private void ItemTemplate_Checked(object sender, RoutedEventArgs e)
+        void ItemTemplate_Checked(object sender, RoutedEventArgs e)
         {
             var tag = (sender as FrameworkElement).Tag;
+
             if (tag != null)
             {
                 string template = tag.ToString();
@@ -123,7 +123,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void ContentGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void ContentGridView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (sender is GridView gridView)
             {
@@ -131,22 +131,22 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void ContentGridView_ItemClick(object sender, ItemClickEventArgs e)
+        void ContentGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             ClickOutput.Text = "You clicked " + (e.ClickedItem as CustomDataObject).Title + ".";
         }
 
-        private void BasicGridView_ItemClick(object sender, ItemClickEventArgs e)
+        void BasicGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             ClickOutput0.Text = "You clicked " + (e.ClickedItem as CustomDataObject).Title + ".";
         }
 
-        private void ItemClickCheckBox_Click(object sender, RoutedEventArgs e)
+        void ItemClickCheckBox_Click(object sender, RoutedEventArgs e)
         {
             ClickOutput.Text = string.Empty;
         }
 
-        private void FlowDirectionCheckBox_Click(object sender, RoutedEventArgs e)
+        void FlowDirectionCheckBox_Click(object sender, RoutedEventArgs e)
         {
             if (ContentGridView.FlowDirection == FlowDirection.LeftToRight)
             {
@@ -158,11 +158,12 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void SelectionModeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void SelectionModeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ContentGridView != null)
             {
                 string colorName = e.AddedItems[0].ToString();
+
                 switch (colorName)
                 {
                     case "None":
@@ -182,7 +183,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void StyledGrid_InitWrapGrid(object sender, RoutedEventArgs e)
+        void StyledGrid_InitWrapGrid(object sender, RoutedEventArgs e)
         {
             // Update ItemsWrapGrid object created on page load by assigning it to StyledGrid's ItemWrapGrid
             StyledGridIWG = sender as ItemsWrapGrid;
@@ -190,14 +191,13 @@ namespace WinUIGallery.ControlPages
             // Now we can change StyledGrid's MaximumRowsorColumns property within its ItemsPanel>ItemsPanelTemplate>ItemsWrapGrid.
             StyledGridIWG.MaximumRowsOrColumns = 3;
         }
-        
 
-        private void NumberBox_ValueChanged(Microsoft.UI.Xaml.Controls.NumberBox sender, Microsoft.UI.Xaml.Controls.NumberBoxValueChangedEventArgs args)
+        void NumberBox_ValueChanged(Microsoft.UI.Xaml.Controls.NumberBox sender, Microsoft.UI.Xaml.Controls.NumberBoxValueChangedEventArgs args)
         {
-            if(StyledGridIWG == null) { return; }
+            if (StyledGridIWG == null) return;
 
             // Only update either max-row value or margins
-            if(sender == WrapItemCount)
+            if (sender == WrapItemCount)
             {
                 StyledGridIWG.MaximumRowsOrColumns = (int)WrapItemCount.Value;
                 return;
@@ -205,6 +205,7 @@ namespace WinUIGallery.ControlPages
 
             int rowSpace = (int)RowSpace.Value;
             int columnSpace = (int)ColumnSpace.Value;
+
             for (int i = 0; i < StyledGrid.Items.Count; i++)
             {
                 GridViewItem item = StyledGrid.ContainerFromIndex(i) as GridViewItem;

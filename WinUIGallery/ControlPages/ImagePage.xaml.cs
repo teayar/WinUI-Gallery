@@ -18,12 +18,9 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ImagePage : Page
     {
-        public ImagePage()
-        {
-            this.InitializeComponent();
-        }
+        public ImagePage() => this.InitializeComponent();
 
-        private void ImageStretch_Checked(object sender, RoutedEventArgs e)
+        void ImageStretch_Checked(object sender, RoutedEventArgs e)
         {
             if (StretchImage != null)
             {

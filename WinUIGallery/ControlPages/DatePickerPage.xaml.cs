@@ -1,4 +1,4 @@
-﻿//*********************************************************
+﻿// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Controls;
@@ -15,10 +15,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class DatePickerPage : Page
     {
-        public DatePickerPage()
-        {
-            this.InitializeComponent();
-        }
+        public DatePickerPage() => this.InitializeComponent();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -30,7 +27,6 @@ namespace WinUIGallery.ControlPages
 
             // Set the maximum year to 5 years in the future.
             Control2.MaxYear = DateTimeOffset.Now.AddYears(5);
-
         }
     }
 }

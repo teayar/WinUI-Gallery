@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using WinUIGallery.Data;
 using System.Linq;
 using Microsoft.UI.Xaml.Navigation;
@@ -17,10 +17,7 @@ namespace WinUIGallery
 {
     public sealed partial class HomePage : ItemsPageBase
     {
-        public HomePage()
-        {
-            this.InitializeComponent();
-        }
+        public HomePage() => this.InitializeComponent();
 
         public string WinAppSdkDetails => App.WinAppSdkDetails;
 
@@ -34,17 +31,18 @@ namespace WinUIGallery
             itemsCVS.Source = FormatData();
         }
 
-        private ObservableCollection<GroupInfoList> FormatData()
+        ObservableCollection<GroupInfoList> FormatData()
         {
-            var query = from item in this.Items
+            var query = from item in Items
                         group item by item.BadgeString into g
                         orderby g.Key
                         select new GroupInfoList(g) { Key = g.Key };
 
             ObservableCollection<GroupInfoList> groupList = new ObservableCollection<GroupInfoList>(query);
 
-            //Move Preview samples to the back of the list
+            // Move Preview samples to the back of the list
             var previewGroup = groupList.ElementAt(1);
+
             if (previewGroup?.Key.ToString() == "Preview")
             {
                 groupList.RemoveAt(1);
@@ -84,9 +82,6 @@ namespace WinUIGallery
 
         public string Title { get; set; }
 
-        public override string ToString()
-        {
-            return Title;
-        }
+        public override string ToString() => Title;
     }
 }

@@ -22,14 +22,14 @@ namespace WinUIGallery.ControlPages
         public EasingFunctionBase EasingFunctionBase { get; private set; }
         public NamedEasingFunction(string name, EasingFunctionBase easingFunctionBase)
         {
-            this.Name = name;
-            this.EasingFunctionBase = easingFunctionBase;
+            Name = name;
+            EasingFunctionBase = easingFunctionBase;
         }
     }
 
     public sealed partial class EasingFunctionPage : Page
     {
-        private List<NamedEasingFunction> EasingFunctions { get; } = new List<NamedEasingFunction>()
+        List<NamedEasingFunction> EasingFunctions { get; } = new List<NamedEasingFunction>()
             {
             new NamedEasingFunction("BackEase", new BackEase()),
             new NamedEasingFunction("BounceEase", new BounceEase()),
@@ -44,33 +44,30 @@ namespace WinUIGallery.ControlPages
             new NamedEasingFunction("SineEase", new SineEase())
             };
 
-        public EasingFunctionPage()
-        {
-            this.InitializeComponent();
-        }
+        public EasingFunctionPage() => this.InitializeComponent();
 
-        private void Button1_Click(object sender, RoutedEventArgs e)
+        void Button1_Click(object sender, RoutedEventArgs e)
         {
             Storyboard1.Children[0].SetValue(DoubleAnimation.FromProperty, Translation1.X);
             Storyboard1.Children[0].SetValue(DoubleAnimation.ToProperty, Translation1.X > 0 ? 0 : 200);
             Storyboard1.Begin();
         }
 
-        private void Button2_Click(object sender, RoutedEventArgs e)
+        void Button2_Click(object sender, RoutedEventArgs e)
         {
             Storyboard2.Children[0].SetValue(DoubleAnimation.FromProperty, Translation2.X);
             Storyboard2.Children[0].SetValue(DoubleAnimation.ToProperty, Translation2.X > 0 ? 0 : 200);
             Storyboard2.Begin();
         }
 
-        private void Button3_Click(object sender, RoutedEventArgs e)
+        void Button3_Click(object sender, RoutedEventArgs e)
         {
             Storyboard3.Children[0].SetValue(DoubleAnimation.FromProperty, Translation3.X);
             Storyboard3.Children[0].SetValue(DoubleAnimation.ToProperty, Translation3.X > 0 ? 0 : 200);
             Storyboard3.Begin();
         }
 
-        private void Button4_Click(object sender, RoutedEventArgs e)
+        void Button4_Click(object sender, RoutedEventArgs e)
         {
             var easingFunction = EasingComboBox.SelectedValue as EasingFunctionBase;
             easingFunction.EasingMode = GetEaseValue();
@@ -88,7 +85,7 @@ namespace WinUIGallery.ControlPages
             else return EasingMode.EaseInOut;
         }
 
-        private void EasingComboBox_Loaded(object sender, RoutedEventArgs e)
+        void EasingComboBox_Loaded(object sender, RoutedEventArgs e)
         {
             EasingComboBox.SelectedIndex = 0;
         }

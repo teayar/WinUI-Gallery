@@ -1,4 +1,4 @@
-﻿//*********************************************************
+﻿// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System;
 using System.Collections.Generic;
 using Microsoft.UI.Xaml;
@@ -17,7 +17,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ListBoxPage : Page
     {
-        private List<Tuple<string, FontFamily>> _fonts = new List<Tuple<string, FontFamily>>()
+        List<Tuple<string, FontFamily>> _fonts = new List<Tuple<string, FontFamily>>()
         {
             new Tuple<string, FontFamily>("Arial", new FontFamily("Arial")),
             new Tuple<string, FontFamily>("Comic Sans MS", new FontFamily("Comic Sans MS")),
@@ -26,18 +26,13 @@ namespace WinUIGallery.ControlPages
             new Tuple<string, FontFamily>("Times New Roman", new FontFamily("Times New Roman"))
         };
 
-        public List<Tuple<string, FontFamily>> Fonts
-        {
-            get { return _fonts; }
-        }
-        public ListBoxPage()
-        {
-            this.InitializeComponent();
-        }
+        public List<Tuple<string, FontFamily>> Fonts => _fonts;
+        public ListBoxPage() => this.InitializeComponent();
 
-        private void ColorListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void ColorListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string colorName = e.AddedItems[0].ToString();
+
             switch (colorName)
             {
                 case "Yellow":
@@ -55,9 +50,6 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void ListBox2_Loaded(object sender, RoutedEventArgs e)
-        {
-            ListBox2.SelectedIndex = 2;
-        }
+        void ListBox2_Loaded(object sender, RoutedEventArgs e) => ListBox2.SelectedIndex = 2;
     }
 }

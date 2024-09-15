@@ -13,17 +13,13 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 
-
 namespace WinUIGallery.ControlPages
 {
     public sealed partial class IconElementPage : Page
     {
-        public IconElementPage()
-        {
-            this.InitializeComponent();
-        }
+        public IconElementPage() => this.InitializeComponent();
 
-        private void MonochromeButton_CheckedChanged(object sender, RoutedEventArgs e)
+        void MonochromeButton_CheckedChanged(object sender, RoutedEventArgs e)
         {
             SlicesIcon.ShowAsMonochrome = (bool)MonochromeButton.IsChecked;
             SlicesIcon.UriSource = new Uri("ms-appx:///Assets/slices.png");

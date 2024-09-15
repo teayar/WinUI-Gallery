@@ -11,7 +11,7 @@ namespace WinUIGallery.Helper
     /// </summary>
     public static class ThemeHelper
     {
-        private const string SelectedAppThemeKey = "SelectedAppTheme";
+        const string SelectedAppThemeKey = "SelectedAppTheme";
 
         /// <summary>
         /// Gets the current actual theme of the app based on the requested theme of the
@@ -89,6 +89,7 @@ namespace WinUIGallery.Helper
             {
                 return Application.Current.RequestedTheme == ApplicationTheme.Dark;
             }
+
             return RootTheme == ElementTheme.Dark;
         }
     }

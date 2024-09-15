@@ -1,4 +1,4 @@
-﻿//*********************************************************
+﻿// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using WinUIGallery.Common;
 using WinUIGallery.Data;
 using System.Collections.Generic;
@@ -18,10 +18,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class FlipViewPage : ItemsPageBase
     {
-        public FlipViewPage()
-        {
-            this.InitializeComponent();
-        }
+        public FlipViewPage() => this.InitializeComponent();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

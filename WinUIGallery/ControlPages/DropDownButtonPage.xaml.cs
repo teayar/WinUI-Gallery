@@ -17,9 +17,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class DropDownButtonPage : Page
     {
-        public DropDownButtonPage()
-        {
-            this.InitializeComponent();
-        }
+        public DropDownButtonPage() => this.InitializeComponent();
     }
 }

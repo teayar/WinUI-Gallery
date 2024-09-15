@@ -16,12 +16,9 @@ namespace WinUIGallery.ControlPages
             "ms-appx:///Assets/SampleMedia/LandscapeImage7.jpg",
             "ms-appx:///Assets/SampleMedia/LandscapeImage8.jpg",
         };
-        public PipsPagerPage()
-        {
-            this.InitializeComponent();
-        }
+        public PipsPagerPage() => this.InitializeComponent();
 
-        private void OrientationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void OrientationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string orientation = e.AddedItems[0].ToString();
 
@@ -38,8 +35,8 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void PrevButtonComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        { 
+        void PrevButtonComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
             string prevButtonVisibility = e.AddedItems[0].ToString();
 
             switch (prevButtonVisibility)
@@ -59,7 +56,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void NextButtonComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void NextButtonComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string nextButtonVisibility = e.AddedItems[0].ToString();
 

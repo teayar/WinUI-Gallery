@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;
@@ -17,16 +17,15 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ItemsViewPage : ItemsPageBase
     {
-        private LinedFlowLayout linedFlowLayout = null;
-        private StackLayout stackLayout = null;
-        private UniformGridLayout uniformGridLayout = null;
+        LinedFlowLayout linedFlowLayout;
+        StackLayout stackLayout;
+        UniformGridLayout uniformGridLayout;
 
-        private DataTemplate linedFlowLayoutItemTemplate = null;
-        private DataTemplate stackLayoutItemTemplate = null;
-        private DataTemplate uniformGridLayoutItemTemplate = null;
+        DataTemplate linedFlowLayoutItemTemplate = null;
+        DataTemplate stackLayoutItemTemplate = null;
+        DataTemplate uniformGridLayoutItemTemplate = null;
 
-        private bool applyLinedFlowLayoutLineHeightAsync = false;
-        private bool applyLinedFlowLayoutOptionsAsync = false;
+        bool applyLinedFlowLayoutLineHeightAsync, applyLinedFlowLayoutOptionsAsync;
 
         public ItemsViewPage()
         {
@@ -35,7 +34,7 @@ namespace WinUIGallery.ControlPages
             this.Loaded += ItemsViewPage_Loaded;
         }
 
-        private void ItemsViewPage_Loaded(object sender, RoutedEventArgs e)
+        void ItemsViewPage_Loaded(object sender, RoutedEventArgs e)
         {
             this.Loaded -= ItemsViewPage_Loaded;
 
@@ -75,13 +74,13 @@ namespace WinUIGallery.ControlPages
         }
 
         // Example1
-        private void BasicItemsView_ItemInvoked(ItemsView sender, ItemsViewItemInvokedEventArgs e)
+        void BasicItemsView_ItemInvoked(ItemsView sender, ItemsViewItemInvokedEventArgs e)
         {
             tblBasicInvokeOutput.Text = "You invoked " + (e.InvokedItem as CustomDataObject).Title + ".";
         }
 
         // Example2
-        private void ApplyLinedFlowLayoutLineHeight()
+        void ApplyLinedFlowLayoutLineHeight()
         {
             if (linedFlowLayout != null && rbSmallLineHeight != null)
             {
@@ -89,7 +88,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void ApplyLinedFlowLayoutOptions()
+        void ApplyLinedFlowLayoutOptions()
         {
             if (linedFlowLayout != null && nbLineSpacing != null && nbMinItemSpacing != null)
             {
@@ -98,7 +97,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void RbLayout_Checked(object sender, RoutedEventArgs e)
+        void RbLayout_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is RadioButton rb && SwappableLayoutsItemsView != null)
             {
@@ -114,6 +113,7 @@ namespace WinUIGallery.ControlPages
                             spStackLayoutOptions.Visibility = Visibility.Collapsed;
                             spUniformGridLayoutOptions.Visibility = Visibility.Collapsed;
                         }
+
                         break;
 
                     case "StackLayout":
@@ -165,11 +165,12 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void RbLineHeight_Checked(object sender, RoutedEventArgs e)
+        void RbLineHeight_Checked(object sender, RoutedEventArgs e)
         {
             if (SwappableLayoutsItemsView != null && SwappableLayoutsItemsView.ScrollView != null && SwappableLayoutsItemsView.ScrollView.VerticalOffset != 0)
             {
-                SwappableLayoutsItemsView.ScrollView.ScrollTo(0, 0, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled, ScrollingSnapPointsMode.Ignore));
+                SwappableLayoutsItemsView.ScrollView
+                    .ScrollTo(0, 0, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled, ScrollingSnapPointsMode.Ignore));
                 applyLinedFlowLayoutLineHeightAsync = true;
             }
             else
@@ -178,11 +179,12 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void NbLinedFlowLayoutOptions_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs e)
+        void NbLinedFlowLayoutOptions_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs e)
         {
             if (SwappableLayoutsItemsView != null && SwappableLayoutsItemsView.ScrollView != null && SwappableLayoutsItemsView.ScrollView.VerticalOffset != 0)
             {
-                SwappableLayoutsItemsView.ScrollView.ScrollTo(0, 0, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled, ScrollingSnapPointsMode.Ignore));
+                SwappableLayoutsItemsView.ScrollView
+                    .ScrollTo(0, 0, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled, ScrollingSnapPointsMode.Ignore));
                 applyLinedFlowLayoutOptionsAsync = true;
             }
             else
@@ -191,7 +193,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void NbStackLayoutOptions_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs e)
+        void NbStackLayoutOptions_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs e)
         {
             if (stackLayout != null)
             {
@@ -199,7 +201,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void NbUniformGridLayoutOptions_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs e)
+        void NbUniformGridLayoutOptions_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs e)
         {
             if (uniformGridLayout != null)
             {
@@ -209,7 +211,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void SwappableLayoutsItemsViewScrollView_ViewChanged(ScrollView sender, object args)
+        void SwappableLayoutsItemsViewScrollView_ViewChanged(ScrollView sender, object args)
         {
             if (sender.VerticalOffset == 0 && (applyLinedFlowLayoutOptionsAsync || applyLinedFlowLayoutLineHeightAsync))
             {
@@ -228,12 +230,12 @@ namespace WinUIGallery.ControlPages
         }
 
         // Example3
-        private void SwappableSelectionModesItemsView_ItemInvoked(ItemsView sender, ItemsViewItemInvokedEventArgs e)
+        void SwappableSelectionModesItemsView_ItemInvoked(ItemsView sender, ItemsViewItemInvokedEventArgs e)
         {
             tblInvocationOutput.Text = "You invoked " + (e.InvokedItem as CustomDataObject).Title + ".";
         }
 
-        private void SwappableSelectionModesItemsView_SelectionChanged(ItemsView sender, ItemsViewSelectionChangedEventArgs e)
+        void SwappableSelectionModesItemsView_SelectionChanged(ItemsView sender, ItemsViewSelectionChangedEventArgs e)
         {
             if (SwappableSelectionModesItemsView != null)
             {
@@ -241,7 +243,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void CmbSelectionMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void CmbSelectionMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (SwappableSelectionModesItemsView != null && sender is ComboBox cmb)
             {
@@ -249,7 +251,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void ChkIsItemInvokedEnabled_IsCheckedChanged(object sender, RoutedEventArgs e)
+        void ChkIsItemInvokedEnabled_IsCheckedChanged(object sender, RoutedEventArgs e)
         {
             tblInvocationOutput.Text = string.Empty;
 
