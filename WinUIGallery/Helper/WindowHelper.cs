@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
@@ -33,15 +33,18 @@ namespace WinUIGallery.Helper
             {
                 SystemBackdrop = new MicaBackdrop()
             };
+
             TrackWindow(newWindow);
             return newWindow;
         }
 
         static public void TrackWindow(Window window)
         {
-            window.Closed += (sender,args) => {
+            window.Closed += (sender, args) =>
+            {
                 _activeWindows.Remove(window);
             };
+
             _activeWindows.Add(window);
         }
 
@@ -64,6 +67,7 @@ namespace WinUIGallery.Helper
                     }
                 }
             }
+
             return null;
         }
         // get dpi for an element
@@ -79,16 +83,18 @@ namespace WinUIGallery.Helper
                     }
                 }
             }
+
             return 0.0;
         }
 
-        static public List<Window> ActiveWindows { get { return _activeWindows; }}
+        static public List<Window> ActiveWindows => _activeWindows;
 
-        static private List<Window> _activeWindows = new List<Window>();
+        static List<Window> _activeWindows = new List<Window>();
 
         static public StorageFolder GetAppLocalFolder()
         {
             StorageFolder localFolder;
+
             if (!NativeHelper.IsAppPackaged)
             {
                 localFolder = Task.Run(async () => await StorageFolder.GetFolderFromPathAsync(System.AppContext.BaseDirectory)).Result;
@@ -97,6 +103,7 @@ namespace WinUIGallery.Helper
             {
                 localFolder = ApplicationData.Current.LocalFolder;
             }
+
             return localFolder;
         }
     }

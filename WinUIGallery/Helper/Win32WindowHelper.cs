@@ -7,18 +7,14 @@ namespace WinUIGallery.Helper
 {
     internal class Win32WindowHelper
     {
-        private static WinProc newWndProc = null;
-        private static nint oldWndProc = nint.Zero;
+        static WinProc newWndProc;
+        static nint oldWndProc = nint.Zero;
 
-        private POINT? minWindowSize = null;
-        private POINT? maxWindowSize = null;
+        POINT? minWindowSize, maxWindowSize;
 
-        private readonly Window window;
+        readonly Window window;
 
-        public Win32WindowHelper(Window window)
-        {
-            this.window = window;
-        }
+        public Win32WindowHelper(Window window) => this.window = window;
 
         public void SetWindowMinMaxSize(POINT? minWindowSize = null, POINT? maxWindowSize = null)
         {
@@ -31,10 +27,10 @@ namespace WinUIGallery.Helper
             oldWndProc = SetWindowLongPtr(hwnd, WindowLongIndexFlags.GWL_WNDPROC, newWndProc);
         }
 
-        private static nint GetWindowHandleForCurrentWindow(object target) =>
+        static nint GetWindowHandleForCurrentWindow(object target) =>
             WinRT.Interop.WindowNative.GetWindowHandle(target);
 
-        private nint WndProc(nint hWnd, WindowMessage Msg, nint wParam, nint lParam)
+        nint WndProc(nint hWnd, WindowMessage Msg, nint wParam, nint lParam)
         {
             switch (Msg)
             {
@@ -48,6 +44,7 @@ namespace WinUIGallery.Helper
                         minMaxInfo.ptMinTrackSize.x = (int)(minWindowSize.Value.x * scalingFactor);
                         minMaxInfo.ptMinTrackSize.y = (int)(minWindowSize.Value.y * scalingFactor);
                     }
+
                     if (maxWindowSize != null)
                     {
                         minMaxInfo.ptMaxTrackSize.x = (int)(maxWindowSize.Value.x * scalingFactor);
@@ -58,10 +55,11 @@ namespace WinUIGallery.Helper
                     break;
 
             }
+
             return CallWindowProc(oldWndProc, hWnd, Msg, wParam, lParam);
         }
 
-        private nint SetWindowLongPtr(nint hWnd, WindowLongIndexFlags nIndex, WinProc newProc)
+        nint SetWindowLongPtr(nint hWnd, WindowLongIndexFlags nIndex, WinProc newProc)
         {
             if (nint.Size == 8)
                 return SetWindowLongPtr64(hWnd, nIndex, newProc);
