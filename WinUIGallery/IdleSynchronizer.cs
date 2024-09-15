@@ -26,19 +26,17 @@ namespace WinUIGallery
         const string s_imageDecodingIdleHandleName = "ImageDecodingIdle";
         const string s_fontDownloadsIdleHandleName = "FontDownloadsIdle";
 
-        private DispatcherQueue m_dispatcherQueue = null;
+        DispatcherQueue m_dispatcherQueue;
 
-        private Handle m_hasAnimationsHandle;
-        private Handle m_animationsCompleteHandle;
-        private Handle m_hasDeferredAnimationOperationsHandle;
-        private Handle m_deferredAnimationOperationsCompleteHandle;
-        private Handle m_rootVisualResetHandle;
-        private Handle m_imageDecodingIdleHandle;
-        private Handle m_fontDownloadsIdleHandle;
+        Handle m_hasAnimationsHandle;
+        Handle m_animationsCompleteHandle;
+        Handle m_hasDeferredAnimationOperationsHandle;
+        Handle m_deferredAnimationOperationsCompleteHandle;
+        Handle m_rootVisualResetHandle;
+        Handle m_imageDecodingIdleHandle;
+        Handle m_fontDownloadsIdleHandle;
 
-        private bool m_waitForAnimationsIsDisabled = false;
-        private bool m_isRS2OrHigherInitialized = false;
-        private bool m_isRS2OrHigher = false;
+        bool m_waitForAnimationsIsDisabled, m_isRS2OrHigherInitialized, m_isRS2OrHigher;
 
         public string Log { get; set; }
         public int TickCountBegin { get; set; }
@@ -55,9 +53,10 @@ namespace WinUIGallery
             m_fontDownloadsIdleHandle = OpenNamedEvent(m_dispatcherQueue, s_fontDownloadsIdleHandleName);
         }
 
-        private Handle OpenNamedEvent(uint processId, uint threadId, string eventNamePrefix)
+        Handle OpenNamedEvent(uint processId, uint threadId, string eventNamePrefix)
         {
             string eventName = string.Format("{0}.{1}.{2}", eventNamePrefix, processId, threadId);
+
             Handle handle = new Handle(
                 NativeMethods.OpenEvent(
                     (uint)(SyncObjectAccess.EVENT_MODIFY_STATE | SyncObjectAccess.SYNCHRONIZE),
@@ -82,14 +81,15 @@ namespace WinUIGallery
             return handle;
         }
 
-        private Handle OpenNamedEvent(DispatcherQueue dispatcherQueue, string eventNamePrefix)
+        Handle OpenNamedEvent(DispatcherQueue dispatcherQueue, string eventNamePrefix)
         {
             return OpenNamedEvent(NativeMethods.GetCurrentProcessId(), GetUIThreadId(dispatcherQueue), eventNamePrefix);
         }
 
-        private uint GetUIThreadId(DispatcherQueue dispatcherQueue)
+        uint GetUIThreadId(DispatcherQueue dispatcherQueue)
         {
             uint threadId = 0;
+
             if (dispatcherQueue.HasThreadAccess)
             {
                 threadId = NativeMethods.GetCurrentThreadId();
@@ -112,7 +112,7 @@ namespace WinUIGallery
             return threadId;
         }
 
-        private static IdleSynchronizer instance = null;
+        static IdleSynchronizer instance;
 
         public static IdleSynchronizer Instance
         {
@@ -139,10 +139,7 @@ namespace WinUIGallery
             instance = new IdleSynchronizer(dispatcherQueue);
         }
 
-        public static void Wait()
-        {
-            Wait(out _);
-        }
+        public static void Wait() => Wait(out _);
 
         public static void Wait(out string logMessage)
         {
@@ -154,32 +151,24 @@ namespace WinUIGallery
             }
         }
 
-        public static string TryWait()
-        {
-            return Instance.WaitInternal(out _);
-        }
+        public static string TryWait() => Instance.WaitInternal(out _);
 
-        public static string TryWait(out string logMessage)
-        {
-            return Instance.WaitInternal(out logMessage);
-        }
+        public static string TryWait(out string logMessage) => Instance.WaitInternal(out logMessage);
 
         public void AddLog(string message)
         {
             System.Diagnostics.Debug.WriteLine(message);
 
-            if (Log != null && Log != "LOG: ")
-            {
-                Log += "; ";
-            }
+            if (Log != null && Log != "LOG: ") Log += "; ";
 
             Log += (Environment.TickCount - TickCountBegin).ToString() + ": ";
             Log += message;
         }
 
-        private string WaitInternal(out string logMessage)
+        string WaitInternal(out string logMessage)
         {
             logMessage = string.Empty;
+
             if (m_dispatcherQueue.HasThreadAccess)
             {
                 return "Cannot wait for UI thread idle from the UI thread.";
@@ -189,23 +178,24 @@ namespace WinUIGallery
             TickCountBegin = Environment.TickCount;
 
             bool isIdle = false;
+
             while (!isIdle)
             {
                 bool hadBuildTreeWork = false;
 
                 var errorString = WaitForRootVisualReset();
-                if (errorString.Length > 0) { return errorString; }
+                if (errorString.Length > 0) return errorString;
                 AddLog("After WaitForRootVisualReset");
 
                 errorString = WaitForImageDecodingIdle();
-                if (errorString.Length > 0) { return errorString; }
+                if (errorString.Length > 0) return errorString;
                 AddLog("After WaitForImageDecodingIdle");
 
                 // SynchronouslyTickUIThread(1);
                 // AddLog("After SynchronouslyTickUIThread(1)");
 
                 errorString = WaitForFontDownloadsIdle();
-                if (errorString.Length > 0) { return errorString; }
+                if (errorString.Length > 0) return errorString;
                 AddLog("After WaitForFontDownloadsIdle");
 
                 WaitForIdleDispatcher();
@@ -222,7 +212,7 @@ namespace WinUIGallery
                 if (!m_waitForAnimationsIsDisabled)
                 {
                     errorString = WaitForAnimationsComplete(out hadAnimations);
-                    if (errorString.Length > 0) { return errorString; }
+                    if (errorString.Length > 0) return errorString;
                     AddLog("After WaitForAnimationsComplete");
                 }
                 else
@@ -232,7 +222,7 @@ namespace WinUIGallery
 
                 bool hadDeferredAnimationOperations;
                 errorString = WaitForDeferredAnimationOperationsComplete(out hadDeferredAnimationOperations);
-                if (errorString.Length > 0) { return errorString; }
+                if (errorString.Length > 0) return errorString;
                 AddLog("After WaitForDeferredAnimationOperationsComplete");
 
                 // In the case where we waited for an animation to complete there's a possibility that
@@ -250,7 +240,7 @@ namespace WinUIGallery
             return string.Empty;
         }
 
-        private string WaitForRootVisualReset()
+        string WaitForRootVisualReset()
         {
             uint waitResult = NativeMethods.WaitForSingleObject(m_rootVisualResetHandle.NativeHandle, 5000);
 
@@ -262,7 +252,7 @@ namespace WinUIGallery
             return string.Empty;
         }
 
-        private string WaitForImageDecodingIdle()
+        string WaitForImageDecodingIdle()
         {
             uint waitResult = NativeMethods.WaitForSingleObject(m_imageDecodingIdleHandle.NativeHandle, 5000);
 
@@ -295,7 +285,7 @@ namespace WinUIGallery
             timer.Interval = TimeSpan.FromMilliseconds(0);
             timer.IsRepeating = false;
 
-            TypedEventHandler<DispatcherQueueTimer,object> tickHandler = null;
+            TypedEventHandler<DispatcherQueueTimer, object> tickHandler = null;
 
             tickHandler = (sender, args) =>
             {
@@ -394,7 +384,7 @@ namespace WinUIGallery
             return string.Empty;
         }
 
-        private bool IsRS2OrHigher()
+        bool IsRS2OrHigher()
         {
             if (!m_isRS2OrHigherInitialized)
             {
@@ -410,18 +400,9 @@ namespace WinUIGallery
     {
         public IntPtr NativeHandle { get; private set; }
 
-        public bool IsValid
-        {
-            get
-            {
-                return NativeHandle != IntPtr.Zero;
-            }
-        }
+        public bool IsValid => NativeHandle != IntPtr.Zero;
 
-        public Handle(IntPtr nativeHandle)
-        {
-            Attach(nativeHandle);
-        }
+        public Handle(IntPtr nativeHandle) => Attach(nativeHandle);
 
         ~Handle()
         {
@@ -454,12 +435,12 @@ namespace WinUIGallery
         public static extern IntPtr OpenEvent(uint dwDesiredAccess, bool bInheritHandle, string lpName);
 
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern UInt32 WaitForSingleObject(IntPtr hHandle, UInt32 dwMilliseconds);
+        public static extern uint WaitForSingleObject(IntPtr hHandle, uint dwMilliseconds);
 
-        public const UInt32 INFINITE = 0xFFFFFFFF;
-        public const UInt32 WAIT_ABANDONED = 0x00000080;
-        public const UInt32 WAIT_OBJECT_0 = 0x00000000;
-        public const UInt32 WAIT_TIMEOUT = 0x00000102;
+        public const uint INFINITE = 0xFFFFFFFF;
+        public const uint WAIT_ABANDONED = 0x00000080;
+        public const uint WAIT_OBJECT_0 = 0x00000000;
+        public const uint WAIT_TIMEOUT = 0x00000102;
 
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool ResetEvent(IntPtr hEvent);

@@ -26,7 +26,7 @@ namespace WinUIGallery
         /// the value of properties without performing any of the actions in
         /// their change handlers.
         /// </summary>
-        private bool _ignorePropertyChange;
+        bool _ignorePropertyChange;
 
         /// <summary>
         /// Initializes a new instance of the
@@ -142,7 +142,7 @@ namespace WinUIGallery
         /// <param name="d">WrapPanel that changed its Orientation.</param>
         /// <param name="e">Event arguments.</param>
         [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Justification = "Almost always set from the CLR property.")]
-        private static void OnOrientationPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnOrientationPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             WrapPanel source = (WrapPanel)d;
             Orientation value = (Orientation)e.NewValue;
@@ -166,6 +166,7 @@ namespace WinUIGallery
                     CultureInfo.InvariantCulture,
                     "Properties.Resources.WrapPanel_OnOrientationPropertyChanged_InvalidValue",
                     value);
+
                 throw new ArgumentException(message, "value");
             }
 
@@ -182,7 +183,7 @@ namespace WinUIGallery
         /// </param>
         /// <param name="e">Event arguments.</param>
         [SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Justification = "Almost always set from the CLR property.")]
-        private static void OnItemHeightOrWidthPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnItemHeightOrWidthPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             WrapPanel source = (WrapPanel)d;
             double value = (double)e.NewValue;
@@ -206,6 +207,7 @@ namespace WinUIGallery
                     CultureInfo.InvariantCulture,
                     "Properties.Resources.WrapPanel_OnItemHeightOrWidthPropertyChanged_InvalidValue",
                     value);
+
                 throw new ArgumentException(message, "value");
             }
 
@@ -245,6 +247,7 @@ namespace WinUIGallery
             double itemHeight = ItemHeight;
             bool hasFixedWidth = !double.IsNaN(itemWidth);
             bool hasFixedHeight = !double.IsNaN(itemHeight);
+
             Size itemSize = new Size(
                 hasFixedWidth ? itemWidth : constraint.Width,
                 hasFixedHeight ? itemHeight : constraint.Height);
@@ -254,6 +257,7 @@ namespace WinUIGallery
             {
                 // Determine the size of the element
                 element.Measure(itemSize);
+
                 OrientedSize elementSize = new OrientedSize(
                     o,
                     hasFixedWidth ? itemWidth : element.DesiredSize.Width,
@@ -328,6 +332,7 @@ namespace WinUIGallery
             bool hasFixedWidth = !double.IsNaN(itemWidth);
             bool hasFixedHeight = !double.IsNaN(itemHeight);
             double indirectOffset = 0;
+
             double? directDelta = (o == Orientation.Horizontal) ?
                 (hasFixedWidth ? (double?)itemWidth : null) :
                 (hasFixedHeight ? (double?)itemHeight : null);
@@ -340,6 +345,7 @@ namespace WinUIGallery
             UIElementCollection children = Children;
             int count = children.Count;
             int lineStart = 0;
+
             for (int lineEnd = 0; lineEnd < count; lineEnd++)
             {
                 UIElement element = children[lineEnd];
@@ -409,7 +415,7 @@ namespace WinUIGallery
         /// <param name="indirectGrowth">
         /// Shared indirect growth of the elements on this line.
         /// </param>
-        private void ArrangeLine(int lineStart, int lineEnd, double? directDelta, double indirectOffset, double indirectGrowth)
+        void ArrangeLine(int lineStart, int lineEnd, double? directDelta, double indirectOffset, double indirectGrowth)
         {
             double directOffset = 0.0;
 
@@ -417,6 +423,7 @@ namespace WinUIGallery
             bool isHorizontal = o == Orientation.Horizontal;
 
             UIElementCollection children = Children;
+
             for (int index = lineStart; index < lineEnd; index++)
             {
                 // Get the size of the element
@@ -433,6 +440,7 @@ namespace WinUIGallery
                 Rect bounds = isHorizontal ?
                     new Rect(directOffset, indirectOffset, directGrowth, indirectGrowth) :
                     new Rect(indirectOffset, directOffset, indirectGrowth, directGrowth);
+
                 element.Arrange(bounds);
 
                 directOffset += directGrowth;
@@ -497,10 +505,12 @@ namespace WinUIGallery
             // An IEEE 754 double precision floating point number is NaN if its
             // exponent equals 2047 and it has a non-zero mantissa.
             ulong exponent = union.IntegerValue & 0xfff0000000000000L;
+
             if ((exponent != 0x7ff0000000000000L) && (exponent != 0xfff0000000000000L))
             {
                 return false;
             }
+
             ulong mantissa = union.IntegerValue & 0x000fffffffffffffL;
             return mantissa != 0L;
         }

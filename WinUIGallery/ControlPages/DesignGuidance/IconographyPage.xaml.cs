@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 
 using System;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ namespace WinUIGallery.ControlPages
                 48
             };
 
-        private string currentSearch = null;
+        string currentSearch;
 
         public IconData SelectedItem
         {
@@ -47,11 +47,11 @@ namespace WinUIGallery.ControlPages
         public IconographyPage()
         {
             // Fill filtered items
-            this.InitializeComponent();
+            InitializeComponent();
             IconsItemsView.Loaded += IconsItemsView_Loaded;
         }
 
-        private void IconsItemsView_Loaded(object sender, RoutedEventArgs e)
+        void IconsItemsView_Loaded(object sender, RoutedEventArgs e)
         {
             // Delegate loading of icons, so we have smooth navigating to this page
             // and not unnecessarily block UI Thread
@@ -65,14 +65,14 @@ namespace WinUIGallery.ControlPages
                 });
             });
         }
-        private void SetSampleCodePresenterCode(IconData value)
+        void SetSampleCodePresenterCode(IconData value)
         {
             XAMLCodePresenter.Code = $"<FontIcon Glyph=\"{value.TextGlyph}\" />";
 
             CSharpCodePresenter.Code = $"FontIcon icon = new FontIcon();" + Environment.NewLine + "icon.Glyph = \"" + value.CodeGlyph + "\";";
         }
 
-        private void SearchTextBox_TextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
+        void SearchTextBox_TextChanged(object sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             Filter((sender as AutoSuggestBox).Text);
         }
@@ -90,6 +90,7 @@ namespace WinUIGallery.ControlPages
             Task.Run(() =>
             {
                 var newItems = new List<IconData>();
+
                 foreach (var item in IconsDataSource.Icons)
                 {
                     // Skip UI update if this thread is not handling the current search term
@@ -102,10 +103,7 @@ namespace WinUIGallery.ControlPages
                             || item.Name.Contains(entry, System.StringComparison.CurrentCultureIgnoreCase)
                             || item.Tags.Any(tag => string.IsNullOrEmpty(tag) is false && tag.Contains(entry, System.StringComparison.CurrentCultureIgnoreCase)));
 
-                    if (fitsFilter)
-                    {
-                        newItems.Add(item);
-                    }
+                    if (fitsFilter) newItems.Add(item);
                 }
 
                 // Skip UI update if this thread is not handling the current search term
@@ -118,6 +116,7 @@ namespace WinUIGallery.ControlPages
 
                     string outputString;
                     var filteredItemsCount = newItems.Count;
+
                     if (filteredItemsCount > 0)
                     {
                         SelectedItem = newItems[0];
@@ -130,10 +129,11 @@ namespace WinUIGallery.ControlPages
 
                     UIHelper.AnnounceActionForAccessibility(IconsAutoSuggestBox, outputString, "AutoSuggestBoxNumberIconsFoundId");
                 });
-            }).Start();
+            })
+                .Start();
         }
 
-        private void IconsItemsView_SelectionChanged(ItemsView sender, ItemsViewSelectionChangedEventArgs args)
+        void IconsItemsView_SelectionChanged(ItemsView sender, ItemsViewSelectionChangedEventArgs args)
         {
             if (IconsItemsView.ItemsSource is IList<IconData> currentItems)
             {
@@ -141,7 +141,6 @@ namespace WinUIGallery.ControlPages
                 {
                     SelectedItem = currentItems[IconsItemsView.CurrentItemIndex];
                 }
-
             }
         }
     }
