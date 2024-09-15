@@ -17,15 +17,15 @@ namespace WinUIGallery.ConnectedAnimationPages
 
             // Populate the collection with some items.
             var items = new List<int>();
+
             for (int i = 0; i < 30; i++)
-            {
                 items.Add(i);
-            }
+            
 
             collection.ItemsSource = items;
         }
 
-        private async void BackButton_Click(object sender, RoutedEventArgs e)
+        async void BackButton_Click(object sender, RoutedEventArgs e)
         {
             ConnectedAnimation animation = ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("backwardsAnimation", destinationElement);
             SmokeGrid.Children.Remove(destinationElement);
@@ -47,13 +47,13 @@ namespace WinUIGallery.ConnectedAnimationPages
             await collection.TryStartConnectedAnimationAsync(animation, _storedItem, "connectedElement");
         }
 
-        private void Animation_Completed(ConnectedAnimation sender, object args)
+        void Animation_Completed(ConnectedAnimation sender, object args)
         {
             SmokeGrid.Visibility = Visibility.Collapsed;
             SmokeGrid.Children.Add(destinationElement);
         }
 
-        private void TipsGrid_ItemClick(object sender, ItemClickEventArgs e)
+        void TipsGrid_ItemClick(object sender, ItemClickEventArgs e)
         {
             ConnectedAnimation animation = null;
 
@@ -67,7 +67,6 @@ namespace WinUIGallery.ConnectedAnimationPages
                 // Notice that the stored item is passed in, as well as the name of the connected element. 
                 // The animation will actually start on the Detailed info page.
                 animation = collection.PrepareConnectedAnimation("forwardAnimation", _storedItem, "connectedElement");
-
             }
 
             SmokeGrid.Visibility = Visibility.Visible;

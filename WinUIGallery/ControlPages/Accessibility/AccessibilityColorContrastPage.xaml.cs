@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 
 using System;
 using Microsoft.UI;
@@ -19,12 +19,9 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class AccessibilityColorContrastPage : Page
     {
-        public AccessibilityColorContrastPage()
-        {
-            this.InitializeComponent();
-        }
+        public AccessibilityColorContrastPage() => this.InitializeComponent();
 
-        private void RecalculateContrastRatio()
+        void RecalculateContrastRatio()
         {
             var textColor = TextColorPicker.Color;
             var backgroundColor = BackgroundColorPicker.Color;
@@ -37,7 +34,7 @@ namespace WinUIGallery.ControlPages
             SetCheckState(ComponentsCheckEllipse, ComponentsCheckIcon, ComponentsCheckResult, ratio >= 3.0);
         }
 
-        private void SetCheckState(Ellipse background, FontIcon icon, TextBlock resultName, bool passed)
+        void SetCheckState(Ellipse background, FontIcon icon, TextBlock resultName, bool passed)
         {
             if (passed)
             {
@@ -68,6 +65,7 @@ namespace WinUIGallery.ControlPages
         {
             var relLuminanceOne = GetRelativeLuminance(first);
             var relLuminanceTwo = GetRelativeLuminance(second);
+
             return (Math.Max(relLuminanceOne, relLuminanceTwo) + 0.05)
                 / (Math.Min(relLuminanceOne, relLuminanceTwo) + 0.05);
         }
@@ -85,14 +83,8 @@ namespace WinUIGallery.ControlPages
             return 0.2126 * r + 0.7152 * g + 0.0722 * b;
         }
 
-        private void BackgroundColorPicker_ColorChanged(object sender, Color e)
-        {
-            RecalculateContrastRatio();
-        }
+        void BackgroundColorPicker_ColorChanged(object sender, Color e) => RecalculateContrastRatio();
 
-        private void TextColorPicker_ColorChanged(object sender, Color e)
-        {
-            RecalculateContrastRatio();
-        }
+        void TextColorPicker_ColorChanged(object sender, Color e) => RecalculateContrastRatio();
     }
 }

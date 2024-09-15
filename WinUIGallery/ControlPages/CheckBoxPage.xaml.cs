@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -21,48 +21,45 @@ namespace WinUIGallery.ControlPages
             Loaded += CheckBoxPage_Loaded;
         }
 
-        void CheckBoxPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            SetCheckedState();
-        }
+        void CheckBoxPage_Loaded(object sender, RoutedEventArgs e) => SetCheckedState();
 
-        private void TwoState_Checked(object sender, RoutedEventArgs e)
+        void TwoState_Checked(object sender, RoutedEventArgs e)
         {
             TwoStateOutput.Text = "You checked the box.";
         }
 
-        private void TwoState_Unchecked(object sender, RoutedEventArgs e)
+        void TwoState_Unchecked(object sender, RoutedEventArgs e)
         {
             TwoStateOutput.Text = "You unchecked the box.";
         }
 
-        private void ThreeState_Checked(object sender, RoutedEventArgs e)
+        void ThreeState_Checked(object sender, RoutedEventArgs e)
         {
             ThreeStateOutput.Text = "CheckBox is checked.";
         }
 
-        private void ThreeState_Unchecked(object sender, RoutedEventArgs e)
+        void ThreeState_Unchecked(object sender, RoutedEventArgs e)
         {
             ThreeStateOutput.Text = "CheckBox is unchecked.";
         }
 
-        private void ThreeState_Indeterminate(object sender, RoutedEventArgs e)
+        void ThreeState_Indeterminate(object sender, RoutedEventArgs e)
         {
             ThreeStateOutput.Text = "CheckBox state is indeterminate.";
         }
 
         #region SelectAllMethods
-        private void SelectAll_Checked(object sender, RoutedEventArgs e)
+        void SelectAll_Checked(object sender, RoutedEventArgs e)
         {
             Option1CheckBox.IsChecked = Option2CheckBox.IsChecked = Option3CheckBox.IsChecked = true;
         }
 
-        private void SelectAll_Unchecked(object sender, RoutedEventArgs e)
+        void SelectAll_Unchecked(object sender, RoutedEventArgs e)
         {
             Option1CheckBox.IsChecked = Option2CheckBox.IsChecked = Option3CheckBox.IsChecked = false;
         }
 
-        private void SelectAll_Indeterminate(object sender, RoutedEventArgs e)
+        void SelectAll_Indeterminate(object sender, RoutedEventArgs e)
         {
             // If the SelectAll box is checked (all options are selected),
             // clicking the box will change it to its indeterminate state.
@@ -80,7 +77,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void SetCheckedState()
+        void SetCheckedState()
         {
             // Controls are null the first time this is called, so we just
             // need to perform a null check on any one of the controls.
@@ -106,15 +103,9 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void Option_Checked(object sender, RoutedEventArgs e)
-        {
-            SetCheckedState();
-        }
+        void Option_Checked(object sender, RoutedEventArgs e) => SetCheckedState();
 
-        private void Option_Unchecked(object sender, RoutedEventArgs e)
-        {
-            SetCheckedState();
-        }
+        void Option_Unchecked(object sender, RoutedEventArgs e) => SetCheckedState();
         #endregion
     }
 }

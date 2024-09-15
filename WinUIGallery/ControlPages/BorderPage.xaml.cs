@@ -1,4 +1,4 @@
-﻿//*********************************************************
+﻿// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -17,21 +17,19 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class BorderPage : Page
     {
-        public BorderPage()
-        {
-            this.InitializeComponent();
-        }
+        public BorderPage() => this.InitializeComponent();
 
-        private void ThicknessSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        void ThicknessSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             if (Control1 != null) Control1.BorderThickness = new Thickness(e.NewValue);
         }
 
-        private void BGRadioButton_Checked(object sender, RoutedEventArgs e)
+        void BGRadioButton_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is RadioButton rb && Control1 != null)
             {
                 string colorName = rb.Content.ToString();
+
                 switch (colorName)
                 {
                     case "Yellow":
@@ -50,11 +48,12 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is RadioButton rb && Control1 != null)
             {
                 string colorName = rb.Content.ToString();
+
                 switch (colorName)
                 {
                     case "Yellow":

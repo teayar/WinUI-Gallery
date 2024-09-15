@@ -10,17 +10,16 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ClipboardPage : Page
     {
-
-        private string textToCopy = "";
+        string textToCopy = "";
 
         public ClipboardPage()
         {
             this.InitializeComponent();
-            richEditBox.Document.SetText(Microsoft.UI.Text.TextSetOptions.None, "This text will be copied to the clipboard.");
-
+            richEditBox.Document
+                .SetText(Microsoft.UI.Text.TextSetOptions.None, "This text will be copied to the clipboard.");
         }
 
-        private void CopyText_Click(object sender, RoutedEventArgs args)
+        void CopyText_Click(object sender, RoutedEventArgs args)
         {
             richEditBox.Document.GetText(Microsoft.UI.Text.TextGetOptions.None, out textToCopy);
             var package = new DataPackage();
@@ -41,12 +40,12 @@ namespace WinUIGallery.ControlPages
                     VisualStateManager.GoToState(this, "ConfirmationClipboardCollapsed", false);
                 });
             }
-
         }
 
-        private async void PasteText_Click(object sender, RoutedEventArgs args)
+        async void PasteText_Click(object sender, RoutedEventArgs args)
         {
             var package = Clipboard.GetContent();
+
             if (package.Contains(StandardDataFormats.Text))
             {
                 var text = await package.GetTextAsync();
@@ -54,8 +53,6 @@ namespace WinUIGallery.ControlPages
 
                 UIHelper.AnnounceActionForAccessibility(sender as Button, "Text pasted from clipboard", "TextPastedSuccessNotificationId");
             }
-
         }
-
     }
 }

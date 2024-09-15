@@ -22,7 +22,7 @@ namespace WinUIGallery.ConnectedAnimationPages
             collection.ItemsSource = WinUIGallery.ControlPages.CustomDataObject.GetDataObjects();
         }
 
-        private async void collection_Loaded(object sender, RoutedEventArgs e)
+        async void collection_Loaded(object sender, RoutedEventArgs e)
         {
             if (_storeditem != null)
             {
@@ -32,6 +32,7 @@ namespace WinUIGallery.ConnectedAnimationPages
 
                 // Play the second connected animation. 
                 ConnectedAnimation animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("BackConnectedAnimation");
+
                 if (animation != null)
                 {
                     // Setup the "back" configuration if the API is present. 
@@ -48,7 +49,7 @@ namespace WinUIGallery.ConnectedAnimationPages
             }
         }
 
-        private void collection_ItemClick(object sender, ItemClickEventArgs e)
+        void collection_ItemClick(object sender, ItemClickEventArgs e)
         {
             // Get the collection item corresponding to the clicked item.
             if (collection.ContainerFromItem(e.ClickedItem) is ListViewItem container)
@@ -67,7 +68,7 @@ namespace WinUIGallery.ConnectedAnimationPages
             Frame.Navigate(typeof(DetailedInfoPage), _storeditem, new SuppressNavigationTransitionInfo());
         }
 
-        private void TextBlock_IsTextTrimmedChanged(TextBlock sender, IsTextTrimmedChangedEventArgs args)
+        void TextBlock_IsTextTrimmedChanged(TextBlock sender, IsTextTrimmedChangedEventArgs args)
         {
             var textBlock = sender as TextBlock;
             var text = textBlock.IsTextTrimmed ? textBlock.Text : string.Empty;

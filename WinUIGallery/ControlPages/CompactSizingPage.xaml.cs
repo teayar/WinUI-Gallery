@@ -7,18 +7,14 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class CompactSizingPage : Page
     {
-        public CompactSizingPage()
-        {
-            this.InitializeComponent();
+        public CompactSizingPage() => this.InitializeComponent();
 
-        }
-
-        private void Example1_Loaded(object sender, RoutedEventArgs e)
+        void Example1_Loaded(object sender, RoutedEventArgs e)
         {
             ContentFrame.Navigate(typeof(SampleStandardSizingPage), null, new SuppressNavigationTransitionInfo());
         }
 
-        private void Standard_Checked(object sender, RoutedEventArgs e)
+        void Standard_Checked(object sender, RoutedEventArgs e)
         {
             var oldPage = ContentFrame.Content as SampleCompactSizingPage;
 
@@ -31,7 +27,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void Compact_Checked(object sender, RoutedEventArgs e)
+        void Compact_Checked(object sender, RoutedEventArgs e)
         {
             var oldPage = ContentFrame.Content as SampleStandardSizingPage;
 

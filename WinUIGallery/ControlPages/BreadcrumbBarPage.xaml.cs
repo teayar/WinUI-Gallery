@@ -23,22 +23,22 @@ namespace WinUIGallery.ControlPages
             BreadcrumbBar2.ItemClicked += BreadcrumbBar2_ItemClicked;
         }
 
-        private void BreadcrumbBar2_ItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
+        void BreadcrumbBar2_ItemClicked(BreadcrumbBar sender, BreadcrumbBarItemClickedEventArgs args)
         {
             var items = BreadcrumbBar2.ItemsSource as ObservableCollection<Folder>;
+
             for (int i = items.Count - 1; i >= args.Index + 1; i--)
-            {
                 items.RemoveAt(i);
-            }
+            
         }
 
-        private void ResetSampleButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        void ResetSampleButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             var items = BreadcrumbBar2.ItemsSource as ObservableCollection<Folder>;
+
             for (int i = items.Count; i < folders.Count; i++)
-            {
                 items.Add(folders[i]);
-            }
+            
 
             // Announce reset success notifiication.
             UIHelper.AnnounceActionForAccessibility(ResetSampleBtn, "BreadcrumbBar sample reset successful.", "BreadCrumbBarSampleResetNotificationId");

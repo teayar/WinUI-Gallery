@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 
 using System;
 using System.Collections.ObjectModel;
@@ -19,15 +19,15 @@ namespace WinUIGallery.ControlPages
     public sealed partial class AnnotatedScrollBarPage : Page
     {
         // Define the number of items present in each section of the source collection.
-        private const int AzureCount = 32;
-        private const int CrimsonCount = 50;
-        private const int CyanCount = 8;
-        private const int FuchsiaCount = 70;
-        private const int GoldCount = 90;
+        const int AzureCount = 32;
+        const int CrimsonCount = 50;
+        const int CyanCount = 8;
+        const int FuchsiaCount = 70;
+        const int GoldCount = 90;
 
         // Each item is sized 120x90 in the ItemsRepeater.
-        private const int ItemWidth = 120;
-        private const int ItemHeight = 90;
+        const int ItemWidth = 120;
+        const int ItemHeight = 90;
 
         // ItemsRepeater's ItemsSource.
         public ObservableCollection<SolidColorBrush> ColorCollection = new ObservableCollection<SolidColorBrush>();
@@ -41,28 +41,28 @@ namespace WinUIGallery.ControlPages
             PopulateColorCollection();
         }
 
-        private void AnnotatedScrollBarPage_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        void AnnotatedScrollBarPage_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             // Connect the ScrollView and AnnotatedScrollBar controls. The AnnotatedScrollBar provides
             // an IScrollController implementation, while the ScrollView consumes it.
             scrollView.ScrollPresenter.VerticalScrollController = annotatedScrollBar.ScrollController;
         }
 
-        private void AnnotatedScrollBar_DetailLabelRequested(object sender, AnnotatedScrollBarDetailLabelRequestedEventArgs e)
+        void AnnotatedScrollBar_DetailLabelRequested(object sender, AnnotatedScrollBarDetailLabelRequestedEventArgs e)
         {
             // Provide a string as the tooltip content when hovering the mouse over the AnnotatedScrollBar's vertical rail. The string simply
             // represents the color of the last item in the row computed from AnnotatedScrollBarDetailLabelRequestedEventArgs.ScrollOffset.
             e.Content = GetOffsetLabel(e.ScrollOffset);
         }
 
-        private void ItemsRepeater_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)
+        void ItemsRepeater_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)
         {
             // When the ItemsRepeater is resized, its items layout may change and thus require an update of
             // the AnnotatedScrollBar label positions.
             PopulateLabelCollection();
         }
 
-        private void AnnotatedScrollBarMaxHeightSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        void AnnotatedScrollBarMaxHeightSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             if (annotatedScrollBar != null)
             {
@@ -72,45 +72,40 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void PopulateColorCollection()
+        void PopulateColorCollection()
         {
             SolidColorBrush solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.Azure);
 
             for (int colorInstance = 0; colorInstance < AzureCount; colorInstance++)
-            {
-                this.ColorCollection.Add(solidColorBrush);
-            }
+                ColorCollection.Add(solidColorBrush);
+            
 
             solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.Crimson);
 
             for (int colorInstance = 0; colorInstance < CrimsonCount; colorInstance++)
-            {
-                this.ColorCollection.Add(solidColorBrush);
-            }
+                ColorCollection.Add(solidColorBrush);
+            
 
             solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.Cyan);
 
             for (int colorInstance = 0; colorInstance < CyanCount; colorInstance++)
-            {
-                this.ColorCollection.Add(solidColorBrush);
-            }
+                ColorCollection.Add(solidColorBrush);
+            
 
             solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.Fuchsia);
 
             for (int colorInstance = 0; colorInstance < FuchsiaCount; colorInstance++)
-            {
-                this.ColorCollection.Add(solidColorBrush);
-            }
+                ColorCollection.Add(solidColorBrush);
+            
 
             solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.Gold);
 
             for (int colorInstance = 0; colorInstance < GoldCount; colorInstance++)
-            {
-                this.ColorCollection.Add(solidColorBrush);
-            }
+                ColorCollection.Add(solidColorBrush);
+            
         }
 
-        private void PopulateLabelCollection()
+        void PopulateLabelCollection()
         {
             if (annotatedScrollBar != null)
             {
@@ -121,13 +116,16 @@ namespace WinUIGallery.ControlPages
                 // The offset value of a label is function of the row that item belongs to.
                 annotatedScrollBar.Labels.Add(new AnnotatedScrollBarLabel("Azure", GetOffsetOfItem(0)));
                 annotatedScrollBar.Labels.Add(new AnnotatedScrollBarLabel("Crimson", GetOffsetOfItem(AzureCount)));
-                annotatedScrollBar.Labels.Add(new AnnotatedScrollBarLabel("Cyan", GetOffsetOfItem(AzureCount + CrimsonCount)));
-                annotatedScrollBar.Labels.Add(new AnnotatedScrollBarLabel("Fuchsia", GetOffsetOfItem(AzureCount + CrimsonCount + CyanCount)));
-                annotatedScrollBar.Labels.Add(new AnnotatedScrollBarLabel("Gold", GetOffsetOfItem(AzureCount + CrimsonCount + CyanCount + FuchsiaCount)));
+                annotatedScrollBar.Labels
+                    .Add(new AnnotatedScrollBarLabel("Cyan", GetOffsetOfItem(AzureCount + CrimsonCount)));
+                annotatedScrollBar.Labels
+                    .Add(new AnnotatedScrollBarLabel("Fuchsia", GetOffsetOfItem(AzureCount + CrimsonCount + CyanCount)));
+                annotatedScrollBar.Labels
+                    .Add(new AnnotatedScrollBarLabel("Gold", GetOffsetOfItem(AzureCount + CrimsonCount + CyanCount + FuchsiaCount)));
             }
         }
 
-        private string GetOffsetLabel(double offset)
+        string GetOffsetLabel(double offset)
         {
             if (offset <= GetOffsetOfItem(AzureCount - 1))
             {
@@ -151,17 +149,11 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private int GetOffsetOfItem(int itemIndex)
-        {
-            return ItemHeight * (itemIndex / GetItemsPerRow());
-        }
+        int GetOffsetOfItem(int itemIndex) => ItemHeight * (itemIndex / GetItemsPerRow());
 
-        private string GetItemColor(int itemIndex)
+        string GetItemColor(int itemIndex)
         {
-            if (itemIndex < AzureCount)
-            {
-                return "Azure";
-            }
+            if (itemIndex < AzureCount) return "Azure";
             else if (itemIndex < AzureCount + CrimsonCount)
             {
                 return "Crimson";
@@ -180,9 +172,9 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private int GetItemsPerRow()
+        int GetItemsPerRow()
         {
-            return (itemsRepeater == null || itemsRepeater.ActualWidth == 0) ? 1 : (int) Math.Max(itemsRepeater.ActualWidth / ItemWidth, 1);
+            return (itemsRepeater == null || itemsRepeater.ActualWidth == 0) ? 1 : (int)Math.Max(itemsRepeater.ActualWidth / ItemWidth, 1);
         }
     }
 }

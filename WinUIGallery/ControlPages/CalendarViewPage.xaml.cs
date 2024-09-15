@@ -46,7 +46,7 @@ namespace WinUIGallery.ControlPages
             calendarLanguages.ItemsSource = langs.Languages;
         }
 
-        private void SelectionMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void SelectionMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (Enum.TryParse<CalendarViewSelectionMode>((sender as ComboBox).SelectedItem.ToString(), out CalendarViewSelectionMode selectionMode))
             {
@@ -54,9 +54,10 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void calendarLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void calendarLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string selectedLang = calendarLanguages.SelectedValue.ToString();
+
             if (Windows.Globalization.Language.IsWellFormed(selectedLang))
             {
                 Control1.Language = selectedLang;

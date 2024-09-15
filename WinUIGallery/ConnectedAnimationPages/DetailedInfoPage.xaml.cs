@@ -15,7 +15,7 @@ namespace WinUIGallery.ConnectedAnimationPages
             GoBackButton.Loaded += GoBackButton_Loaded;
         }
 
-        private void GoBackButton_Loaded(object sender, RoutedEventArgs e)
+        void GoBackButton_Loaded(object sender, RoutedEventArgs e)
         {
             // When we land in page, put focus on the back button
             GoBackButton.Focus(FocusState.Programmatic);
@@ -29,11 +29,11 @@ namespace WinUIGallery.ConnectedAnimationPages
             DetailedObject = e.Parameter as CustomDataObject;
 
             ConnectedAnimation imageAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("ForwardConnectedAnimation");
+
             if (imageAnimation != null)
             {
                 // Connected animation + coordinated animation
                 imageAnimation.TryStart(detailedImage, new UIElement[] { coordinatedPanel });
-
             }
         }
 
@@ -45,9 +45,6 @@ namespace WinUIGallery.ConnectedAnimationPages
             ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("BackConnectedAnimation", detailedImage);
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.GoBack();
-        }
+        void BackButton_Click(object sender, RoutedEventArgs e) => Frame.GoBack();
     }
 }

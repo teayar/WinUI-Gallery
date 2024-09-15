@@ -4,14 +4,11 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ColorPickerPage : Page
     {
-        public ColorPickerPage()
-        {
-            this.InitializeComponent();
-        }
+        public ColorPickerPage() => this.InitializeComponent();
 
-        private void ColorSpectrumShapeRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void ColorSpectrumShapeRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            switch(ColorSpectrumShapeRadioButtons.SelectedItem)
+            switch (ColorSpectrumShapeRadioButtons.SelectedItem)
             {
                 case "Box":
                     colorPicker.ColorSpectrumShape = Microsoft.UI.Xaml.Controls.ColorSpectrumShape.Box;

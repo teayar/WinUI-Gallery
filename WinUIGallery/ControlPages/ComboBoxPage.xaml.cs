@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System;
 using System.Collections.Generic;
 using Windows.Foundation.Metadata;
@@ -46,15 +46,13 @@ namespace WinUIGallery.ControlPages
                 72
             };
 
-        public ComboBoxPage()
-        {
-            this.InitializeComponent();
-        }
+        public ComboBoxPage() => this.InitializeComponent();
 
-        private void ColorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void ColorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string colorName = e.AddedItems[0].ToString();
             Windows.UI.Color color;
+
             switch (colorName)
             {
                 case "Yellow":
@@ -72,15 +70,13 @@ namespace WinUIGallery.ControlPages
                 default:
                     throw new Exception($"Invalid argument: {colorName}");
             }
+
             Control1Output.Fill = new SolidColorBrush(color);
         }
 
-        private void Combo2_Loaded(object sender, RoutedEventArgs e)
-        {
-            Combo2.SelectedIndex = 2;
-        }
+        void Combo2_Loaded(object sender, RoutedEventArgs e) => Combo2.SelectedIndex = 2;
 
-        private void Combo3_Loaded(object sender, RoutedEventArgs e)
+        void Combo3_Loaded(object sender, RoutedEventArgs e)
         {
             Combo3.SelectedIndex = 2;
 
@@ -90,7 +86,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void Combo3_TextSubmitted(ComboBox sender, ComboBoxTextSubmittedEventArgs args)
+        void Combo3_TextSubmitted(ComboBox sender, ComboBoxTextSubmittedEventArgs args)
         {
             bool isDouble = double.TryParse(sender.Text, out double newValue);
 

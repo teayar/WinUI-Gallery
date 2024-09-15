@@ -40,32 +40,36 @@ namespace WinUIGallery.ControlPages
             expandToFillContainer.Children.Add(sv);
         }
 
-        private MediaFrameSourceGroup mediaFrameSourceGroup;
-        private MediaCapture mediaCapture;
+        MediaFrameSourceGroup mediaFrameSourceGroup;
+        MediaCapture mediaCapture;
 
-        async private void StartCaptureElement()
+        async void StartCaptureElement()
         {
             var groups = await MediaFrameSourceGroup.FindAllAsync();
+
             if (groups.Count == 0)
             {
                 frameSourceName.Text = "No camera devices found.";
                 return;
             }
+
             mediaFrameSourceGroup = groups.First();
 
             frameSourceName.Text = "Viewing: " + mediaFrameSourceGroup.DisplayName;
             mediaCapture = new MediaCapture();
+
             var mediaCaptureInitializationSettings = new MediaCaptureInitializationSettings()
             {
-                SourceGroup = this.mediaFrameSourceGroup,
+                SourceGroup = mediaFrameSourceGroup,
                 SharingMode = MediaCaptureSharingMode.SharedReadOnly,
                 StreamingCaptureMode = StreamingCaptureMode.Video,
                 MemoryPreference = MediaCaptureMemoryPreference.Cpu
             };
+
             await mediaCapture.InitializeAsync(mediaCaptureInitializationSettings);
 
             // Set the MediaPlayerElement's Source property to the MediaSource for the mediaCapture.
-            var frameSource = mediaCapture.FrameSources[this.mediaFrameSourceGroup.SourceInfos[0].Id];
+            var frameSource = mediaCapture.FrameSources[mediaFrameSourceGroup.SourceInfos[0].Id];
             captureElement.Source = Windows.Media.Core.MediaSource.CreateFromMediaFrameSource(frameSource);
         }
 
@@ -78,12 +82,13 @@ namespace WinUIGallery.ControlPages
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
         }
 
-        private void MirrorToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        void MirrorToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             if (mirrorSwitch.IsOn)
             {
                 captureElement.RenderTransform = new ScaleTransform() { ScaleX = -1 };
                 captureElement.RenderTransformOrigin = new Point(0.5, 0.5);
+
                 MirrorTextReplacement =
                     "\n" +
                     "        // Mirror the preview\n" +
@@ -95,10 +100,11 @@ namespace WinUIGallery.ControlPages
                 captureElement.RenderTransform = null;
                 MirrorTextReplacement = "";
             }
+
             OnPropertyChanged("MirrorTextReplacement");
         }
 
-        async private void CapturePhoto_Click(object sender, RoutedEventArgs e)
+        async void CapturePhoto_Click(object sender, RoutedEventArgs e)
         {
             // Capture a photo to a stream
             var imgFormat = ImageEncodingProperties.CreateJpeg();

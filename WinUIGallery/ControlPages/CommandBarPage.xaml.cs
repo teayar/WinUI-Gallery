@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
@@ -16,7 +16,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class CommandBarPage : Page, INotifyPropertyChanged
     {
-        private bool multipleButtons = false;
+        bool multipleButtons;
 
         public bool MultipleButtons
         {
@@ -44,24 +44,24 @@ namespace WinUIGallery.ControlPages
             AddKeyboardAccelerators();
         }
 
-        private void OpenButton_Click(object sender, RoutedEventArgs e)
+        void OpenButton_Click(object sender, RoutedEventArgs e)
         {
             PrimaryCommandBar.IsOpen = true;
             PrimaryCommandBar.IsSticky = true;
         }
 
-        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             PrimaryCommandBar.IsOpen = false;
             PrimaryCommandBar.IsSticky = false;
         }
 
-        private void OnElementClicked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        void OnElementClicked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             SelectedOptionText.Text = "You clicked: " + (sender as AppBarButton).Label;
         }
 
-        private void AddSecondaryCommands_Click(object sender, RoutedEventArgs e)
+        void AddSecondaryCommands_Click(object sender, RoutedEventArgs e)
         {
             // Add compact button to the command bar. It provides functionality specific
             // to this page, and is removed when leaving the page.
@@ -71,11 +71,14 @@ namespace WinUIGallery.ControlPages
                 var newButton = new AppBarButton();
                 newButton.Icon = new SymbolIcon(Symbol.Add);
                 newButton.Label = "Button 1";
-                newButton.KeyboardAccelerators.Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
+
+                newButton.KeyboardAccelerators
+                    .Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
                 {
                     Key = Windows.System.VirtualKey.N,
                     Modifiers = Windows.System.VirtualKeyModifiers.Control
                 });
+
                 PrimaryCommandBar.SecondaryCommands.Add(newButton);
 
                 newButton = new AppBarButton
@@ -83,38 +86,48 @@ namespace WinUIGallery.ControlPages
                     Icon = new SymbolIcon(Symbol.Delete),
                     Label = "Button 2"
                 };
+
                 PrimaryCommandBar.SecondaryCommands.Add(newButton);
-                newButton.KeyboardAccelerators.Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
+
+                newButton.KeyboardAccelerators
+                    .Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
                 {
                     Key = Windows.System.VirtualKey.Delete
                 });
+
                 PrimaryCommandBar.SecondaryCommands.Add(new AppBarSeparator());
 
                 newButton = new AppBarButton();
                 newButton.Icon = new SymbolIcon(Symbol.FontDecrease);
                 newButton.Label = "Button 3";
-                newButton.KeyboardAccelerators.Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
+
+                newButton.KeyboardAccelerators
+                    .Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
                 {
                     Key = Windows.System.VirtualKey.Subtract,
                     Modifiers = Windows.System.VirtualKeyModifiers.Control
                 });
+
                 PrimaryCommandBar.SecondaryCommands.Add(newButton);
 
                 newButton = new AppBarButton();
                 newButton.Icon = new SymbolIcon(Symbol.FontIncrease);
                 newButton.Label = "Button 4";
-                newButton.KeyboardAccelerators.Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
+
+                newButton.KeyboardAccelerators
+                    .Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
                 {
                     Key = Windows.System.VirtualKey.Add,
                     Modifiers = Windows.System.VirtualKeyModifiers.Control
                 });
-                PrimaryCommandBar.SecondaryCommands.Add(newButton);
 
+                PrimaryCommandBar.SecondaryCommands.Add(newButton);
             }
+
             MultipleButtons = true;
         }
 
-        private void RemoveSecondaryCommands_Click(object sender, RoutedEventArgs e)
+        void RemoveSecondaryCommands_Click(object sender, RoutedEventArgs e)
         {
             RemoveSecondaryCommands();
         }
@@ -125,36 +138,37 @@ namespace WinUIGallery.ControlPages
             base.OnNavigatingFrom(e);
         }
 
-        private void RemoveSecondaryCommands()
+        void RemoveSecondaryCommands()
         {
             while (PrimaryCommandBar.SecondaryCommands.Count > 1)
             {
                 PrimaryCommandBar.SecondaryCommands.RemoveAt(PrimaryCommandBar.SecondaryCommands.Count - 1);
             }
+
             MultipleButtons = false;
         }
 
-
-        private void AddKeyboardAccelerators()
+        void AddKeyboardAccelerators()
         {
-            editButton.KeyboardAccelerators.Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
+            editButton.KeyboardAccelerators
+                .Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
             {
                 Key = Windows.System.VirtualKey.E,
                 Modifiers = Windows.System.VirtualKeyModifiers.Control
             });
 
-            shareButton.KeyboardAccelerators.Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
+            shareButton.KeyboardAccelerators
+                .Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
             {
                 Key = Windows.System.VirtualKey.F4
             });
 
-            addButton.KeyboardAccelerators.Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
+            addButton.KeyboardAccelerators
+                .Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
             {
                 Key = Windows.System.VirtualKey.A,
                 Modifiers = Windows.System.VirtualKeyModifiers.Control
             });
-
         }
-
     }
 }

@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 
 using Microsoft.UI.Xaml.Controls;
 
@@ -14,9 +14,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class AccessibilityScreenReaderPage : Page
     {
-        public AccessibilityScreenReaderPage()
-        {
-            this.InitializeComponent();
-        }
+        public AccessibilityScreenReaderPage() => this.InitializeComponent();
     }
 }

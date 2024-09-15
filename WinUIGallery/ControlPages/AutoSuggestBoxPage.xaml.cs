@@ -21,7 +21,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class AutoSuggestBoxPage : Page
     {
-        private List<string> Cats = new List<string>()
+        List<string> Cats = new List<string>()
         {
             "Abyssinian",
             "Aegean",
@@ -122,39 +122,37 @@ namespace WinUIGallery.ControlPages
             "York Chocolate"
         };
 
-        public AutoSuggestBoxPage()
-        {
-            this.InitializeComponent();
-        }
+        public AutoSuggestBoxPage() => this.InitializeComponent();
 
-        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             // Since selecting an item will also change the text,
             // only listen to changes caused by user entering text.
-            if(args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
                 var suitableItems = new List<string>();
                 var splitText = sender.Text.ToLower().Split(" ");
-                foreach(var cat in Cats)
+
+                foreach (var cat in Cats)
                 {
-                    var found = splitText.All((key)=>
+                    var found = splitText.All((key) =>
                     {
                         return cat.ToLower().Contains(key);
                     });
-                    if(found)
-                    {
-                        suitableItems.Add(cat);
-                    }
+
+                    if (found) suitableItems.Add(cat);
                 }
-                if(suitableItems.Count == 0)
+
+                if (suitableItems.Count == 0)
                 {
                     suitableItems.Add("No results found");
                 }
+
                 sender.ItemsSource = suitableItems;
             }
         }
 
-        private void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        void AutoSuggestBox_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
             SuggestionOutput.Text = args.SelectedItem.ToString();
         }
@@ -165,11 +163,11 @@ namespace WinUIGallery.ControlPages
         /// </summary>
         /// <param name="sender">The AutoSuggestBox whose text got changed.</param>
         /// <param name="args">The event arguments.</param>
-        private void Control2_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        void Control2_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            //We only want to get results when it was a user typing,
-            //otherwise we assume the value got filled in by TextMemberPath
-            //or the handler for SuggestionChosen
+            // We only want to get results when it was a user typing,
+            // otherwise we assume the value got filled in by TextMemberPath
+            // or the handler for SuggestionChosen
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
                 var suggestions = SearchControls(sender.Text);
@@ -190,18 +188,19 @@ namespace WinUIGallery.ControlPages
         /// <param name="sender">The AutoSuggestBox that fired the event.</param>
         /// <param name="args">The args contain the QueryText, which is the text in the TextBox,
         /// and also ChosenSuggestion, which is only non-null when a user selects an item in the list.</param>
-        private void Control2_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        void Control2_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             if (args.ChosenSuggestion != null && args.ChosenSuggestion is ControlInfoDataItem)
             {
-                //User selected an item, take an action
+                // User selected an item, take an action
                 SelectControl(args.ChosenSuggestion as ControlInfoDataItem);
             }
             else if (!string.IsNullOrEmpty(args.QueryText))
             {
-                //Do a fuzzy search based on the text
+                // Do a fuzzy search based on the text
                 var suggestions = SearchControls(sender.Text);
-                if(suggestions.Count > 0)
+
+                if (suggestions.Count > 0)
                 {
                     SelectControl(suggestions.FirstOrDefault());
                 }
@@ -215,9 +214,9 @@ namespace WinUIGallery.ControlPages
         /// </summary>
         /// <param name="sender">The AutoSuggestBox that fired the event.</param>
         /// <param name="args">The args contain SelectedItem, which contains the data item of the item that is currently highlighted.</param>
-        private void Control2_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        void Control2_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
         {
-            //Don't autocomplete the TextBox when we are showing "no results"
+            // Don't autocomplete the TextBox when we are showing "no results"
             if (args.SelectedItem is ControlInfoDataItem control)
             {
                 sender.Text = control.Title;
@@ -228,14 +227,13 @@ namespace WinUIGallery.ControlPages
         /// This
         /// </summary>
         /// <param name="contact"></param>
-        private void SelectControl(ControlInfoDataItem control)
+        void SelectControl(ControlInfoDataItem control)
         {
             if (control != null)
             {
                 ControlDetails.Visibility = Visibility.Visible;
 
-
-                BitmapImage image = control.IconGlyph == null? null : new BitmapImage(new Uri(control.IconGlyph));
+                BitmapImage image = control.IconGlyph == null ? null : new BitmapImage(new Uri(control.IconGlyph));
                 ControlImage.Source = image;
 
                 ControlTitle.Text = control.Title;
@@ -243,11 +241,12 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private List<ControlInfoDataItem> SearchControls(string query)
+        List<ControlInfoDataItem> SearchControls(string query)
         {
             var suggestions = new List<ControlInfoDataItem>();
 
             var querySplit = query.Split(" ");
+
             foreach (var group in ControlInfoDataSource.Instance.Groups)
             {
                 var matchingItems = group.Items.Where(
@@ -257,6 +256,7 @@ namespace WinUIGallery.ControlPages
                         // e.g. for query "split button" the only result should "SplitButton" since its the only query to contain "split" and "button" 
                         // If any of the sub tokens is not in the string, we ignore the item. So the search gets more precise with more words 
                         bool flag = item.IncludedInBuild;
+
                         foreach (string queryToken in querySplit)
                         {
                             // Check if token is not in string 
@@ -266,13 +266,15 @@ namespace WinUIGallery.ControlPages
                                 flag = false;
                             }
                         }
+
                         return flag;
                     });
+
                 foreach (var item in matchingItems)
-                {
                     suggestions.Add(item);
-                }
+                
             }
+
             return suggestions.OrderByDescending(i => i.Title.StartsWith(query, StringComparison.CurrentCultureIgnoreCase)).ThenBy(i => i.Title).ToList();
         }
     }
