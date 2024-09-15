@@ -64,22 +64,19 @@ namespace WinUIGallery.Helper
     [Windows.Foundation.Metadata.WebHostHidden]
     public class NavigationHelper : DependencyObject
     {
-        private Page Page { get; set; }
-        private Frame Frame { get { return this.Page.Frame; } }
+        Page Page { get; set; }
+        Frame Frame => Page.Frame;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigationHelper"/> class.
         /// </summary>
         /// <param name="page">A reference to the current page used for navigation.
         /// This reference allows for frame manipulation.</param>
-        public NavigationHelper(Page page)
-        {
-            this.Page = page;
-        }
+        public NavigationHelper(Page page) => Page = page;
 
         #region Process lifetime management
 
-        private string _pageKey;
+        string _pageKey;
 
         /// <summary>
         /// Handle this event to populate the page using content passed
@@ -104,15 +101,16 @@ namespace WinUIGallery.Helper
         /// property provides the group to be displayed.</param>
         public void OnNavigatedTo(NavigationEventArgs e)
         {
-            var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
-            this._pageKey = "Page-" + this.Frame.BackStackDepth;
+            var frameState = SuspensionManager.SessionStateForFrame(Frame);
+            _pageKey = "Page-" + Frame.BackStackDepth;
 
             if (e.NavigationMode == NavigationMode.New)
             {
                 // Clear existing state for forward navigation when adding a new page to the
                 // navigation stack
-                var nextPageKey = this._pageKey;
-                int nextPageIndex = this.Frame.BackStackDepth;
+                var nextPageKey = _pageKey;
+                int nextPageIndex = Frame.BackStackDepth;
+
                 while (frameState.Remove(nextPageKey))
                 {
                     nextPageIndex++;
@@ -120,14 +118,14 @@ namespace WinUIGallery.Helper
                 }
 
                 // Pass the navigation parameter to the new page
-                this.LoadState?.Invoke(this, new LoadStateEventArgs(e.Parameter, null));
+                LoadState?.Invoke(this, new LoadStateEventArgs(e.Parameter, null));
             }
             else
             {
                 // Pass the navigation parameter and preserved page state to the page, using
                 // the same strategy for loading suspended state and recreating pages discarded
                 // from cache
-                this.LoadState?.Invoke(this, new LoadStateEventArgs(e.Parameter, (Dictionary<string, object>)frameState[this._pageKey]));
+                LoadState?.Invoke(this, new LoadStateEventArgs(e.Parameter, (Dictionary<string, object>)frameState[_pageKey]));
             }
         }
 
@@ -140,9 +138,9 @@ namespace WinUIGallery.Helper
         /// property provides the group to be displayed.</param>
         public void OnNavigatedFrom(NavigationEventArgs e)
         {
-            var frameState = SuspensionManager.SessionStateForFrame(this.Frame);
+            var frameState = SuspensionManager.SessionStateForFrame(Frame);
             var pageState = new Dictionary<string, object>();
-            this.SaveState?.Invoke(this, new SaveStateEventArgs(pageState));
+            SaveState?.Invoke(this, new SaveStateEventArgs(pageState));
             frameState[_pageKey] = pageState;
         }
 
@@ -169,11 +167,11 @@ namespace WinUIGallery.Helper
     [Windows.Foundation.Metadata.WebHostHidden]
     public class RootFrameNavigationHelper
     {
-        private Frame Frame { get; set; }
-        private NavigationView CurrentNavView { get; set; }
+        Frame Frame { get; set; }
+        NavigationView CurrentNavView { get; set; }
 
 #nullable enable
-        private static RootFrameNavigationHelper? instance;
+        static RootFrameNavigationHelper? instance;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RootNavigationHelper"/> class.
@@ -182,18 +180,17 @@ namespace WinUIGallery.Helper
         /// This reference allows for frame manipulation and to register navigation handlers.</param>
         public RootFrameNavigationHelper(Frame rootFrame, NavigationView currentNavView)
         {
-            if (instance != null)
-            {
-                return;
-            }
+            if (instance != null) return;
 
-            this.Frame = rootFrame;
-            this.Frame.Navigated += (s, e) =>
+            Frame = rootFrame;
+
+            Frame.Navigated += (s, e) =>
             {
                 // Update the Back button whenever a navigation occurs.
                 UpdateBackButton();
             };
-            this.CurrentNavView = currentNavView;
+
+            CurrentNavView = currentNavView;
 
             CurrentNavView.BackRequested += NavView_BackRequested;
             CurrentNavView.PointerPressed += CurrentNavView_PointerPressed;
@@ -244,7 +241,7 @@ namespace WinUIGallery.Helper
             }
         }
 
-        private void CurrentNavView_PointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        void CurrentNavView_PointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             var properties = e.GetCurrentPoint(CurrentNavView).Properties;
 
@@ -256,6 +253,7 @@ namespace WinUIGallery.Helper
             // If back or forward are pressed (but not both) navigate appropriately
             bool backPressed = properties.IsXButton1Pressed;
             bool forwardPressed = properties.IsXButton2Pressed;
+
             if (backPressed ^ forwardPressed)
             {
                 e.Handled = true;
@@ -264,44 +262,43 @@ namespace WinUIGallery.Helper
             }
         }
 
-        private void NavView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        void NavView_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
         {
             TryGoBack();
         }
 
-        private bool TryGoBack()
+        bool TryGoBack()
         {
             bool navigated = false;
             // Don't go back if the nav pane is overlayed.
-            if (this.CurrentNavView.IsPaneOpen && (this.CurrentNavView.DisplayMode == NavigationViewDisplayMode.Compact || this.CurrentNavView.DisplayMode == NavigationViewDisplayMode.Minimal))
+            if (CurrentNavView.IsPaneOpen && (CurrentNavView.DisplayMode == NavigationViewDisplayMode.Compact || CurrentNavView.DisplayMode == NavigationViewDisplayMode.Minimal))
             {
                 return navigated;
             }
 
-            if (this.Frame.CanGoBack)
+            if (Frame.CanGoBack)
             {
-                this.Frame.GoBack();
+                Frame.GoBack();
                 navigated = true;
             }
 
             return navigated;
         }
 
-        private bool TryGoForward()
+        bool TryGoForward()
         {
             bool navigated = false;
-            if (this.Frame.CanGoForward)
+
+            if (Frame.CanGoForward)
             {
-                this.Frame.GoForward();
+                Frame.GoForward();
                 navigated = true;
             }
+
             return navigated;
         }
 
-        private void UpdateBackButton()
-        {
-            this.CurrentNavView.IsBackEnabled = this.Frame.CanGoBack ? true : false;
-        }
+        void UpdateBackButton() => CurrentNavView.IsBackEnabled = Frame.CanGoBack ? true : false;
     }
 
     /// <summary>
@@ -343,8 +340,8 @@ namespace WinUIGallery.Helper
         public LoadStateEventArgs(object navigationParameter, Dictionary<string, object> pageState)
             : base()
         {
-            this.NavigationParameter = navigationParameter;
-            this.PageState = pageState;
+            NavigationParameter = navigationParameter;
+            PageState = pageState;
         }
     }
     /// <summary>
@@ -364,7 +361,7 @@ namespace WinUIGallery.Helper
         public SaveStateEventArgs(Dictionary<string, object> pageState)
             : base()
         {
-            this.PageState = pageState;
+            PageState = pageState;
         }
     }
 }

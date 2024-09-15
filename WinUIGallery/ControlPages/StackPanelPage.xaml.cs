@@ -1,4 +1,4 @@
-﻿//*********************************************************
+﻿// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -19,12 +19,9 @@ namespace WinUIGallery.ControlPages
     /// </summary>
     public sealed partial class StackPanelPage : Page
     {
-        public StackPanelPage()
-        {
-            this.InitializeComponent();
-        }
+        public StackPanelPage() => this.InitializeComponent();
 
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is RadioButton rb && Control1 != null)
             {

@@ -48,7 +48,7 @@ namespace WinUIGallery.ControlPages
             SetEmptyScratchPadContent();
         }
 
-        private void SetEmptyScratchPadContent()
+        void SetEmptyScratchPadContent()
         {
             scratchPad.Content = new TextBlock()
             {
@@ -59,7 +59,7 @@ namespace WinUIGallery.ControlPages
             };
         }
 
-        private string GetDefaultScratchXAML()
+        string GetDefaultScratchXAML()
         {
             return
 @"<StackPanel  BorderThickness=""1"" BorderBrush=""Green"" CornerRadius=""4"" Padding=""3"">
@@ -74,22 +74,26 @@ namespace WinUIGallery.ControlPages
         public string ReadScratchPadXAMLinLocalSettings()
         {
             var appData = Windows.Storage.ApplicationData.Current;
+
             if (appData.LocalSettings.Containers.ContainsKey("ScratchPad"))
             {
                 var scratchPadContainer = appData.LocalSettings.CreateContainer("ScratchPad", Windows.Storage.ApplicationDataCreateDisposition.Existing);
+
                 if (scratchPadContainer != null && scratchPadContainer.Values.ContainsKey("ScratchPadXAML"))
                 {
                     // String values are limited to 4K characters. Use a composite value to support a longer string.
                     var compositeStr = scratchPadContainer.Values["ScratchPadXAML"] as ApplicationDataCompositeValue;
                     var xamlStr = "";
                     int count = (int)compositeStr["count"];
+
                     for (int i = 0; i < count; i++)
-                    {
                         xamlStr += compositeStr[i.ToString()];
-                    }
+                    
+
                     return xamlStr;
                 }
             }
+
             return null;
         }
 
@@ -100,6 +104,7 @@ namespace WinUIGallery.ControlPages
             // String values are limited to 4K characters. Use a composite value to support a longer string.
             var compositeStr = new ApplicationDataCompositeValue();
             int count = 0;
+
             while (xamlStr.Length > 0)
             {
                 var len = Math.Min(xamlStr.Length, 4000);
@@ -107,11 +112,12 @@ namespace WinUIGallery.ControlPages
                 count++;
                 xamlStr = xamlStr.Substring(len);
             }
+
             compositeStr["count"] = count;
             scratchPadContainer.Values["ScratchPadXAML"] = compositeStr;
         }
 
-        private async void ResetToDefaultClick(object sender, RoutedEventArgs e)
+        async void ResetToDefaultClick(object sender, RoutedEventArgs e)
         {
             ContentDialog dialog = new ContentDialog();
             dialog.XamlRoot = this.XamlRoot;
@@ -122,6 +128,7 @@ namespace WinUIGallery.ControlPages
             dialog.DefaultButton = ContentDialogButton.Primary;
 
             var result = await dialog.ShowAsync();
+
             if (result == ContentDialogResult.Primary)
             {
                 m_oldText = GetDefaultScratchXAML();
@@ -134,12 +141,13 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private string AddXmlNamespace(string xml)
+        string AddXmlNamespace(string xml)
         {
             xml = xml.Trim();
 
             char[] chars = { ' ', '/', '>' };
             var insertIndex = xml.IndexOfAny(chars);
+
             if (insertIndex < 0)
             {
                 throw new ArgumentException("No end tag.");
@@ -149,11 +157,11 @@ namespace WinUIGallery.ControlPages
             return xml;
         }
 
-        private void LoadContent()
+        void LoadContent()
         {
             string newText;
             textbox.TextDocument.GetText(Microsoft.UI.Text.TextGetOptions.None, out newText);
-            //System.Diagnostics.Debug.WriteLine("new text: " + newText);
+            // System.Diagnostics.Debug.WriteLine("new text: " + newText);
 
             SaveScratchPadXAMLinLocalSettings(newText);
 
@@ -172,10 +180,11 @@ namespace WinUIGallery.ControlPages
             {
                 loadStatus.Text = ex.Message + "\n" + loadStatus.Text;
             }
+
             loadStatus.Opacity = 1.0;
         }
 
-        private void LoadContentAndApplyFormatting()
+        void LoadContentAndApplyFormatting()
         {
             LoadContent();
 
@@ -184,7 +193,7 @@ namespace WinUIGallery.ControlPages
             formatter.ApplyColors();
         }
 
-        private void InsertTextboxText(string str, bool setCursorAfterInsertedStr)
+        void InsertTextboxText(string str, bool setCursorAfterInsertedStr)
         {
             var selectionStart = textbox.TextDocument.Selection.StartPosition;
             var range = textbox.TextDocument.GetRange(selectionStart, selectionStart);
@@ -193,25 +202,28 @@ namespace WinUIGallery.ControlPages
             textbox.TextDocument.Selection.StartPosition = selectionStart + (setCursorAfterInsertedStr ? str.Length : 0);
         }
 
-        private string GetTextboxTextPreviousLine()
+        string GetTextboxTextPreviousLine()
         {
             string newText;
             textbox.TextDocument.GetText(Microsoft.UI.Text.TextGetOptions.None, out newText);
             var selectionIndex = textbox.TextDocument.Selection.StartPosition;
+
             if (selectionIndex > 0)
             {
                 char[] eolChars = { '\r', '\n' };
                 var endOfLineIndex = newText.LastIndexOfAny(eolChars, selectionIndex - 1);
+
                 if (endOfLineIndex > 0)
                 {
                     var startOfLineIndex = newText.LastIndexOfAny(eolChars, endOfLineIndex - 1) + 1;
                     return newText.Substring(startOfLineIndex, endOfLineIndex - startOfLineIndex);
                 }
             }
+
             return "";
         }
 
-        private void HandleEnter()
+        void HandleEnter()
         {
             textbox.TextDocument.BeginUndoGroup();
             string previousLine = GetTextboxTextPreviousLine();
@@ -222,6 +234,7 @@ namespace WinUIGallery.ControlPages
             // If this looks like the start of content area in a tag, further indent and put the end tag on a new line.
             var selectionStart = textbox.TextDocument.Selection.StartPosition;
             var range = textbox.TextDocument.GetRange(selectionStart, selectionStart + 2);
+
             if (range.Text == "</")
             {
                 InsertTextboxText("    ", true);
@@ -229,15 +242,17 @@ namespace WinUIGallery.ControlPages
                 range = textbox.TextDocument.GetRange(selectionStart, selectionStart);
                 range.Text = "\n" + indentStr;
             }
+
             textbox.TextDocument.EndUndoGroup();
         }
 
-        private void textbox_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
+        void textbox_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
         {
         }
-        private void textbox_KeyDown(object sender, KeyRoutedEventArgs e)
+        void textbox_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             m_lastChangeFromTyping = true;
+
             switch (e.Key)
             {
                 case Windows.System.VirtualKey.Tab:
@@ -245,6 +260,7 @@ namespace WinUIGallery.ControlPages
                     {
                         var isShiftKeyDown = ((int)InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Shift) &
                             (int)Windows.UI.Core.CoreVirtualKeyStates.Down) == (int)Windows.UI.Core.CoreVirtualKeyStates.Down;
+
                         string text;
                         textbox.TextDocument.GetText(Microsoft.UI.Text.TextGetOptions.None, out text);
 
@@ -252,6 +268,7 @@ namespace WinUIGallery.ControlPages
                         var selectionEnd = selectionStart + textbox.TextDocument.Selection.Length;
                         char[] eolChars = { '\r', '\n' };
                         var startOfLineIndex = text.LastIndexOfAny(eolChars, selectionStart) + 1;
+
                         if (startOfLineIndex >= 0)
                         {
                             var range = textbox.TextDocument.GetRange(startOfLineIndex, startOfLineIndex);
@@ -263,6 +280,7 @@ namespace WinUIGallery.ControlPages
                                 selectionEnd += 4;
 
                                 range.Move(Microsoft.UI.Text.TextRangeUnit.Paragraph, 1);
+
                                 while (range.StartPosition < selectionEnd)
                                 {
                                     range.Text = "    ";
@@ -273,17 +291,20 @@ namespace WinUIGallery.ControlPages
                             else // Unindent
                             {
                                 bool firstLine = true;
+
                                 while (range.StartPosition < selectionEnd)
                                 {
                                     range.MoveEnd(Microsoft.UI.Text.TextRangeUnit.Character, 4);
                                     var numWhitespace = range.Text.Count(char.IsWhiteSpace);
                                     range = textbox.TextDocument.GetRange(range.StartPosition, range.StartPosition + numWhitespace);
                                     range.Text = "";
+
                                     if (firstLine)
                                     {
                                         firstLine = false;
                                         selectionStart -= numWhitespace;
                                     }
+
                                     selectionEnd -= numWhitespace;
                                     range.Move(Microsoft.UI.Text.TextRangeUnit.Paragraph, 1);
                                 }
@@ -295,12 +316,14 @@ namespace WinUIGallery.ControlPages
                             e.Handled = true;
                         }
                     }
+
                     break;
             }
         }
-        private void textbox_PreviewKeyUp(object sender, KeyRoutedEventArgs e)
+        void textbox_PreviewKeyUp(object sender, KeyRoutedEventArgs e)
         {
             m_lastChangeFromTyping = true;
+
             switch (e.Key)
             {
                 case Windows.System.VirtualKey.F5:
@@ -313,14 +336,11 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void LoadClick(object sender, RoutedEventArgs e)
-        {
-            LoadContentAndApplyFormatting();
-        }
+        void LoadClick(object sender, RoutedEventArgs e) => LoadContentAndApplyFormatting();
 
-        bool m_lastChangeFromTyping = false;
+        bool m_lastChangeFromTyping;
         string m_oldText = "";
-        private void textbox_TextChanged(object sender, RoutedEventArgs e)
+        void textbox_TextChanged(object sender, RoutedEventArgs e)
         {
             if (textbox.TextDocument.Selection.Length == 0 && m_lastChangeFromTyping)
             {
@@ -335,10 +355,12 @@ namespace WinUIGallery.ControlPages
 
                 string newText;
                 textbox.TextDocument.GetText(Microsoft.UI.Text.TextGetOptions.None, out newText);
+
                 if (newText.Length == m_oldText.Length + 1)
                 {
                     // Added just one character
                     var selectionIndex = textbox.TextDocument.Selection.StartPosition;
+
                     if (selectionIndex >= 2 && newText[selectionIndex - 1] == '>' && newText[selectionIndex - 2] != '/')
                     {
                         var tagStartIndex = newText.LastIndexOf('<', selectionIndex - 1);
@@ -349,9 +371,11 @@ namespace WinUIGallery.ControlPages
 
                             char[] chars = { ' ', '/', '>', '\t', '\r', '\n' };
                             var nameEndIndex = tagName.IndexOfAny(chars);
+
                             if (nameEndIndex > 0)
                             {
                                 tagName = tagName = tagName.Substring(0, nameEndIndex);
+
                                 if (tagName != "!--") // don't add a close tag for a comment
                                 {
                                     InsertTextboxText("</" + tagName + ">", false);
@@ -366,18 +390,19 @@ namespace WinUIGallery.ControlPages
                         // to be inside a tag and just after a property name.
                         char[] tagChars = { '<', '>' };
                         var lastTagIndex = newText.LastIndexOfAny(tagChars, selectionIndex);
+
                         if (lastTagIndex >= 0 && newText[lastTagIndex] == '<')
                         {
                             // In a tag. Make sure we aren't in a property value (improper comparison
                             // here is to check if the last quote is proceed by an '=').
                             var quoteIndex = newText.LastIndexOf('"', selectionIndex);
+
                             if (quoteIndex < lastTagIndex || newText[quoteIndex - 1] != '=')
                             {
                                 InsertTextboxText("\"\"", false);
                                 textbox.TextDocument.Selection.StartPosition++;
                             }
                         }
-
                     }
                 }
             }
@@ -386,7 +411,7 @@ namespace WinUIGallery.ControlPages
             textbox.TextDocument.GetText(Microsoft.UI.Text.TextGetOptions.None, out m_oldText);
         }
 
-        private void textbox_ActualThemeChanged(FrameworkElement sender, object args)
+        void textbox_ActualThemeChanged(FrameworkElement sender, object args)
         {
             // Updating the formating for theme change
             var formatter = new XamlTextFormatter(textbox);
@@ -396,11 +421,8 @@ namespace WinUIGallery.ControlPages
 
     public class XamlTextFormatter
     {
-        private RichEditBox m_richEditBox;
-        public XamlTextFormatter(RichEditBox richEditBox)
-        {
-            m_richEditBox = richEditBox;
-        }
+        RichEditBox m_richEditBox;
+        public XamlTextFormatter(RichEditBox richEditBox) => m_richEditBox = richEditBox;
 
         enum ZoneType
         {
@@ -426,6 +448,7 @@ namespace WinUIGallery.ControlPages
             var startIndex = 0;
             var currentZoneType = ZoneType.Unknown;
             bool inATag = false;
+
             for (var currIndex = 0; currIndex < rebText.Length; currIndex++)
             {
                 if (char.IsWhiteSpace(rebText[currIndex]))
@@ -442,6 +465,7 @@ namespace WinUIGallery.ControlPages
                 {
                     UpdateZone(startIndex, currIndex, currentZoneType);
                     startIndex = currIndex;
+
                     if (rebText.Substring(currIndex).StartsWith("<!--"))
                     {
                         currentZoneType = ZoneType.Comment;
@@ -449,10 +473,7 @@ namespace WinUIGallery.ControlPages
 
                         // Look for end of comment
                         var endIndex = rebText.IndexOf("-->", currIndex + 1);
-                        if (endIndex >= 0)
-                        {
-                            currIndex = endIndex + 2;
-                        }
+                        if (endIndex >= 0) currIndex = endIndex + 2;
                     }
                     else
                     {
@@ -502,10 +523,7 @@ namespace WinUIGallery.ControlPages
                         if (currIndex < rebText.Length - 2 && rebText[currIndex + 1] == '"')
                         {
                             var endIndex = rebText.IndexOf("\"", currIndex + 2);
-                            if (endIndex >= 0)
-                            {
-                                currIndex = endIndex;
-                            }
+                            if (endIndex >= 0) currIndex = endIndex;
                         }
                     }
                     else if (currentZoneType != ZoneType.TagName && currentZoneType != ZoneType.PropertyName
@@ -524,22 +542,21 @@ namespace WinUIGallery.ControlPages
                     // else already ...other..., so continue
                 }
             }
+
             doc.EndUndoGroup();
         }
 
         // endIndexExclusive is the index just after the zone.
-        private void UpdateZone(int startIndex, int endIndexExclusive, ZoneType zoneType)
+        void UpdateZone(int startIndex, int endIndexExclusive, ZoneType zoneType)
         {
-            if (startIndex >= endIndexExclusive)
-            {
-                return;
-            }
+            if (startIndex >= endIndexExclusive) return;
 
             bool lightTheme = m_richEditBox.ActualTheme != ElementTheme.Dark;
 
             var doc = m_richEditBox.Document;
             var range = doc.GetRange(startIndex, endIndexExclusive);
             Windows.UI.Color foregroundColor = lightTheme ? Microsoft.UI.Colors.Black : Microsoft.UI.Colors.White;
+
             switch (zoneType)
             {
                 case ZoneType.OpenTag:

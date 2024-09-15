@@ -23,17 +23,18 @@ namespace WinUIGallery.ControlPages
 
             if (ElementSoundPlayer.State == ElementSoundPlayerState.On)
                 soundToggle.IsOn = true;
+
             if (ElementSoundPlayer.SpatialAudioMode == ElementSpatialAudioMode.On && soundToggle.IsOn == true)
                 spatialAudioBox.IsChecked = true;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        void Button_Click(object sender, RoutedEventArgs e)
         {
             var tagInt = int.Parse((string)(sender as Button).Tag);
             ElementSoundPlayer.Play((ElementSoundKind)tagInt);
         }
 
-        private void spatialAudioBox_Checked(object sender, RoutedEventArgs e)
+        void spatialAudioBox_Checked(object sender, RoutedEventArgs e)
         {
             if (soundToggle.IsOn == true)
             {
@@ -41,7 +42,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void spatialAudioBox_Unchecked(object sender, RoutedEventArgs e)
+        void spatialAudioBox_Unchecked(object sender, RoutedEventArgs e)
         {
             if (soundToggle.IsOn == true)
             {
@@ -49,7 +50,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void soundToggle_Toggled(object sender, RoutedEventArgs e)
+        void soundToggle_Toggled(object sender, RoutedEventArgs e)
         {
             if (soundToggle.IsOn == true)
             {

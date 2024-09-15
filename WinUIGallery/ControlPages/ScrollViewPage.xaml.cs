@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using Microsoft.UI.Composition;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -26,7 +26,7 @@ namespace WinUIGallery.ControlPages
         }
 
         // Example1
-        private void ScrollViewPage_Loaded(object sender, RoutedEventArgs e)
+        void ScrollViewPage_Loaded(object sender, RoutedEventArgs e)
         {
             scrollView1.ZoomTo(4.0f, null, new ScrollingZoomOptions(ScrollingAnimationMode.Enabled, ScrollingSnapPointsMode.Ignore));
 
@@ -42,12 +42,13 @@ namespace WinUIGallery.ControlPages
                 FractionDigits = 1,
                 NumberRounder = rounder
             };
+
             nbZoomFactor.NumberFormatter = formatter;
-            
+
             this.Loaded -= ScrollViewPage_Loaded;
         }
 
-        private void CmbZoomMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void CmbZoomMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (scrollView1 != null)
             {
@@ -58,7 +59,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void NbZoomFactor_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs e)
+        void NbZoomFactor_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs e)
         {
             if (scrollView1 != null)
             {
@@ -66,7 +67,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void CmbHorizontalScrollMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void CmbHorizontalScrollMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (scrollView1 != null)
             {
@@ -77,7 +78,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void CmbHorizontalScrollBarVisibility_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void CmbHorizontalScrollBarVisibility_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (scrollView1 != null)
             {
@@ -88,7 +89,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void CmbVerticalScrollMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void CmbVerticalScrollMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (scrollView1 != null)
             {
@@ -99,7 +100,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void CmbVerticalScrollBarVisibility_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void CmbVerticalScrollBarVisibility_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (scrollView1 != null)
             {
@@ -111,12 +112,9 @@ namespace WinUIGallery.ControlPages
         }
 
         // Example2
-        private void NbVerticalVelocity_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs e)
+        void NbVerticalVelocity_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs e)
         {
-            if (double.IsNaN(e.OldValue))
-            {
-                return;
-            }
+            if (double.IsNaN(e.OldValue)) return;
 
             if (scrollView2 != null)
             {
@@ -171,7 +169,7 @@ namespace WinUIGallery.ControlPages
         }
 
         // Example3
-        private void BtnScrollWithAnimation_Click(object sender, RoutedEventArgs e)
+        void BtnScrollWithAnimation_Click(object sender, RoutedEventArgs e)
         {
             if (scrollView3 != null)
             {
@@ -179,7 +177,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void ScrollView_ScrollAnimationStarting(ScrollView sender, ScrollingScrollAnimationStartingEventArgs e)
+        void ScrollView_ScrollAnimationStarting(ScrollView sender, ScrollingScrollAnimationStartingEventArgs e)
         {
             Vector3KeyFrameAnimation stockKeyFrameAnimation = e.Animation as Vector3KeyFrameAnimation;
 
@@ -205,6 +203,7 @@ namespace WinUIGallery.ControlPages
                             customKeyFrameAnimation.InsertKeyFrame(
                                 1.0f - (0.4f / (float)Math.Pow(2, step)),
                                 new Vector3((float)scrollView3.HorizontalOffset, targetVerticalPosition + deltaVerticalPosition, 0.0f));
+
                             deltaVerticalPosition /= -2.0f;
                         }
 
@@ -229,10 +228,12 @@ namespace WinUIGallery.ControlPages
                             0.499999f,
                             new Vector3((float)scrollView3.HorizontalOffset, targetVerticalPosition - 0.9f * deltaVerticalPosition, 0.0f),
                             cubicBezierStart);
+
                         customKeyFrameAnimation.InsertKeyFrame(
                             0.5f,
                             new Vector3((float)scrollView3.HorizontalOffset, targetVerticalPosition - 0.1f * deltaVerticalPosition, 0.0f),
                             step);
+
                         customKeyFrameAnimation.InsertKeyFrame(
                             1.0f,
                             new Vector3((float)scrollView3.HorizontalOffset, targetVerticalPosition, 0.0f),
@@ -245,7 +246,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private double GetTargetVerticalOffset()
+        double GetTargetVerticalOffset()
         {
             if (scrollView3.VerticalOffset > scrollView3.ScrollableHeight / 2.0)
             {

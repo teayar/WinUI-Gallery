@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -61,23 +61,19 @@ namespace WinUIGallery.Data
 
         public string SourcePath { get; set; }
 
-        public override string ToString()
-        {
-            return this.Title;
-        }
+        public override string ToString() => Title;
     }
 
     public class ControlInfoDocLink
     {
         public ControlInfoDocLink(string title, string uri)
         {
-            this.Title = title;
-            this.Uri = uri.Replace("X.Y", string.Format("{0}.{1}", WASDK.Release.Major, WASDK.Release.Minor));
+            Title = title;
+            Uri = uri.Replace("X.Y", string.Format("{0}.{1}", WASDK.Release.Major, WASDK.Release.Minor));
         }
         public string Title { get; set; }
         public string Uri { get; set; }
     }
-
 
     /// <summary>
     /// Generic group data model.
@@ -95,10 +91,7 @@ namespace WinUIGallery.Data
         public string Folder { get; set; }
         public ObservableCollection<ControlInfoDataItem> Items { get; set; }
 
-        public override string ToString()
-        {
-            return this.Title;
-        }
+        public override string ToString() => Title;
     }
 
     /// <summary>
@@ -109,34 +102,22 @@ namespace WinUIGallery.Data
     /// </summary>
     public sealed class ControlInfoDataSource
     {
-        private static readonly object _lock = new();
+        static readonly object _lock = new();
 
         #region Singleton
 
-        private static readonly ControlInfoDataSource _instance;
+        static readonly ControlInfoDataSource _instance;
 
-        public static ControlInfoDataSource Instance
-        {
-            get
-            {
-                return _instance;
-            }
-        }
+        public static ControlInfoDataSource Instance => _instance;
 
-        static ControlInfoDataSource()
-        {
-            _instance = new ControlInfoDataSource();
-        }
+        static ControlInfoDataSource() => _instance = new ControlInfoDataSource();
 
         private ControlInfoDataSource() { }
 
         #endregion
 
-        private readonly IList<ControlInfoDataGroup> _groups = new List<ControlInfoDataGroup>();
-        public IList<ControlInfoDataGroup> Groups
-        {
-            get { return this._groups; }
-        }
+        readonly IList<ControlInfoDataGroup> _groups = new List<ControlInfoDataGroup>();
+        public IList<ControlInfoDataGroup> Groups => _groups;
 
         public async Task<IEnumerable<ControlInfoDataGroup>> GetGroupsAsync()
         {
@@ -171,15 +152,11 @@ namespace WinUIGallery.Data
             return null;
         }
 
-        private async Task GetControlInfoDataAsync()
+        async Task GetControlInfoDataAsync()
         {
             lock (_lock)
-            {
-                if (this.Groups.Count() != 0)
-                {
-                    return;
-                }
-            }
+                if (Groups.Count() != 0) return;
+            
 
             var jsonText = await FileLoader.LoadText("DataModel/ControlInfoData.json");
             var controlInfoDataGroup = JsonSerializer.Deserialize(jsonText, typeof(Root), RootContext.Default) as Root;
@@ -188,7 +165,10 @@ namespace WinUIGallery.Data
             {
                 string pageRoot = "WinUIGallery.ControlPages.";
 
-                controlInfoDataGroup.Groups.SelectMany(g => g.Items).ToList().ForEach(item =>
+                controlInfoDataGroup.Groups
+                    .SelectMany(g => g.Items)
+                    .ToList()
+                    .ForEach(item =>
                 {
 #nullable enable
                     string? badgeString = item switch
@@ -198,6 +178,7 @@ namespace WinUIGallery.Data
                         { IsPreview: true } => "Preview",
                         _ => null
                     };
+
                     string pageString = $"{pageRoot}{item.UniqueId}Page";
                     Type? pageType = Type.GetType(pageString);
 

@@ -1,4 +1,4 @@
-﻿//*********************************************************
+﻿// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using WinUIGallery.Data;
 using System.Collections.Generic;
 using Microsoft.UI.Xaml;
@@ -17,16 +17,10 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class SemanticZoomPage : Page
     {
-        private IEnumerable<ControlInfoDataGroup> _groups;
+        IEnumerable<ControlInfoDataGroup> _groups;
 
-        public SemanticZoomPage()
-        {
-            this.InitializeComponent();
-        }
-        public IEnumerable<ControlInfoDataGroup> Groups
-        {
-            get { return this._groups; }
-        }
+        public SemanticZoomPage() => this.InitializeComponent();
+        public IEnumerable<ControlInfoDataGroup> Groups => _groups;
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -35,9 +29,6 @@ namespace WinUIGallery.ControlPages
             _groups = ControlInfoDataSource.Instance.Groups;
         }
 
-        private void List_GotFocus(object sender, RoutedEventArgs e)
-        {
-            Control1.StartBringIntoView();
-        }
+        void List_GotFocus(object sender, RoutedEventArgs e) => Control1.StartBringIntoView();
     }
 }

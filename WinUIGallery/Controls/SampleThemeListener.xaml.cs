@@ -23,9 +23,6 @@ namespace WinUIGallery.DesktopWap.Controls
 {
     public sealed partial class SampleThemeListener : UserControl
     {
-        public SampleThemeListener()
-        {
-            this.InitializeComponent();
-        }
+        public SampleThemeListener() => this.InitializeComponent();
     }
 }

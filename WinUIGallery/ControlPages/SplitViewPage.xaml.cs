@@ -16,12 +16,11 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI;
 
-
 namespace WinUIGallery.ControlPages
 {
     public sealed partial class SplitViewPage : Page
     {
-        private ObservableCollection<NavLink> _navLinks = new ObservableCollection<NavLink>()
+        ObservableCollection<NavLink> _navLinks = new ObservableCollection<NavLink>()
         {
             new NavLink() { Label = "People", Symbol = Symbol.People  },
             new NavLink() { Label = "Globe", Symbol = Symbol.Globe },
@@ -29,24 +28,19 @@ namespace WinUIGallery.ControlPages
             new NavLink() { Label = "Mail", Symbol = Symbol.Mail },
         };
 
-        public ObservableCollection<NavLink> NavLinks
-        {
-            get { return _navLinks; }
-        }
+        public ObservableCollection<NavLink> NavLinks => _navLinks;
 
-        public SplitViewPage()
-        {
-            this.InitializeComponent();
-        }
+        public SplitViewPage() => this.InitializeComponent();
 
-        private void NavLinksList_ItemClick(object sender, ItemClickEventArgs e)
+        void NavLinksList_ItemClick(object sender, ItemClickEventArgs e)
         {
             content.Text = (e.ClickedItem as NavLink).Label + " Page";
         }
 
-        private void PanePlacement_Toggled(object sender, RoutedEventArgs e)
+        void PanePlacement_Toggled(object sender, RoutedEventArgs e)
         {
             var ts = sender as ToggleSwitch;
+
             if (ts.IsOn)
             {
                 splitView.PanePlacement = SplitViewPanePlacement.Right;
@@ -57,12 +51,12 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void displayModeCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void displayModeCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             splitView.DisplayMode = (SplitViewDisplayMode)Enum.Parse(typeof(SplitViewDisplayMode), (e.AddedItems[0] as ComboBoxItem).Content.ToString());
         }
 
-        private void paneBackgroundCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void paneBackgroundCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var colorString = (e.AddedItems[0] as ComboBoxItem).Content.ToString();
 

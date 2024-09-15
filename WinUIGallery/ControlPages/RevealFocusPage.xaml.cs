@@ -1,4 +1,4 @@
-﻿//*********************************************************
+﻿// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System;
 using Windows.Foundation.Metadata;
 using Microsoft.UI;
@@ -41,7 +41,7 @@ namespace WinUIGallery.ControlPages
         }
 
         // DEMO ONLY: Change focus visual mode to high visibility
-        private void HighVisibility_Checked(object sender, RoutedEventArgs e)
+        void HighVisibility_Checked(object sender, RoutedEventArgs e)
         {
             if (exampleButton.ActualTheme == ElementTheme.Light)
             {
@@ -62,7 +62,7 @@ namespace WinUIGallery.ControlPages
         }
 
         // DEMO ONLY: Change focus visual mode to reveal focus
-        private void RevealFocus_Checked(object sender, RoutedEventArgs e)
+        void RevealFocus_Checked(object sender, RoutedEventArgs e)
         {
             if (Spring2018)
             {
@@ -75,14 +75,14 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        void Button_Click(object sender, RoutedEventArgs e)
         {
             // Draw the focus visuals at the edge of the control
             // A negative FocusVisualMargin outsets the focus visual. A positive one insets the focus visual
             marginSlider.Value = -1 * (primarySlider.Value + secondarySlider.Value);
         }
 
-        private void confirmColor_Click(object sender, RoutedEventArgs e)
+        void confirmColor_Click(object sender, RoutedEventArgs e)
         {
             // DEMO ONLY: Set colors of the buttons to the selected color in ColorPicker
             primaryColorPickerButton.Background = new SolidColorBrush(myPrimaryColorPicker.Color);
@@ -104,7 +104,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void Example2_ActualThemeChanged(FrameworkElement sender, object args)
+        void Example2_ActualThemeChanged(FrameworkElement sender, object args)
         {
             if (Example2.ActualTheme == ElementTheme.Light)
             {
@@ -118,7 +118,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void MoveFocusBtn_Click(object sender, RoutedEventArgs e)
+        void MoveFocusBtn_Click(object sender, RoutedEventArgs e)
         {
             // Set focus to button for better preview/demo of customization
             exampleButton.Focus(FocusState.Keyboard);
@@ -127,15 +127,11 @@ namespace WinUIGallery.ControlPages
 
     public class MyConverters
     {
-        public static Thickness IntToThickness(double UniformLength)
-        {
-            return new Thickness(UniformLength);
-        }
+        public static Thickness IntToThickness(double UniformLength) => new Thickness(UniformLength);
 
         public static SolidColorBrush ColorToBrush(Windows.UI.Color color)
         {
             return new SolidColorBrush(color);
         }
-
     }
 }

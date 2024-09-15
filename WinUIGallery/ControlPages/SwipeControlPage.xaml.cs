@@ -1,4 +1,4 @@
-﻿//*********************************************************
+﻿// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -17,27 +17,26 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class SwipeControlPage : Page
     {
-        private bool isArchived = false;
-
-        private bool isFlagged = false;
-        private bool isAccepted = false;
+        bool isArchived, isFlagged, isAccepted;
 
         public SwipeControlPage()
         {
             this.InitializeComponent();
             var source = @"Swipe Item 1,Swipe Item 2,Swipe Item 3,Swipe Item 4".Split(',');
+
             foreach (var item in source)
                 items.Add(item);
+
             lv.ItemsSource = items;
         }
 
         ObservableCollection<object> items = new ObservableCollection<object>();
 
-        private void DeleteOne_ItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
+        void DeleteOne_ItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
         {
             isArchived = !isArchived;
 
-            if(isArchived)
+            if (isArchived)
             {
                 ((TextBlock)args.SwipeControl.Content).Text = "Archived - Swipe Left";
             }
@@ -47,12 +46,12 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void DeleteItem_ItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
+        void DeleteItem_ItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
         {
             items.Remove(args.SwipeControl.DataContext);
         }
 
-        private void Accept_ItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
+        void Accept_ItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
         {
             isAccepted = !isAccepted;
             CheckAcceptFlagBool(args.SwipeControl);
@@ -71,7 +70,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void Flag_ItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
+        void Flag_ItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
         {
             isFlagged = !isFlagged;
             CheckAcceptFlagBool(args.SwipeControl);
@@ -90,9 +89,9 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void CheckAcceptFlagBool(SwipeControl swipeCtrl)
+        void CheckAcceptFlagBool(SwipeControl swipeCtrl)
         {
-            if(isAccepted && !isFlagged)
+            if (isAccepted && !isFlagged)
             {
                 ((TextBlock)swipeCtrl.Content).Text = "Swipe Right - Accepted";
             }

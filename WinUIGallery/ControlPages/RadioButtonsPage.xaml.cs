@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using Microsoft.UI;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -15,16 +15,14 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class RadioButtonsPage : Page
     {
-        public RadioButtonsPage()
-        {
-            this.InitializeComponent();
-        }
+        public RadioButtonsPage() => this.InitializeComponent();
 
-        private void BackgroundColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void BackgroundColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ControlOutput != null && sender is RadioButtons rb)
             {
                 string colorName = rb.SelectedItem as string;
+
                 switch (colorName)
                 {
                     case "Yellow":
@@ -40,11 +38,12 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void BorderBrush_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void BorderBrush_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ControlOutput != null && sender is RadioButtons rb)
             {
                 string colorName = rb.SelectedItem as string;
+
                 switch (colorName)
                 {
                     case "Yellow":

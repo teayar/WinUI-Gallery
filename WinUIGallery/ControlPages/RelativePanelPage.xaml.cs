@@ -17,9 +17,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class RelativePanelPage : Page
     {
-        public RelativePanelPage()
-        {
-            this.InitializeComponent();
-        }
+        public RelativePanelPage() => this.InitializeComponent();
     }
 }

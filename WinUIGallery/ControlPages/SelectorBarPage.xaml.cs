@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Microsoft.UI.Xaml.Controls;
@@ -16,10 +16,9 @@ using WinUIGallery.SamplePages;
 
 namespace WinUIGallery.ControlPages
 {
-    
     public sealed partial class SelectorBarPage : Page
     {
-        int previousSelectedIndex = 0;
+        int previousSelectedIndex;
 
         public ObservableCollection<SolidColorBrush> PinkColorCollection = new ObservableCollection<SolidColorBrush>();
         public ObservableCollection<SolidColorBrush> PlumColorCollection = new ObservableCollection<SolidColorBrush>();
@@ -32,7 +31,7 @@ namespace WinUIGallery.ControlPages
             PopulateColorCollections();
         }
 
-        private void SelectorBar2_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+        void SelectorBar2_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
         {
             SelectorBarItem selectedItem = sender.SelectedItem;
             int currentSelectedIndex = sender.Items.IndexOf(selectedItem);
@@ -64,7 +63,7 @@ namespace WinUIGallery.ControlPages
             previousSelectedIndex = currentSelectedIndex;
         }
 
-        private void SelectorBar3_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+        void SelectorBar3_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
         {
             if (sender.SelectedItem == SelectorBarItemPink)
             {
@@ -80,28 +79,25 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void PopulateColorCollections()
+        void PopulateColorCollections()
         {
             SolidColorBrush solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.Pink);
 
             for (int colorInstance = 0; colorInstance < 5; colorInstance++)
-            {
-                this.PinkColorCollection.Add(solidColorBrush);
-            }
+                PinkColorCollection.Add(solidColorBrush);
+            
 
             solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.Plum);
 
             for (int colorInstance = 0; colorInstance < 7; colorInstance++)
-            {
-                this.PlumColorCollection.Add(solidColorBrush);
-            }
+                PlumColorCollection.Add(solidColorBrush);
+            
 
             solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.PowderBlue);
 
             for (int colorInstance = 0; colorInstance < 4; colorInstance++)
-            {
-                this.PowderBlueColorCollection.Add(solidColorBrush);
-            }
+                PowderBlueColorCollection.Add(solidColorBrush);
+            
         }
     }
 }

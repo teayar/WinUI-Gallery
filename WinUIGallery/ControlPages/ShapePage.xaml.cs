@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using WinUIGallery.Data;
 using WinUIGallery.Helper;
 using System.Collections.Generic;
@@ -18,9 +18,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ShapePage : Page
     {
-        public ShapePage()
-        {
-            this.InitializeComponent();
-        }
+        public ShapePage() => this.InitializeComponent();
     }
 }

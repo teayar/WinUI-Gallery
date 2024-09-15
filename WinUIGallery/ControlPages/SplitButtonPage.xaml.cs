@@ -10,19 +10,21 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class SplitButtonPage : Page
     {
-        private Windows.UI.Color currentColor = Colors.Green;
+        Windows.UI.Color currentColor = Colors.Green;
 
         public SplitButtonPage()
         {
             this.InitializeComponent();
 
             myRichEditBox.Document.Selection.CharacterFormat.ForegroundColor = currentColor;
-            myRichEditBox.Document.Selection.SetText(Microsoft.UI.Text.TextSetOptions.None,
+
+            myRichEditBox.Document.Selection
+                .SetText(Microsoft.UI.Text.TextSetOptions.None,
                 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, " +
                 "sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tempor commodo ullamcorper a lacus.");
         }
 
-        private void GridView_ItemClick(object sender, ItemClickEventArgs e)
+        void GridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var rect = (Rectangle)e.ClickedItem;
             var color = ((SolidColorBrush)rect.Fill).Color;
@@ -33,15 +35,16 @@ namespace WinUIGallery.ControlPages
             currentColor = color;
 
             // Delay required to circumvent GridView bug: https://github.com/microsoft/microsoft-ui-xaml/issues/6350
-            Task.Delay(10).ContinueWith(_ => myColorButton.Flyout.Hide(), TaskScheduler.FromCurrentSynchronizationContext());
+            Task.Delay(10)
+                .ContinueWith(_ => myColorButton.Flyout.Hide(), TaskScheduler.FromCurrentSynchronizationContext());
         }
-        
-        private void RevealColorButton_Click(object sender, RoutedEventArgs e)
+
+        void RevealColorButton_Click(object sender, RoutedEventArgs e)
         {
             myColorButtonReveal.Flyout.Hide();
         }
 
-        private void myColorButton_Click(Microsoft.UI.Xaml.Controls.SplitButton sender, Microsoft.UI.Xaml.Controls.SplitButtonClickEventArgs args)
+        void myColorButton_Click(Microsoft.UI.Xaml.Controls.SplitButton sender, Microsoft.UI.Xaml.Controls.SplitButtonClickEventArgs args)
         {
             var border = (Border)sender.Content;
             var color = ((Microsoft.UI.Xaml.Media.SolidColorBrush)border.Background).Color;
@@ -50,9 +53,9 @@ namespace WinUIGallery.ControlPages
             currentColor = color;
         }
 
-        private void MyRichEditBox_TextChanged(object sender, RoutedEventArgs e)
+        void MyRichEditBox_TextChanged(object sender, RoutedEventArgs e)
         {
-            if(myRichEditBox.Document.Selection.CharacterFormat.ForegroundColor != currentColor)
+            if (myRichEditBox.Document.Selection.CharacterFormat.ForegroundColor != currentColor)
             {
                 myRichEditBox.Document.Selection.CharacterFormat.ForegroundColor = currentColor;
             }

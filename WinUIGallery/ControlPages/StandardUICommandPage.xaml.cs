@@ -14,22 +14,16 @@ namespace WinUIGallery.ControlPages
         public string Text { get; set; }
         public ICommand Command { get; set; }
 
-        public override string ToString()
-        {
-            return Text;
-        }
+        public override string ToString() => Text;
     }
 
     public sealed partial class StandardUICommandPage : Page
     {
         ObservableCollection<ListItemData> collection = new ObservableCollection<ListItemData>();
 
-        public StandardUICommandPage()
-        {
-            this.InitializeComponent();
-        }
+        public StandardUICommandPage() => this.InitializeComponent();
 
-        private void DeleteCommand_ExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+        void DeleteCommand_ExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {
             if (args.Parameter != null)
             {
@@ -42,19 +36,20 @@ namespace WinUIGallery.ControlPages
                     }
                 }
             }
+
             if (ListViewRight.SelectedIndex != -1)
             {
                 collection.RemoveAt(ListViewRight.SelectedIndex);
             }
         }
 
-        private void ListView_Loaded(object sender, RoutedEventArgs e)
+        void ListView_Loaded(object sender, RoutedEventArgs e)
         {
             var listView = (ListView)sender;
             listView.ItemsSource = collection;
         }
 
-        private void ListViewSwipeContainer_PointerEntered(object sender, PointerRoutedEventArgs e)
+        void ListViewSwipeContainer_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             if (e.Pointer.PointerDeviceType == Microsoft.UI.Input.PointerDeviceType.Mouse || e.Pointer.PointerDeviceType == Microsoft.UI.Input.PointerDeviceType.Pen)
             {
@@ -62,12 +57,12 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void ListViewSwipeContainer_PointerExited(object sender, PointerRoutedEventArgs e)
+        void ListViewSwipeContainer_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             VisualStateManager.GoToState(sender as Control, "HoverButtonsHidden", true);
         }
 
-        private void ControlExample_Loaded(object sender, RoutedEventArgs e)
+        void ControlExample_Loaded(object sender, RoutedEventArgs e)
         {
             if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 7))
             {
@@ -90,16 +85,19 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void ListViewRight_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+        void ListViewRight_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
         {
             MenuFlyout flyout = new MenuFlyout();
             ListItemData data = (ListItemData)args.Item;
             MenuFlyoutItem item = new MenuFlyoutItem() { Command = data.Command };
-            flyout.Opened += delegate (object element, object e) {
+
+            flyout.Opened += delegate (object element, object e)
+            {
                 MenuFlyout flyoutElement = element as MenuFlyout;
                 ListViewItem elementToHighlight = flyoutElement.Target as ListViewItem;
                 elementToHighlight.IsSelected = true;
             };
+
             flyout.Items.Add(item);
             args.ItemContainer.ContextFlyout = flyout;
         }

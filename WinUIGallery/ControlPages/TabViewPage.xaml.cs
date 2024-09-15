@@ -29,31 +29,30 @@ namespace WinUIGallery.ControlPages
 
             // Launching isn't supported yet on Desktop
             // Blocked on Task 27517663: DCPP Preview 2 Bug: Dragging in TabView windowing sample causes app to crash
-            //this.LaunchExample.Visibility = Visibility.Collapsed;
+            // this.LaunchExample.Visibility = Visibility.Collapsed;
 
             InitializeDataBindingSampleData();
         }
 
-#region SharedTabViewLogic
-        private void TabView_Loaded(object sender, RoutedEventArgs e)
+        #region SharedTabViewLogic
+        void TabView_Loaded(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i < 3; i++)
-            {
                 (sender as TabView).TabItems.Add(CreateNewTab(i));
-            }
+            
         }
 
-        private void TabView_AddButtonClick(TabView sender, object args)
+        void TabView_AddButtonClick(TabView sender, object args)
         {
             sender.TabItems.Add(CreateNewTab(sender.TabItems.Count));
         }
 
-        private void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+        void TabView_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
             sender.TabItems.Remove(args.Tab);
         }
 
-        private TabViewItem CreateNewTab(int index)
+        TabViewItem CreateNewTab(int index)
         {
             TabViewItem newItem = new TabViewItem
             {
@@ -81,20 +80,19 @@ namespace WinUIGallery.ControlPages
 
             return newItem;
         }
-#endregion
+        #endregion
 
-#region ItemsSourceSample
-        private void InitializeDataBindingSampleData()
+        #region ItemsSourceSample
+        void InitializeDataBindingSampleData()
         {
             myDatas = new ObservableCollection<MyData>();
 
             for (int index = 0; index < 3; index++)
-            {
                 myDatas.Add(CreateNewMyData(index));
-            }
+            
         }
 
-        private MyData CreateNewMyData(int index)
+        MyData CreateNewMyData(int index)
         {
             var newData = new MyData
             {
@@ -122,21 +120,21 @@ namespace WinUIGallery.ControlPages
             return newData;
         }
 
-        private void TabViewItemsSourceSample_AddTabButtonClick(TabView sender, object args)
+        void TabViewItemsSourceSample_AddTabButtonClick(TabView sender, object args)
         {
             // Add a new MyData item to the collection. TabView automatically generates a TabViewItem.
             myDatas.Add(CreateNewMyData(myDatas.Count));
         }
 
-        private void TabViewItemsSourceSample_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+        void TabViewItemsSourceSample_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
             // Remove the requested MyData object from the collection.
             myDatas.Remove(args.Item as MyData);
         }
-#endregion
+        #endregion
 
-#region KeyboardAcceleratorSample
-        private void NewTabKeyboardAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+        #region KeyboardAcceleratorSample
+        void NewTabKeyboardAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
         {
             var senderTabView = args.Element as TabView;
             senderTabView.TabItems.Add(CreateNewTab(senderTabView.TabItems.Count));
@@ -144,7 +142,7 @@ namespace WinUIGallery.ControlPages
             args.Handled = true;
         }
 
-        private void CloseSelectedTabKeyboardAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+        void CloseSelectedTabKeyboardAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
         {
             var InvokedTabView = (args.Element as TabView);
 
@@ -157,7 +155,7 @@ namespace WinUIGallery.ControlPages
             args.Handled = true;
         }
 
-        private void NavigateToNumberedTabKeyboardAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+        void NavigateToNumberedTabKeyboardAccelerator_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
         {
             var InvokedTabView = (args.Element as TabView);
 
@@ -203,12 +201,13 @@ namespace WinUIGallery.ControlPages
 
             args.Handled = true;
         }
-#endregion
+        #endregion
 
-        private void TabWidthBehaviorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void TabWidthBehaviorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string widthModeString = (e.AddedItems[0] as ComboBoxItem).Content.ToString();
             TabViewWidthMode widthMode = TabViewWidthMode.Equal;
+
             switch (widthModeString)
             {
                 case "Equal":
@@ -221,13 +220,15 @@ namespace WinUIGallery.ControlPages
                     widthMode = TabViewWidthMode.Compact;
                     break;
             }
+
             TabView3.TabWidthMode = widthMode;
         }
 
-        private void TabCloseButtonOverlayModeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void TabCloseButtonOverlayModeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string overlayModeString = (e.AddedItems[0] as ComboBoxItem).Content.ToString();
             TabViewCloseButtonOverlayMode overlayMode = TabViewCloseButtonOverlayMode.Auto;
+
             switch (overlayModeString)
             {
                 case "Auto":
@@ -240,10 +241,11 @@ namespace WinUIGallery.ControlPages
                     overlayMode = TabViewCloseButtonOverlayMode.Always;
                     break;
             }
+
             TabView4.CloseButtonOverlayMode = overlayMode;
         }
 
-        private void TabViewWindowingButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        void TabViewWindowingButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             var tabViewSample = new TabViewWindowingSamplePage();
 

@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
@@ -22,7 +22,7 @@ namespace WinUIGallery.ControlPages
             ScrollViewerControl.ZoomToFactor(4.0f);
         }
 
-        private void ZoomModeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void ZoomModeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ScrollViewerControl != null && ZoomSlider != null)
             {
@@ -39,7 +39,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void ZoomSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        void ZoomSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             if (ScrollViewerControl != null)
             {
@@ -47,7 +47,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void hsmCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void hsmCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ScrollViewerControl != null)
             {
@@ -58,7 +58,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void hsbvCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void hsbvCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ScrollViewerControl != null)
             {
@@ -69,7 +69,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void vsmCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void vsmCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ScrollViewerControl != null)
             {
@@ -80,7 +80,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void vsbvCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void vsbvCombo_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ScrollViewerControl != null)
             {
@@ -91,12 +91,12 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void ScrollViewerControl_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
+        void ScrollViewerControl_ManipulationCompleted(object sender, ManipulationCompletedRoutedEventArgs e)
         {
             ZoomSlider.Value = ScrollViewerControl.ZoomFactor;
         }
 
-        private void ScrollViewerControl_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        void ScrollViewerControl_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
             if (!e.IsIntermediate)
             {

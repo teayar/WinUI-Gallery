@@ -29,7 +29,7 @@ namespace WinUIGallery.DesktopWap.DataModel
 
         public static List<IconData> Icons => Instance.icons;
 
-        private List<IconData> icons = new();
+        List<IconData> icons = new();
 
         private IconsDataSource() { }
 
@@ -38,19 +38,18 @@ namespace WinUIGallery.DesktopWap.DataModel
         public async Task<List<IconData>> LoadIcons()
         {
             lock (_lock)
-            {
-                if (icons.Count != 0)
-                {
-                    return icons;
-                }
-            }
+                if (icons.Count != 0) return icons;
+            
+
             var jsonText = await FileLoader.LoadText("DataModel/IconsData.json");
+
             lock (_lock)
             {
                 if (icons.Count == 0)
                 {
                     icons = JsonSerializer.Deserialize(jsonText, typeof(List<IconData>), IconDataListContext.Default) as List<IconData>;
                 }
+
                 return icons;
             }
         }
