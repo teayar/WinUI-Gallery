@@ -6,8 +6,7 @@ namespace WinUIGallery
     // https://learn.microsoft.com/windows/apps/design/devices/designing-for-tv#custom-visual-state-trigger-for-xbox
     class DeviceFamilyTrigger : StateTriggerBase
     {
-        private string _actualDeviceFamily;
-        private string _triggerDeviceFamily;
+        string _actualDeviceFamily, _triggerDeviceFamily;
 
         public string DeviceFamily
         {

@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using WinUIGallery.Data;
 using System.Linq;
 using Microsoft.UI.Xaml.Navigation;
@@ -18,10 +18,7 @@ namespace WinUIGallery
     /// </summary>
     public sealed partial class AllControlsPage : ItemsPageBase
     {
-        public AllControlsPage()
-        {
-            this.InitializeComponent();
-        }
+        public AllControlsPage() => this.InitializeComponent();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

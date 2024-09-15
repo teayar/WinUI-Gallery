@@ -21,9 +21,9 @@ namespace WinUIGallery.Common
     /// </summary>
     internal sealed class SuspensionManager
     {
-        private static Dictionary<string, object> _sessionState = new Dictionary<string, object>();
-        private static List<Type> _knownTypes = new List<Type>();
-        private const string sessionStateFilename = "_sessionState.xml";
+        static Dictionary<string, object> _sessionState = new Dictionary<string, object>();
+        static List<Type> _knownTypes = new List<Type>();
+        const string sessionStateFilename = "_sessionState.xml";
 
         /// <summary>
         /// Provides access to global session state for the current session.  This state is
@@ -32,20 +32,14 @@ namespace WinUIGallery.Common
         /// <see cref="DataContractSerializer"/> and should be as compact as possible.  Strings
         /// and other self-contained data types are strongly recommended.
         /// </summary>
-        public static Dictionary<string, object> SessionState
-        {
-            get { return _sessionState; }
-        }
+        public static Dictionary<string, object> SessionState => _sessionState;
 
         /// <summary>
         /// List of custom types provided to the <see cref="DataContractSerializer"/> when
         /// reading and writing session state.  Initially empty, additional types may be
         /// added to customize the serialization process.
         /// </summary>
-        public static List<Type> KnownTypes
-        {
-            get { return _knownTypes; }
-        }
+        public static List<Type> KnownTypes => _knownTypes;
 
         /// <summary>
         /// Save the current <see cref="SessionState"/>.  Any <see cref="Frame"/> instances
@@ -78,6 +72,7 @@ namespace WinUIGallery.Common
                 // Get an output stream for the SessionState file and write the state asynchronously
                 StorageFolder localFolder = WindowHelper.GetAppLocalFolder();
                 StorageFile file = await localFolder.CreateFileAsync(sessionStateFilename, CreationCollisionOption.ReplaceExisting);
+
                 using (Stream fileStream = await file.OpenStreamForWriteAsync())
                 {
                     sessionData.Seek(0, SeekOrigin.Begin);
@@ -111,6 +106,7 @@ namespace WinUIGallery.Common
                 StorageFolder localFolder = WindowHelper.GetAppLocalFolder();
 
                 StorageFile file = await localFolder.GetFileAsync(sessionStateFilename);
+
                 using (IInputStream inStream = await file.OpenSequentialReadAsync())
                 {
                     // Deserialize the Session State
@@ -134,11 +130,11 @@ namespace WinUIGallery.Common
             }
         }
 
-        private static DependencyProperty FrameSessionStateKeyProperty =
-            DependencyProperty.RegisterAttached("_FrameSessionStateKey", typeof(String), typeof(SuspensionManager), new PropertyMetadata(null));
-        private static DependencyProperty FrameSessionStateProperty =
-            DependencyProperty.RegisterAttached("_FrameSessionState", typeof(Dictionary<String, Object>), typeof(SuspensionManager), new PropertyMetadata(null));
-        private static List<WeakReference<Frame>> _registeredFrames = new List<WeakReference<Frame>>();
+        static DependencyProperty FrameSessionStateKeyProperty =
+            DependencyProperty.RegisterAttached("_FrameSessionStateKey", typeof(string), typeof(SuspensionManager), new PropertyMetadata(null));
+        static DependencyProperty FrameSessionStateProperty =
+            DependencyProperty.RegisterAttached("_FrameSessionState", typeof(Dictionary<string, object>), typeof(SuspensionManager), new PropertyMetadata(null));
+        static List<WeakReference<Frame>> _registeredFrames = new List<WeakReference<Frame>>();
 
         /// <summary>
         /// Registers a <see cref="Frame"/> instance to allow its navigation history to be saved to
@@ -185,6 +181,7 @@ namespace WinUIGallery.Common
             // Remove session state and remove the frame from the list of frames whose navigation
             // state will be saved (along with any weak references that are no longer reachable)
             SessionState.Remove((string)frame.GetValue(FrameSessionStateKeyProperty));
+
             _registeredFrames.RemoveAll((weakFrameReference) =>
             {
                 return !weakFrameReference.TryGetTarget(out Frame testFrame) || testFrame == frame;
@@ -211,6 +208,7 @@ namespace WinUIGallery.Common
             if (frameState == null)
             {
                 var frameSessionKey = (string)frame.GetValue(FrameSessionStateKeyProperty);
+
                 if (frameSessionKey != null)
                 {
                     // Registered frames reflect the corresponding session state
@@ -218,6 +216,7 @@ namespace WinUIGallery.Common
                     {
                         _sessionState[frameSessionKey] = new Dictionary<string, object>();
                     }
+
                     frameState = (Dictionary<string, object>)_sessionState[frameSessionKey];
                 }
                 else
@@ -225,21 +224,24 @@ namespace WinUIGallery.Common
                     // Frames that aren't registered have transient state
                     frameState = new Dictionary<string, object>();
                 }
+
                 frame.SetValue(FrameSessionStateProperty, frameState);
             }
+
             return frameState;
         }
 
-        private static void RestoreFrameNavigationState(Frame frame)
+        static void RestoreFrameNavigationState(Frame frame)
         {
             var frameState = SessionStateForFrame(frame);
+
             if (frameState.ContainsKey("Navigation"))
             {
                 frame.SetNavigationState((string)frameState["Navigation"]);
             }
         }
 
-        private static void SaveFrameNavigationState(Frame frame)
+        static void SaveFrameNavigationState(Frame frame)
         {
             var frameState = SessionStateForFrame(frame);
             frameState["Navigation"] = frame.GetNavigationState();
@@ -254,7 +256,6 @@ namespace WinUIGallery.Common
         public SuspensionManagerException(Exception e)
             : base("SuspensionManager failed", e)
         {
-
         }
     }
 }

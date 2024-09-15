@@ -3,7 +3,6 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace WinUIGallery.Common
 {
-
     public class CategoryBase { }
 
     public class Category : CategoryBase

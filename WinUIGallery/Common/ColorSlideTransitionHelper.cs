@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // This code is licensed under the MIT License (MIT).
@@ -7,7 +7,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 
 using System;
 using System.Numerics;
@@ -32,7 +32,6 @@ namespace WinUIGallery.Common
 
         #endregion
 
-
         #region Ctor
 
         /// <summary>
@@ -51,12 +50,10 @@ namespace WinUIGallery.Common
 
             InitializeSlideAnimation();
 
-
             ElementCompositionPreview.SetElementChildVisual(hostForVisual, _containerForVisuals);
         }
 
         #endregion
-
 
         #region Public API surface
 
@@ -66,7 +63,6 @@ namespace WinUIGallery.Common
         /// Indicates that the color slide transition has completed.
         /// </summary>
         public event ColorSlideTransitionCompletedEventHandler ColorSlideTransitionCompleted;
-
 
         /// <summary>
         /// Starts the color slide transition using the specified color and boundary sizes.
@@ -91,15 +87,13 @@ namespace WinUIGallery.Common
 
         #endregion
 
-
         #region All the heavy lifting
         /// <summary>
         /// Creates a Visual using the specific color and constraints
         /// </summary>
-        private SpriteVisual CreateVisualWithColorAndPosition(Windows.UI.Color color,
+        SpriteVisual CreateVisualWithColorAndPosition(Windows.UI.Color color,
                                                               Windows.Foundation.Rect finalBounds)
         {
-
             var offset = new Vector3((float)finalBounds.Left, (float)finalBounds.Top, 0f);
             var size = new Vector2((float)finalBounds.Width, (float)finalBounds.Height);
 
@@ -109,29 +103,24 @@ namespace WinUIGallery.Common
             coloredRectangle.Size = size;
 
             return coloredRectangle;
-
         }
-
-
 
         /// <summary>
         /// Creates an animation template for a "color slide" type effect on a rectangular colored visual.
         /// This is a sub-second animation on the Scale property of the visual.
         /// </summary>
-        private void InitializeSlideAnimation()
+        void InitializeSlideAnimation()
         {
             _slideAnimation = _compositor.CreateScalarKeyFrameAnimation();
             _slideAnimation.InsertKeyFrame(1.0f, 0f);
             _slideAnimation.Duration = TimeSpan.FromMilliseconds(800); // keeping this under a sec to not be obtrusive
-
         }
 
         /// <summary>
         /// Runs the animation
         /// </summary>
-        private void TriggerSlideAnimation(SpriteVisual colorVisual)
+        void TriggerSlideAnimation(SpriteVisual colorVisual)
         {
-
             // animate the Scale of the visual within a scoped batch
             // this gives us transactionality and allows us to do work once the transaction completes
             var batchTransaction = _compositor.CreateScopedBatch(CompositionBatchTypes.Animation);
@@ -144,13 +133,12 @@ namespace WinUIGallery.Common
             batchTransaction.Completed += SlideAnimationCompleted;
 
             batchTransaction.End();
-
         }
 
         /// <summary>
         /// Cleans up after the slide animation has ended
         /// </summary>
-        private void SlideAnimationCompleted(object sender, CompositionBatchCompletedEventArgs args)
+        void SlideAnimationCompleted(object sender, CompositionBatchCompletedEventArgs args)
         {
             if (!firstRun)
             {
@@ -170,6 +158,5 @@ namespace WinUIGallery.Common
         }
 
         #endregion
-
     }
 }

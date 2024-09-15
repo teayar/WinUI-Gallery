@@ -35,12 +35,12 @@ namespace WinUIGallery.Common
 
             // Initialize column offsets
             int numColumns = Math.Max(1, (int)(availableSize.Width / Width));
+
             if (m_columnOffsets.Count == 0)
             {
                 for (int i = 0; i < numColumns; i++)
-                {
                     m_columnOffsets.Add(0);
-                }
+                
             }
 
             m_firstIndex = GetStartIndex(viewport);
@@ -91,17 +91,18 @@ namespace WinUIGallery.Common
                     child.Arrange(m_cachedBounds[index]);
                 }
             }
+
             return finalSize;
         }
 
-        private void UpdateCachedBounds(Size availableSize)
+        void UpdateCachedBounds(Size availableSize)
         {
             int numColumns = Math.Max(1, (int)(availableSize.Width / Width));
             m_columnOffsets.Clear();
+
             for (int i = 0; i < numColumns; i++)
-            {
                 m_columnOffsets.Add(0);
-            }
+            
 
             for (int index = 0; index < m_cachedBounds.Count; index++)
             {
@@ -114,9 +115,10 @@ namespace WinUIGallery.Common
             cachedBoundsInvalid = false;
         }
 
-        private int GetStartIndex(Rect viewport)
+        int GetStartIndex(Rect viewport)
         {
             int startIndex = 0;
+
             if (m_cachedBounds.Count == 0)
             {
                 startIndex = 0;
@@ -129,6 +131,7 @@ namespace WinUIGallery.Common
                 for (int i = 0; i < m_cachedBounds.Count; i++)
                 {
                     var currentBounds = m_cachedBounds[i];
+
                     if (currentBounds.Y < viewport.Bottom &&
                         currentBounds.Bottom > viewport.Top)
                     {
@@ -141,13 +144,15 @@ namespace WinUIGallery.Common
             return startIndex;
         }
 
-        private int GetIndexOfLowestColumn(List<double> columnOffsets, out double lowestOffset)
+        int GetIndexOfLowestColumn(List<double> columnOffsets, out double lowestOffset)
         {
             int lowestIndex = 0;
             lowestOffset = columnOffsets[lowestIndex];
+
             for (int index = 0; index < columnOffsets.Count; index++)
             {
                 var currentOffset = columnOffsets[index];
+
                 if (lowestOffset > currentOffset)
                 {
                     lowestOffset = currentOffset;
@@ -158,12 +163,14 @@ namespace WinUIGallery.Common
             return lowestIndex;
         }
 
-        private Size GetExtentSize(Size availableSize)
+        Size GetExtentSize(Size availableSize)
         {
             double largestColumnOffset = m_columnOffsets[0];
+
             for (int index = 0; index < m_columnOffsets.Count; index++)
             {
                 var currentOffset = m_columnOffsets[index];
+
                 if (largestColumnOffset < currentOffset)
                 {
                     largestColumnOffset = currentOffset;
@@ -173,11 +180,10 @@ namespace WinUIGallery.Common
             return new Size(availableSize.Width, largestColumnOffset);
         }
 
-        int m_firstIndex = 0;
-        int m_lastIndex = 0;
-        double m_lastAvailableWidth = 0.0;
+        int m_firstIndex, m_lastIndex;
+        double m_lastAvailableWidth;
         List<double> m_columnOffsets = new List<double>();
         List<Rect> m_cachedBounds = new List<Rect>();
-        private bool cachedBoundsInvalid = false;
+        bool cachedBoundsInvalid;
     }
 }

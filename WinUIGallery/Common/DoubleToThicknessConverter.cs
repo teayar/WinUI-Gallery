@@ -13,6 +13,7 @@ namespace WinUIGallery.Common
                 var val = (double)value;
                 return new Thickness(val);
             }
+
             return false;
         }
 

@@ -16,8 +16,8 @@ namespace WinUIGallery.Common
     /// </summary>
     public class RelayCommand : ICommand
     {
-        private readonly Action _execute;
-        private readonly Func<bool> _canExecute;
+        readonly Action _execute;
+        readonly Func<bool> _canExecute;
 
         /// <summary>
         /// Raised when RaiseCanExecuteChanged is called.
@@ -51,10 +51,7 @@ namespace WinUIGallery.Common
         /// Data used by the command. If the command does not require data to be passed, this object can be set to null.
         /// </param>
         /// <returns>true if this command can be executed; otherwise, false.</returns>
-        public bool CanExecute(object parameter)
-        {
-            return _canExecute == null ? true : _canExecute();
-        }
+        public bool CanExecute(object parameter) => _canExecute == null ? true : _canExecute();
 
         /// <summary>
         /// Executes the <see cref="RelayCommand"/> on the current command target.
@@ -62,19 +59,13 @@ namespace WinUIGallery.Common
         /// <param name="parameter">
         /// Data used by the command. If the command does not require data to be passed, this object can be set to null.
         /// </param>
-        public void Execute(object parameter)
-        {
-            _execute();
-        }
+        public void Execute(object parameter) => _execute();
 
         /// <summary>
         /// Method used to raise the <see cref="CanExecuteChanged"/> event
         /// to indicate that the return value of the <see cref="CanExecute"/>
         /// method has changed.
         /// </summary>
-        public void RaiseCanExecuteChanged()
-        {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
-        }
+        public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
     }
 }

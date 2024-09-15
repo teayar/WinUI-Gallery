@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -33,11 +33,10 @@ namespace WinUIGallery
     /// </summary>
     sealed partial class App : Application
     {
-        private static Window startupWindow;
-        private static Win32WindowHelper win32WindowHelper;
-        private static int registeredKeyPressedHook = 0;
-        private HookProc keyEventHook;
-
+        static Window startupWindow;
+        static Win32WindowHelper win32WindowHelper;
+        static int registeredKeyPressedHook;
+        HookProc keyEventHook;
 
         public static string WinAppSdkDetails
         {
@@ -57,6 +56,7 @@ namespace WinUIGallery
                         from module in Process.GetCurrentProcess().Modules.OfType<ProcessModule>()
                         where module.FileName.EndsWith("Microsoft.WindowsAppRuntime.Insights.Resource.dll")
                         select FileVersionInfo.GetVersionInfo(module.FileName);
+
                     return WinAppSdkDetails + ", Windows App Runtime " + windowsAppRuntimeVersion.First().FileVersion;
                 }
                 catch
@@ -70,13 +70,7 @@ namespace WinUIGallery
         // On UWP, this is simply Window.Current
         // On Desktop, multiple Windows may be created, and the StartupWindow may have already
         // been closed.
-        public static Window StartupWindow
-        {
-            get
-            {
-                return startupWindow;
-            }
-        }
+        public static Window StartupWindow => startupWindow;
         /// <summary>
         /// Initializes the singleton Application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -108,6 +102,7 @@ namespace WinUIGallery
             {
                 throw new InvalidOperationException("Generic parameter 'TEnum' must be an enum.");
             }
+
             return (TEnum)Enum.Parse(typeof(TEnum), text);
         }
 
@@ -131,6 +126,7 @@ namespace WinUIGallery
             {
                 this.DebugSettings.BindingFailed += DebugSettings_BindingFailed;
             }
+
 #endif
 
             keyEventHook = new HookProc(KeyEventHook);
@@ -139,7 +135,7 @@ namespace WinUIGallery
             EnsureWindow();
         }
 
-        private int KeyEventHook(int nCode, IntPtr wParam, IntPtr lParam)
+        int KeyEventHook(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0 && IsKeyDownHook(lParam))
             {
@@ -149,9 +145,8 @@ namespace WinUIGallery
             return CallNextHookEx(registeredKeyPressedHook, nCode, wParam, lParam);
         }
 
-        private void DebugSettings_BindingFailed(object sender, BindingFailedEventArgs e)
+        void DebugSettings_BindingFailed(object sender, BindingFailedEventArgs e)
         {
-
         }
 
 #if WINUI_PRERELEASE
@@ -161,7 +156,7 @@ namespace WinUIGallery
         }
 #endif
 
-        private async void EnsureWindow(IActivatedEventArgs args = null)
+        async void EnsureWindow(IActivatedEventArgs args = null)
         {
             // No matter what our destination is, we're going to need control data loaded - let's knock that out now.
             // We'll never need to do this again.
@@ -187,15 +182,17 @@ namespace WinUIGallery
                         }
                         catch (SuspensionManagerException)
                         {
-                            //Something went wrong restoring state.
-                            //Assume there is no state and continue
+                            // Something went wrong restoring state.
+                            // Assume there is no state and continue
                         }
                     }
 
                     targetPageArguments = ((Windows.ApplicationModel.Activation.LaunchActivatedEventArgs)args).Arguments;
                 }
             }
+
             var eventargs = Microsoft.Windows.AppLifecycle.AppInstance.GetCurrent().GetActivatedEventArgs();
+
             if (eventargs != null && eventargs.Kind is ExtendedActivationKind.Protocol && eventargs.Data is ProtocolActivatedEventArgs)
             {
                 ProtocolActivatedEventArgs ProtocolArgs = eventargs.Data as ProtocolActivatedEventArgs;
@@ -238,14 +235,17 @@ namespace WinUIGallery
         {
             Frame rootFrame;
             NavigationRootPage rootPage = StartupWindow.Content as NavigationRootPage;
+
             if (rootPage == null)
             {
                 rootPage = new NavigationRootPage();
                 rootFrame = (Frame)rootPage.FindName("rootFrame");
+
                 if (rootFrame == null)
                 {
                     throw new Exception("Root frame not found");
                 }
+
                 SuspensionManager.RegisterFrame(rootFrame, "AppFrame");
                 rootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
                 rootFrame.NavigationFailed += OnNavigationFailed;

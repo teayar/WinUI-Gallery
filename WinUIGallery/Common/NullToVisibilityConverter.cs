@@ -9,7 +9,6 @@ namespace WinUIGallery.Common
         public Visibility NullValue { get; set; } = Visibility.Collapsed;
         public Visibility NonNullValue { get; set; } = Visibility.Visible;
 
-
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             return (value == null) ? NullValue : NonNullValue;

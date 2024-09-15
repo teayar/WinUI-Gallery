@@ -5,7 +5,6 @@ using System;
 
 namespace WinUIGallery.Common
 {
-
     [ContentProperty(Name = "ItemTemplate")]
     class MenuItemTemplateSelector : DataTemplateSelector
     {

@@ -24,20 +24,17 @@ namespace WinUIGallery
         /// <summary>
         /// The orientation of the structure.
         /// </summary>
-        private Orientation _orientation;
+        Orientation _orientation;
 
         /// <summary>
         /// Gets the orientation of the structure.
         /// </summary>
-        public Orientation Orientation
-        {
-            get { return _orientation; }
-        }
+        public Orientation Orientation => _orientation;
 
         /// <summary>
         /// The size dimension that grows directly with layout placement.
         /// </summary>
-        private double _direct;
+        double _direct;
 
         /// <summary>
         /// Gets or sets the size dimension that grows directly with layout
@@ -53,7 +50,7 @@ namespace WinUIGallery
         /// The size dimension that grows indirectly with the maximum value of
         /// the layout row or column.
         /// </summary>
-        private double _indirect;
+        double _indirect;
 
         /// <summary>
         /// Gets or sets the size dimension that grows indirectly with the

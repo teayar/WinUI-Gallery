@@ -9,14 +9,10 @@ namespace WinUIGallery.Common
         public Visibility EmptyValue { get; set; } = Visibility.Collapsed;
         public Visibility NonEmptyValue { get; set; } = Visibility.Visible;
 
-
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (value == null)
-            {
-                return EmptyValue;
-            }
-            else if(value is string stringValue && stringValue != "")
+            if (value == null) return EmptyValue;
+            else if (value is string stringValue && stringValue != "")
             {
                 return NonEmptyValue;
             }

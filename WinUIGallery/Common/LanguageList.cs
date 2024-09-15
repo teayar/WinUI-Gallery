@@ -8,10 +8,8 @@ namespace WinUIGallery.Common
 {
     class LanguageList
     {
-        private List<Language> _languages;
-        public List<Language> Languages {
-            get { return _languages; }
-        }
+        List<Language> _languages;
+        public List<Language> Languages => _languages;
 
         public LanguageList()
         {
@@ -106,7 +104,6 @@ namespace WinUIGallery.Common
             _languages.Add(new Language("Vietnamese", "vi"));
             _languages.Add(new Language("Welsh", "cy"));
             _languages.Add(new Language("Wolof", "wo"));
-            
         }
 
         public class Language
@@ -114,10 +111,10 @@ namespace WinUIGallery.Common
             public string Name { get; set; }
             public string Code { get; set; }
 
-            public Language (string name, string code)
+            public Language(string name, string code)
             {
-                this.Name = name;
-                this.Code = code;
+                Name = name;
+                Code = code;
             }
         }
     }
