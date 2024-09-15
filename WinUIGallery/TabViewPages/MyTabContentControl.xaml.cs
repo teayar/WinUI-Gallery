@@ -7,9 +7,6 @@ namespace WinUIGallery.TabViewPages
 {
     public sealed partial class MyTabContentControl : UserControl
     {
-        public MyTabContentControl()
-        {
-            this.InitializeComponent();
-        }
+        public MyTabContentControl() => this.InitializeComponent();
     }
 }

@@ -17,27 +17,12 @@ namespace WinUIGalleryUnitTests
 {
     public sealed partial class UnitTestAppWindow : Window
     {
-        public UnitTestAppWindow()
-        {
-            this.InitializeComponent();
-        }
+        public UnitTestAppWindow() => this.InitializeComponent();
 
-        public Grid RootGrid
-        {
-            get
-            {
-                return rootGrid;
-            }
-        }
+        public Grid RootGrid => rootGrid;
 
-        public void AddToVisualTree(UIElement element)
-        {
-            this.RootGrid.Children.Add(element);
-        }
+        public void AddToVisualTree(UIElement element) => RootGrid.Children.Add(element);
 
-        public void CleanupVisualTree()
-        {
-            this.RootGrid.Children.Clear();
-        }
+        public void CleanupVisualTree() => RootGrid.Children.Clear();
     }
 }

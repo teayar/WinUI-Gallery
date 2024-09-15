@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using WinUIGallery.Common;
 using WinUIGallery.Data;
 using WinUIGallery.Helper;
@@ -19,7 +19,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 
-
 namespace WinUIGallery
 {
     /// <summary>
@@ -27,8 +26,8 @@ namespace WinUIGallery
     /// </summary>
     public sealed partial class SearchResultsPage : ItemsPageBase
     {
-        private IEnumerable<Filter> _filters;
-        private Filter _selectedFilter;
+        IEnumerable<Filter> _filters;
+        Filter _selectedFilter;
         string _queryText;
 
         public IEnumerable<Filter> Filters
@@ -37,10 +36,7 @@ namespace WinUIGallery
             set { this.SetProperty(ref _filters, value); }
         }
 
-        public SearchResultsPage()
-        {
-            this.InitializeComponent();
-        }
+        public SearchResultsPage() => this.InitializeComponent();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -59,12 +55,12 @@ namespace WinUIGallery
             _selectedFilter = (Filter)resultsNavView.SelectedItem;
         }
 
-        private void OnResultsNavViewLoaded(object sender, RoutedEventArgs e)
+        void OnResultsNavViewLoaded(object sender, RoutedEventArgs e)
         {
             resultsNavView.Focus(FocusState.Programmatic);
         }
 
-        private void OnResultsNavViewSelectionChanged(object sender, NavigationViewSelectionChangedEventArgs e)
+        void OnResultsNavViewSelectionChanged(object sender, NavigationViewSelectionChangedEventArgs e)
         {
             if (e.SelectedItem != null)
             {
@@ -72,7 +68,7 @@ namespace WinUIGallery
             }
         }
 
-        private void BuildFilterList(string queryText)
+        void BuildFilterList(string queryText)
         {
             if (!string.IsNullOrEmpty(queryText))
             {
@@ -82,6 +78,7 @@ namespace WinUIGallery
 
                 // Query is already lowercase
                 var querySplit = queryText.ToLower().Split(" ");
+
                 foreach (var group in ControlInfoDataSource.Instance.Groups)
                 {
                     var matchingItems =
@@ -91,6 +88,7 @@ namespace WinUIGallery
                             // e.g. for query "split button" the only result should "SplitButton" since its the only query to contain "split" and "button"
                             // If any of the sub tokens is not in the string, we ignore the item. So the search gets more precise with more words
                             bool flag = true;
+
                             foreach (string queryToken in querySplit)
                             {
                                 // Check if token is in title or subtitle
@@ -100,8 +98,10 @@ namespace WinUIGallery
                                     flag = false;
                                 }
                             }
+
                             return flag;
                         }).ToList();
+
                     int numberOfMatchingItems = matchingItems.Count();
 
                     if (numberOfMatchingItems > 0)
@@ -151,23 +151,20 @@ namespace WinUIGallery
     /// </summary>
     public sealed class Filter : INotifyPropertyChanged
     {
-        private string _name;
-        private int _count;
-        private bool? _active;
-        private List<ControlInfoDataItem> _items;
+        string _name;
+        int _count;
+        bool? _active;
+        List<ControlInfoDataItem> _items;
 
         public Filter(string name, int count, List<ControlInfoDataItem> controlInfoList, bool active = false)
         {
-            this.Name = name;
-            this.Count = count;
-            this.Active = active;
-            this.Items = controlInfoList;
+            Name = name;
+            Count = count;
+            Active = active;
+            Items = controlInfoList;
         }
 
-        public override string ToString()
-        {
-            return Description;
-        }
+        public override string ToString() => Description;
 
         public List<ControlInfoDataItem> Items
         {
@@ -178,13 +175,13 @@ namespace WinUIGallery
         public string Name
         {
             get { return _name; }
-            set { if (this.SetProperty(ref _name, value)) this.NotifyPropertyChanged(nameof(Description)); }
+            set { if (this.SetProperty(ref _name, value)) NotifyPropertyChanged(nameof(Description)); }
         }
 
         public int Count
         {
             get { return _count; }
-            set { if (this.SetProperty(ref _count, value)) this.NotifyPropertyChanged(nameof(Description)); }
+            set { if (this.SetProperty(ref _count, value)) NotifyPropertyChanged(nameof(Description)); }
         }
 
         public bool? Active
@@ -193,10 +190,7 @@ namespace WinUIGallery
             set { this.SetProperty(ref _active, value); }
         }
 
-        public string Description
-        {
-            get { return string.Format("{0} ({1})", _name, _count); }
-        }
+        public string Description => string.Format("{0} ({1})", _name, _count);
 
         /// <summary>
         /// Multicast event for property change notifications.
@@ -215,12 +209,12 @@ namespace WinUIGallery
         /// support CallerMemberName.</param>
         /// <returns>True if the value was changed, false if the existing value matched the
         /// desired value.</returns>
-        private bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+        bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
         {
             if (object.Equals(storage, value)) return false;
 
             storage = value;
-            this.NotifyPropertyChanged(propertyName);
+            NotifyPropertyChanged(propertyName);
             return true;
         }
 
@@ -230,9 +224,9 @@ namespace WinUIGallery
         /// <param name="propertyName">Name of the property used to notify listeners.  This
         /// value is optional and can be provided automatically when invoked from compilers
         /// that support <see cref="CallerMemberNameAttribute"/>.</param>
-        private void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+        void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

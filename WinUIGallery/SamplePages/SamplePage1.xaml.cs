@@ -7,10 +7,7 @@ namespace WinUIGallery.SamplePages
 {
     public sealed partial class SamplePage1 : Page
     {
-        public SamplePage1()
-        {
-            this.InitializeComponent();
-        }
+        public SamplePage1() => this.InitializeComponent();
 
         public void PrepareConnectedAnimation(ConnectedAnimationConfiguration config)
         {
@@ -27,10 +24,7 @@ namespace WinUIGallery.SamplePages
             base.OnNavigatedTo(e);
 
             var anim = ConnectedAnimationService.GetForCurrentView().GetAnimation("BackwardConnectedAnimation");
-            if (anim != null)
-            {
-                anim.TryStart(SourceElement);
-            }
+            if (anim != null) anim.TryStart(SourceElement);
         }
     }
 }

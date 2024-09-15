@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System;
 using System.Linq;
 using System.Numerics;
@@ -34,17 +34,11 @@ namespace WinUIGallery
     /// </summary>
     public sealed partial class ItemPage : Page
     {
-        private static string WinUIBaseUrl = string.Format("https://github.com/microsoft/microsoft-ui-xaml/tree/winui3/release/{0}.{1}-stable/controls/dev", WASDK.Release.Major, WASDK.Release.Minor);
-        private static string GalleryBaseUrl = "https://github.com/microsoft/WinUI-Gallery/tree/main/WinUIGallery/ControlPages/";
+        static string WinUIBaseUrl = string.Format("https://github.com/microsoft/microsoft-ui-xaml/tree/winui3/release/{0}.{1}-stable/controls/dev", WASDK.Release.Major, WASDK.Release.Minor);
+        static string GalleryBaseUrl = "https://github.com/microsoft/WinUI-Gallery/tree/main/WinUIGallery/ControlPages/";
 
-        public ControlInfoDataItem Item
-        {
-            get { return _item; }
-            set { _item = value; }
-        }
-
-        private ControlInfoDataItem _item;
-        private ElementTheme? _currentElementTheme;
+        public ControlInfoDataItem Item { get; set; }
+        ElementTheme? _currentElementTheme;
 
         public ItemPage()
         {
@@ -55,17 +49,18 @@ namespace WinUIGallery
         public void SetInitialVisuals()
         {
             var navigationRootPage = NavigationRootPage.GetForElement(this);
+
             if (navigationRootPage != null)
             {
                 pageHeader.ToggleThemeAction = OnToggleTheme;
                 navigationRootPage.NavigationViewLoaded = OnNavigationViewLoaded;
-                
+
                 this.Focus(FocusState.Programmatic);
             }
         }
-        private void OnNavigationViewLoaded()
+        void OnNavigationViewLoaded()
         {
-            NavigationRootPage.GetForElement(this).EnsureNavigationSelection(this.Item.UniqueId);
+            NavigationRootPage.GetForElement(this).EnsureNavigationSelection(Item.UniqueId);
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -90,6 +85,7 @@ namespace WinUIGallery
                     System.Diagnostics.Debug.WriteLine(string.Format("[ItemPage] Navigate to {0}", pageType.ToString()));
                     this.contentFrame.Navigate(pageType);
                 }
+
                 args.NavigationRootPage.EnsureNavigationSelection(item?.UniqueId);
             }
 
@@ -105,6 +101,7 @@ namespace WinUIGallery
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             var navigationRootPage = NavigationRootPage.GetForElement(this);
+
             if (navigationRootPage != null)
             {
                 navigationRootPage.NavigationViewLoaded = null;
@@ -116,10 +113,12 @@ namespace WinUIGallery
             // See this PR for more information: https://github.com/microsoft/WinUI-Gallery/pull/145
             Frame contentFrameAsFrame = contentFrame as Frame;
             Page innerPage = contentFrameAsFrame.Content as Page;
+
             if (innerPage != null)
             {
                 MethodInfo dynMethod = innerPage.GetType().GetMethod("OnNavigatedFrom",
                     BindingFlags.NonPublic | BindingFlags.Instance);
+
                 dynMethod.Invoke(innerPage, new object[] { e });
             }
 
@@ -130,32 +129,35 @@ namespace WinUIGallery
         {
             UIElement element = (UIElement)obj;
             Window window = WindowHelper.GetWindowForElement(element);
+
             if (window != null)
             {
                 return (ItemPage)window.Content;
             }
+
             return null;
         }
 
-        private void OnToggleTheme()
+        void OnToggleTheme()
         {
             var currentElementTheme = ((_currentElementTheme ?? ElementTheme.Default) == ElementTheme.Default) ? ThemeHelper.ActualTheme : _currentElementTheme.Value;
             var newTheme = currentElementTheme == ElementTheme.Dark ? ElementTheme.Light : ElementTheme.Dark;
             SetControlExamplesTheme(newTheme);
         }
 
-        private void SetControlExamplesTheme(ElementTheme theme)
+        void SetControlExamplesTheme(ElementTheme theme)
         {
             var controlExamples = (this.contentFrame.Content as UIElement)?.GetDescendantsOfType<SampleThemeListener>();
 
             if (controlExamples != null)
             {
                 _currentElementTheme = theme;
+
                 foreach (var controlExample in controlExamples)
-                {
                     controlExample.RequestedTheme = theme;
-                }
-                if(controlExamples.Count() == 0)
+                
+
+                if (controlExamples.Count() == 0)
                 {
                     this.RequestedTheme = theme;
                 }

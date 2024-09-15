@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -33,25 +33,23 @@ namespace WinUIGallery
     {
         public Windows.System.VirtualKey ArrowKey;
         public Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue;
-        private RootFrameNavigationHelper _navHelper;
-        private UISettings _settings;
-
+        RootFrameNavigationHelper _navHelper;
+        UISettings _settings;
 
         public static NavigationRootPage GetForElement(object obj)
         {
             UIElement element = (UIElement)obj;
             Window window = WindowHelper.GetWindowForElement(element);
+
             if (window != null)
             {
                 return (NavigationRootPage)window.Content;
             }
+
             return null;
         }
 
-        public Microsoft.UI.Xaml.Controls.NavigationView NavigationView
-        {
-            get { return NavigationViewControl; }
-        }
+        public Microsoft.UI.Xaml.Controls.NavigationView NavigationView => NavigationViewControl;
 
         public Action NavigationViewLoaded { get; set; }
 
@@ -107,7 +105,7 @@ namespace WinUIGallery
             };
         }
 
-        private void Window_Activated(object sender, WindowActivatedEventArgs args)
+        void Window_Activated(object sender, WindowActivatedEventArgs args)
         {
             if (args.WindowActivationState == WindowActivationState.Deactivated)
             {
@@ -119,7 +117,7 @@ namespace WinUIGallery
             }
         }
 
-        private void OnPaneDisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
+        void OnPaneDisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
         {
             if (sender.PaneDisplayMode == NavigationViewPaneDisplayMode.Top)
             {
@@ -140,7 +138,7 @@ namespace WinUIGallery
 
         // this handles updating the caption button colors correctly when indows system theme is changed
         // while the app is open
-        private void _settings_ColorValuesChanged(UISettings sender, object args)
+        void _settings_ColorValuesChanged(UISettings sender, object args)
         {
             // This calls comes off-thread, hence we will need to dispatch it to current app's thread
             dispatcherQueue.TryEnqueue(() =>
@@ -164,7 +162,7 @@ namespace WinUIGallery
 
         public void EnsureNavigationSelection(string id)
         {
-            foreach (object rawGroup in this.NavigationView.MenuItems)
+            foreach (object rawGroup in NavigationView.MenuItems)
             {
                 if (rawGroup is NavigationViewItem group)
                 {
@@ -202,7 +200,7 @@ namespace WinUIGallery
             }
         }
 
-        private void AddNavigationMenuItems()
+        void AddNavigationMenuItems()
         {
             foreach (var group in ControlInfoDataSource.Instance.Groups.OrderBy(i => i.Title).Where(i => !i.IsSpecialSection))
             {
@@ -234,7 +232,7 @@ namespace WinUIGallery
             Home.Loaded += OnHomeMenuItemLoaded;
         }
 
-        private void OnMenuFlyoutItemClick(object sender, RoutedEventArgs e)
+        void OnMenuFlyoutItemClick(object sender, RoutedEventArgs e)
         {
             switch ((sender as MenuFlyoutItem).Tag)
             {
@@ -247,7 +245,7 @@ namespace WinUIGallery
             }
         }
 
-        private static IconElement GetIcon(string imagePath)
+        static IconElement GetIcon(string imagePath)
         {
             return imagePath.ToLowerInvariant().EndsWith(".png") ?
                         (IconElement)new BitmapIcon() { UriSource = new Uri(imagePath, UriKind.RelativeOrAbsolute), ShowAsMonochrome = false } :
@@ -257,7 +255,7 @@ namespace WinUIGallery
                         };
         }
 
-        private void SetDeviceFamily()
+        void SetDeviceFamily()
         {
             var familyName = AnalyticsInfo.VersionInfo.DeviceFamily;
 
@@ -269,24 +267,25 @@ namespace WinUIGallery
             DeviceFamily = parsedDeviceType;
         }
 
-        private void OnHomeMenuItemLoaded(object sender, RoutedEventArgs e)
+        void OnHomeMenuItemLoaded(object sender, RoutedEventArgs e)
         {
-            if ( NavigationViewControl.DisplayMode == NavigationViewDisplayMode.Expanded)
+            if (NavigationViewControl.DisplayMode == NavigationViewDisplayMode.Expanded)
             {
                 controlsSearchBox.Focus(FocusState.Keyboard);
             }
         }
 
-        private void OnNavigationViewControlLoaded(object sender, RoutedEventArgs e)
+        void OnNavigationViewControlLoaded(object sender, RoutedEventArgs e)
         {
             // Delay necessary to ensure NavigationView visual state can match navigation
-            Task.Delay(500).ContinueWith(_ => this.NavigationViewLoaded?.Invoke(), TaskScheduler.FromCurrentSynchronizationContext());
+            Task.Delay(500)
+                .ContinueWith(_ => NavigationViewLoaded?.Invoke(), TaskScheduler.FromCurrentSynchronizationContext());
 
             var navigationView = sender as NavigationView;
             navigationView.RegisterPropertyChangedCallback(NavigationView.IsPaneOpenProperty, OnIsPaneOpenChanged);
         }
 
-        private void OnIsPaneOpenChanged(DependencyObject sender, DependencyProperty dp)
+        void OnIsPaneOpenChanged(DependencyObject sender, DependencyProperty dp)
         {
             var navigationView = sender as NavigationView;
             var announcementText = navigationView.IsPaneOpen ? "Navigation Pane Opened" : "Navigation Pane Closed";
@@ -294,7 +293,7 @@ namespace WinUIGallery
             UIHelper.AnnounceActionForAccessibility(navigationView, announcementText, "NavigationViewPaneIsOpenChangeNotificationId");
         }
 
-        private void OnNavigationViewSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        void OnNavigationViewSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             if (args.IsSettingsSelected)
             {
@@ -306,6 +305,7 @@ namespace WinUIGallery
             else
             {
                 var selectedItem = args.SelectedItemContainer;
+
                 if (selectedItem == AllControlsItem)
                 {
                     if (rootFrame.CurrentSourcePageType != typeof(AllControlsPage))
@@ -322,7 +322,7 @@ namespace WinUIGallery
                 }
                 else if (selectedItem == DesignGuidanceItem || selectedItem == AccessibilityItem)
                 {
-                    //Navigate(typeof(SectionPage), "Design_Guidance");
+                    // Navigate(typeof(SectionPage), "Design_Guidance");
                 }
                 else if (selectedItem == ColorItem)
                 {
@@ -372,23 +372,24 @@ namespace WinUIGallery
             }
         }
 
-        private void OnRootFrameNavigated(object sender, NavigationEventArgs e)
+        void OnRootFrameNavigated(object sender, NavigationEventArgs e)
         {
             TestContentLoadedCheckBox.IsChecked = true;
         }
 
-        private void OnRootFrameNavigating(object sender, NavigatingCancelEventArgs e)
+        void OnRootFrameNavigating(object sender, NavigatingCancelEventArgs e)
         {
             TestContentLoadedCheckBox.IsChecked = false;
         }
 
-        private void OnControlsSearchBoxTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        void OnControlsSearchBoxTextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
                 var suggestions = new List<ControlInfoDataItem>();
 
                 var querySplit = sender.Text.Split(" ");
+
                 foreach (var group in ControlInfoDataSource.Instance.Groups)
                 {
                     var matchingItems = group.Items.Where(
@@ -398,6 +399,7 @@ namespace WinUIGallery
                             // e.g. for query "split button" the only result should "SplitButton" since its the only query to contain "split" and "button"
                             // If any of the sub tokens is not in the string, we ignore the item. So the search gets more precise with more words
                             bool flag = item.IncludedInBuild;
+
                             foreach (string queryToken in querySplit)
                             {
                                 // Check if token is not in string
@@ -407,13 +409,15 @@ namespace WinUIGallery
                                     flag = false;
                                 }
                             }
+
                             return flag;
                         });
+
                     foreach (var item in matchingItems)
-                    {
                         suggestions.Add(item);
-                    }
+                    
                 }
+
                 if (suggestions.Count > 0)
                 {
                     controlsSearchBox.ItemsSource = suggestions.OrderByDescending(i => i.Title.StartsWith(sender.Text, StringComparison.CurrentCultureIgnoreCase)).ThenBy(i => i.Title);
@@ -425,7 +429,7 @@ namespace WinUIGallery
             }
         }
 
-        private void OnControlsSearchBoxQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        void OnControlsSearchBoxQuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             if (args.ChosenSuggestion != null && args.ChosenSuggestion is ControlInfoDataItem)
             {
@@ -448,6 +452,7 @@ namespace WinUIGallery
         public bool EnsureItemIsVisibleInNavigation(string name)
         {
             bool changedSelection = false;
+
             foreach (object rawItem in NavigationView.MenuItems)
             {
                 // Check if we encountered the separator
@@ -495,6 +500,7 @@ namespace WinUIGallery
                                     NavigationView.SelectedItem = child;
                                     child.StartBringIntoView();
                                 }
+
                                 // Set to true to also skip out of outer for loop
                                 changedSelection = true;
                                 // Break out of child iteration for loop
@@ -503,25 +509,27 @@ namespace WinUIGallery
                         }
                     }
                 }
+
                 // We updated selection, break here!
                 if (changedSelection)
                 {
                     break;
                 }
             }
+
             return changedSelection;
         }
-        private void CtrlF_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
+        void CtrlF_Invoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
         {
             controlsSearchBox.Focus(FocusState.Programmatic);
         }
 
         #region Helpers for test automation
 
-        private static string _error = string.Empty;
-        private static string _log = string.Empty;
+        static string _error = string.Empty;
+        static string _log = string.Empty;
 
-        private async void WaitForIdleInvokerButton_Click(object sender, RoutedEventArgs e)
+        async void WaitForIdleInvokerButton_Click(object sender, RoutedEventArgs e)
         {
             _idleStateEnteredCheckBox.IsChecked = false;
             await Windows.System.Threading.ThreadPool.RunAsync(WaitForIdleWorker);
@@ -544,17 +552,17 @@ namespace WinUIGallery
             }
         }
 
-        private static void WaitForIdleWorker(IAsyncAction action)
+        static void WaitForIdleWorker(IAsyncAction action)
         {
             _error = IdleSynchronizer.TryWait(out _log);
         }
 
-        private void CloseAppInvokerButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        void CloseAppInvokerButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             Application.Current.Exit();
         }
 
-        private void GoBackInvokerButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        void GoBackInvokerButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             if (this.rootFrame.CanGoBack)
             {
@@ -562,7 +570,7 @@ namespace WinUIGallery
             }
         }
 
-        private void WaitForDebuggerInvokerButton_Click(object sender, RoutedEventArgs e)
+        void WaitForDebuggerInvokerButton_Click(object sender, RoutedEventArgs e)
         {
             DebuggerAttachedCheckBox.IsChecked = false;
 
@@ -571,9 +579,8 @@ namespace WinUIGallery
             var workItem = new Windows.System.Threading.WorkItemHandler((IAsyncAction _) =>
             {
                 while (!IsDebuggerPresent())
-                {
                     Thread.Sleep(1000);
-                }
+                
 
                 DebugBreak();
 
@@ -589,13 +596,12 @@ namespace WinUIGallery
         }
 
         [DllImport("kernel32.dll")]
-        private static extern bool IsDebuggerPresent();
+        static extern bool IsDebuggerPresent();
 
         [DllImport("kernel32.dll")]
-        private static extern void DebugBreak();
+        static extern void DebugBreak();
 
         #endregion
-
     }
 
     public class NavigationRootPageArgs

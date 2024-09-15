@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using WinUIGallery.Data;
 using System;
 using System.Collections.Generic;
@@ -26,8 +26,8 @@ namespace WinUIGallery
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private string _itemId;
-        private IEnumerable<ControlInfoDataItem> _items;
+        string _itemId;
+        IEnumerable<ControlInfoDataItem> _items;
 
         public IEnumerable<ControlInfoDataItem> Items
         {
@@ -51,6 +51,7 @@ namespace WinUIGallery
             }
 
             var item = args.Item as ControlInfoDataItem;
+
             if (item != null)
             {
                 args.ItemContainer.IsEnabled = item.IncludedInBuild;
@@ -63,7 +64,8 @@ namespace WinUIGallery
 
             _itemId = item.UniqueId;
 
-            NavigationRootPage.GetForElement(this).Navigate(typeof(ItemPage), _itemId, new DrillInNavigationTransitionInfo());
+            NavigationRootPage.GetForElement(this)
+                .Navigate(typeof(ItemPage), _itemId, new DrillInNavigationTransitionInfo());
         }
 
         protected void OnItemGridViewLoaded(object sender, RoutedEventArgs e)
@@ -73,6 +75,7 @@ namespace WinUIGallery
                 var gridView = (GridView)sender;
                 var items = gridView.ItemsSource as IEnumerable<ControlInfoDataItem>;
                 var item = items?.FirstOrDefault(s => s.UniqueId == _itemId);
+
                 if (item != null)
                 {
                     gridView.ScrollIntoView(item);

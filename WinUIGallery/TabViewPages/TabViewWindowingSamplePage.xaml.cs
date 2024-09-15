@@ -19,8 +19,8 @@ namespace WinUIGallery.TabViewPages
 {
     public sealed partial class TabViewWindowingSamplePage : Page
     {
-        private const string DataIdentifier = "MyTabItem";
-        private Win32WindowHelper win32WindowHelper;
+        const string DataIdentifier = "MyTabItem";
+        Win32WindowHelper win32WindowHelper;
         public TabViewWindowingSamplePage()
         {
             this.InitializeComponent();
@@ -36,7 +36,7 @@ namespace WinUIGallery.TabViewPages
             win32WindowHelper.SetWindowMinMaxSize(new Win32WindowHelper.POINT() { x = 500, y = 300 });
         }
 
-        private void TabViewWindowingSamplePage_Loaded(object sender, RoutedEventArgs e)
+        void TabViewWindowingSamplePage_Loaded(object sender, RoutedEventArgs e)
         {
             var currentWindow = WindowHelper.GetWindowForElement(this);
             currentWindow.ExtendsContentIntoTitleBar = true;
@@ -44,7 +44,7 @@ namespace WinUIGallery.TabViewPages
             CustomDragRegion.MinWidth = 188;
         }
 
-        private void Tabs_TabItemsChanged(TabView sender, Windows.Foundation.Collections.IVectorChangedEventArgs args)
+        void Tabs_TabItemsChanged(TabView sender, Windows.Foundation.Collections.IVectorChangedEventArgs args)
         {
             // If there are no more tabs, close the window.
             if (sender.TabItems.Count == 0)
@@ -58,19 +58,17 @@ namespace WinUIGallery.TabViewPages
             // Main Window -- add some default items
             for (int i = 0; i < 3; i++)
             {
-                Tabs.TabItems.Add(new TabViewItem() { IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = Symbol.Placeholder }, Header = $"Item {i}", Content = new MyTabContentControl() { DataContext = $"Page {i}" } });
+                Tabs.TabItems
+                    .Add(new TabViewItem() { IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = Symbol.Placeholder }, Header = $"Item {i}", Content = new MyTabContentControl() { DataContext = $"Page {i}" } });
             }
 
             Tabs.SelectedIndex = 0;
         }
 
-        public void AddTabToTabs(TabViewItem tab)
-        {
-            Tabs.TabItems.Add(tab);
-        }
+        public void AddTabToTabs(TabViewItem tab) => Tabs.TabItems.Add(tab);
 
         // Create a new Window once the Tab is dragged outside.
-        private void Tabs_TabDroppedOutside(TabView sender, TabViewTabDroppedOutsideEventArgs args)
+        void Tabs_TabDroppedOutside(TabView sender, TabViewTabDroppedOutsideEventArgs args)
         {
             var newPage = new TabViewWindowingSamplePage();
 
@@ -85,7 +83,7 @@ namespace WinUIGallery.TabViewPages
             newWindow.Activate();
         }
 
-        private void Tabs_TabDragStarting(TabView sender, TabViewTabDragStartingEventArgs args)
+        void Tabs_TabDragStarting(TabView sender, TabViewTabDragStartingEventArgs args)
         {
             // We can only drag one tab at a time, so grab the first one...
             var firstItem = args.Tab;
@@ -97,7 +95,7 @@ namespace WinUIGallery.TabViewPages
             args.Data.RequestedOperation = DataPackageOperation.Move;
         }
 
-        private async void Tabs_TabStripDrop(object sender, DragEventArgs e)
+        async void Tabs_TabStripDrop(object sender, DragEventArgs e)
         {
             // This event is called when we're dragging between different TabViews
             // It is responsible for handling the drop of the item into the second TabView
@@ -140,7 +138,8 @@ namespace WinUIGallery.TabViewPages
 
                     var taskCompletionSource = new TaskCompletionSource();
 
-                    element.DispatcherQueue.TryEnqueue(
+                    element.DispatcherQueue
+                        .TryEnqueue(
                         Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal,
                         new DispatcherQueueHandler(() =>
                         {
@@ -156,6 +155,7 @@ namespace WinUIGallery.TabViewPages
                     await taskCompletionSource.Task;
 
                     var insertedItem = CreateNewTVI(header.ToString(), dataContext.ToString());
+
                     if (index < 0)
                     {
                         // We didn't find a transition point, so we're at the end of the list
@@ -173,7 +173,7 @@ namespace WinUIGallery.TabViewPages
             }
         }
 
-        private TabViewItem CreateNewTVI(string header, string dataContext)
+        TabViewItem CreateNewTVI(string header, string dataContext)
         {
             var newTab = new TabViewItem()
             {
@@ -192,7 +192,7 @@ namespace WinUIGallery.TabViewPages
         }
 
         // This method prevents the TabView from handling things that aren't text (ie. files, images, etc.)
-        private void Tabs_TabStripDragOver(object sender, DragEventArgs e)
+        void Tabs_TabStripDragOver(object sender, DragEventArgs e)
         {
             if (e.DataView.Properties.ContainsKey(DataIdentifier))
             {
@@ -200,13 +200,13 @@ namespace WinUIGallery.TabViewPages
             }
         }
 
-        private void Tabs_AddTabButtonClick(TabView sender, object args)
+        void Tabs_AddTabButtonClick(TabView sender, object args)
         {
             var tab = CreateNewTVI("New Item", "New Item");
             sender.TabItems.Add(tab);
         }
 
-        private void Tabs_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+        void Tabs_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
             sender.TabItems.Remove(args.Tab);
         }

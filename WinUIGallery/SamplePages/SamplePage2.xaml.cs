@@ -7,10 +7,7 @@ namespace WinUIGallery.SamplePages
 {
     public sealed partial class SamplePage2 : Page
     {
-        public SamplePage2()
-        {
-            this.InitializeComponent();
-        }
+        public SamplePage2() => this.InitializeComponent();
 
         public void PrepareConnectedAnimation(ConnectedAnimationConfiguration config)
         {
@@ -27,6 +24,7 @@ namespace WinUIGallery.SamplePages
             base.OnNavigatedTo(e);
 
             var anim = ConnectedAnimationService.GetForCurrentView().GetAnimation("ForwardConnectedAnimation");
+
             if (anim != null)
             {
                 AddContentPanelAnimations();
@@ -34,9 +32,9 @@ namespace WinUIGallery.SamplePages
             }
         }
 
-        private void AddContentPanelAnimations()
+        void AddContentPanelAnimations()
         {
-            ContentPanel.Transitions = new TransitionCollection {new EntranceThemeTransition()};
+            ContentPanel.Transitions = new TransitionCollection { new EntranceThemeTransition() };
         }
     }
 }

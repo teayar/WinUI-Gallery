@@ -21,10 +21,7 @@ namespace WinUIGalleryUnitTests
 {
     public partial class UnitTestApp : Application
     {
-        public UnitTestApp()
-        {
-            this.InitializeComponent();
-        }
+        public UnitTestApp() => this.InitializeComponent();
 
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
@@ -38,11 +35,8 @@ namespace WinUIGalleryUnitTests
             Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.Run(Environment.CommandLine);
         }
 
-        private static UnitTestAppWindow s_window;
+        static UnitTestAppWindow s_window;
 
-        public static UnitTestAppWindow UnitTestAppWindow
-        {
-            get { return s_window; }
-        }
+        public static UnitTestAppWindow UnitTestAppWindow => s_window;
     }
 }

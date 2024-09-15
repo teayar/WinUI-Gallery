@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System;
 using WinUIGallery.Helper;
 using Microsoft.UI;
@@ -35,7 +35,7 @@ namespace WinUIGallery
         }
 
         public string WinAppSdkRuntimeDetails => App.WinAppSdkRuntimeDetails;
-        private int lastNavigationSelectionMode = 0;
+        int lastNavigationSelectionMode;
 
         public SettingsPage()
         {
@@ -43,14 +43,12 @@ namespace WinUIGallery
             Loaded += OnSettingsPageLoaded;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-        }
+        protected override void OnNavigatedTo(NavigationEventArgs e) => base.OnNavigatedTo(e);
 
-        private void OnSettingsPageLoaded(object sender, RoutedEventArgs e)
+        void OnSettingsPageLoaded(object sender, RoutedEventArgs e)
         {
             var currentTheme = ThemeHelper.RootTheme;
+
             switch (currentTheme)
             {
                 case ElementTheme.Light:
@@ -65,6 +63,7 @@ namespace WinUIGallery
             }
 
             NavigationRootPage navigationRootPage = NavigationRootPage.GetForElement(this);
+
             if (navigationRootPage != null)
             {
                 if (navigationRootPage.NavigationView.PaneDisplayMode == NavigationViewPaneDisplayMode.Auto)
@@ -75,23 +74,27 @@ namespace WinUIGallery
                 {
                     navigationLocation.SelectedIndex = 1;
                 }
+
                 lastNavigationSelectionMode = navigationLocation.SelectedIndex;
             }
 
             if (ElementSoundPlayer.State == ElementSoundPlayerState.On)
                 soundToggle.IsOn = true;
+
             if (ElementSoundPlayer.SpatialAudioMode == ElementSpatialAudioMode.On)
                 spatialSoundBox.IsOn = true;
         }
 
-        private void themeMode_SelectionChanged(object sender, RoutedEventArgs e)
+        void themeMode_SelectionChanged(object sender, RoutedEventArgs e)
         {
             var selectedTheme = ((ComboBoxItem)themeMode.SelectedItem)?.Tag?.ToString();
             var window = WindowHelper.GetWindowForElement(this);
             string color;
+
             if (selectedTheme != null)
             {
                 ThemeHelper.RootTheme = App.GetEnum<ElementTheme>(selectedTheme);
+
                 if (selectedTheme == "Dark")
                 {
                     TitleBarHelper.SetCaptionButtonColors(window, Colors.White);
@@ -104,15 +107,16 @@ namespace WinUIGallery
                 }
                 else
                 {
-                    color = TitleBarHelper.ApplySystemThemeToCaptionButtons(window) == Colors.White  ? "Dark" : "Light";
+                    color = TitleBarHelper.ApplySystemThemeToCaptionButtons(window) == Colors.White ? "Dark" : "Light";
                 }
+
                 // announce visual change to automation
                 UIHelper.AnnounceActionForAccessibility(sender as UIElement, $"Theme changed to {color}",
                                                                                 "ThemeChangedNotificationActivityId");
             }
         }
 
-        private void soundToggle_Toggled(object sender, RoutedEventArgs e)
+        void soundToggle_Toggled(object sender, RoutedEventArgs e)
         {
             if (soundToggle.IsOn == true)
             {
@@ -129,7 +133,7 @@ namespace WinUIGallery
             }
         }
 
-        private void navigationLocation_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        void navigationLocation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             // Since setting the left mode does not look at the old setting we 
             // need to check if this is an actual update
@@ -140,7 +144,7 @@ namespace WinUIGallery
             }
         }
 
-        private void spatialSoundBox_Toggled(object sender, RoutedEventArgs e)
+        void spatialSoundBox_Toggled(object sender, RoutedEventArgs e)
         {
             if (soundToggle.IsOn == true)
             {
@@ -152,15 +156,15 @@ namespace WinUIGallery
             }
         }
 
-        private void soundPageHyperlink_Click(object sender, RoutedEventArgs e)
+        void soundPageHyperlink_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(ItemPage), new NavigationRootPageArgs() { Parameter = "Sound", NavigationRootPage = NavigationRootPage.GetForElement(this) });
+            this.Frame
+                .Navigate(typeof(ItemPage), new NavigationRootPageArgs() { Parameter = "Sound", NavigationRootPage = NavigationRootPage.GetForElement(this) });
         }
 
-        private async void bugRequestCard_Click(object sender, RoutedEventArgs e)
+        async void bugRequestCard_Click(object sender, RoutedEventArgs e)
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/microsoft/WinUI-Gallery/issues/new/choose"));
-        
         }
     }
 }

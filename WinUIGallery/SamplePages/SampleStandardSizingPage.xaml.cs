@@ -23,10 +23,7 @@ namespace WinUIGallery.SamplePages
         public PasswordBox ConfirmPassword => confirmPassword;
         public DatePicker ChosenDate => chosenDate;
 
-        public SampleStandardSizingPage()
-        {
-            this.InitializeComponent();
-        }
+        public SampleStandardSizingPage() => this.InitializeComponent();
 
         public void CopyState(SampleCompactSizingPage page)
         {

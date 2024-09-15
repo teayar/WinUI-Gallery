@@ -16,7 +16,6 @@ namespace WinUIGallery.SamplePages
             SetBackdrop(BackdropType.Mica);
         }
 
-
         public enum BackdropType
         {
             Mica,
@@ -54,6 +53,7 @@ namespace WinUIGallery.SamplePages
                     tbChangeStatus.Text += "  Mica isn't supported. Trying Acrylic.";
                 }
             }
+
             if (type == BackdropType.MicaAlt)
             {
                 if (TrySetMicaBackdrop(true))
@@ -68,6 +68,7 @@ namespace WinUIGallery.SamplePages
                     tbChangeStatus.Text += "  MicaAlt isn't supported. Trying Acrylic.";
                 }
             }
+
             if (type == BackdropType.DesktopAcrylic)
             {
                 if (TrySetAcrylicBackdrop())
@@ -116,11 +117,11 @@ namespace WinUIGallery.SamplePages
 
             switch (m_currentBackdrop)
             {
-                case BackdropType.Mica:           newType = BackdropType.MicaAlt; break;
-                case BackdropType.MicaAlt:        newType = BackdropType.DesktopAcrylic; break;
+                case BackdropType.Mica: newType = BackdropType.MicaAlt; break;
+                case BackdropType.MicaAlt: newType = BackdropType.DesktopAcrylic; break;
                 case BackdropType.DesktopAcrylic: newType = BackdropType.DefaultColor; break;
                 default:
-                case BackdropType.DefaultColor:   newType = BackdropType.Mica; break;
+                case BackdropType.DefaultColor: newType = BackdropType.Mica; break;
             }
 
             SetBackdrop(newType);
