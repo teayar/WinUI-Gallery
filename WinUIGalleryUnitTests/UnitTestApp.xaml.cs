@@ -21,7 +21,7 @@ namespace WinUIGalleryUnitTests
 {
     public partial class UnitTestApp : Application
     {
-        public UnitTestApp() => this.InitializeComponent();
+        public UnitTestApp() => InitializeComponent();
 
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {

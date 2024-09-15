@@ -17,7 +17,7 @@ namespace WinUIGalleryUnitTests
 {
     public sealed partial class UnitTestAppWindow : Window
     {
-        public UnitTestAppWindow() => this.InitializeComponent();
+        public UnitTestAppWindow() => InitializeComponent();
 
         public Grid RootGrid => rootGrid;
 
