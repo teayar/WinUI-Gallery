@@ -28,6 +28,14 @@ namespace WinUIGallery
         /// </summary>
         private bool _ignorePropertyChange;
 
+        /// <summary>
+        /// Initializes a new instance of the
+        /// <see cref="T:WinRTXamlToolkit.Controls.WrapPanel" /> class.
+        /// </summary>
+        public WrapPanel()
+        {
+        }
+
         #region public double ItemHeight
         /// <summary>
         /// Gets or sets the height of the layout area for each item that is
@@ -165,14 +173,6 @@ namespace WinUIGallery
             source.InvalidateMeasure();
         }
         #endregion public Orientation Orientation
-
-        /// <summary>
-        /// Initializes a new instance of the
-        /// <see cref="T:WinRTXamlToolkit.Controls.WrapPanel" /> class.
-        /// </summary>
-        public WrapPanel()
-        {
-        }
 
         /// <summary>
         /// Property changed handler for ItemHeight and ItemWidth.

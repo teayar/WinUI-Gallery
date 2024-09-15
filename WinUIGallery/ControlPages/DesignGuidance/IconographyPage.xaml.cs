@@ -87,7 +87,7 @@ namespace WinUIGallery.ControlPages
             string[] filter = search?.Split(" ");
 
             // Spawning a new thread to not have the UI freeze because of our search
-            new Thread(() =>
+            Task.Run(() =>
             {
                 var newItems = new List<IconData>();
                 foreach (var item in IconsDataSource.Icons)
