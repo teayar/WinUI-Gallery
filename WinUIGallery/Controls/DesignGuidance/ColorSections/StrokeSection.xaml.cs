@@ -23,6 +23,6 @@ namespace WinUIGallery.DesktopWap.Controls.DesignGuidance.ColorSections
 {
     public sealed partial class StrokeSection : Page
     {
-        public StrokeSection() => this.InitializeComponent();
+        public StrokeSection() => InitializeComponent();
     }
 }

@@ -4,7 +4,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class RatingControlPage : Page
     {
-        public RatingControlPage() => this.InitializeComponent();
+        public RatingControlPage() => InitializeComponent();
 
         void RatingControl1_ValueChanged(Microsoft.UI.Xaml.Controls.RatingControl sender, object args)
         {

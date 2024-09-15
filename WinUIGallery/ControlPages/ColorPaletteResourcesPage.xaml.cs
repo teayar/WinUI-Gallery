@@ -17,6 +17,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ColorPaletteResourcesPage : Page
     {
-        public ColorPaletteResourcesPage() => this.InitializeComponent();
+        public ColorPaletteResourcesPage() => InitializeComponent();
     }
 }

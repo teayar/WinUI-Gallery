@@ -15,7 +15,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class TeachingTipPage : Page
     {
-        public TeachingTipPage() => this.InitializeComponent();
+        public TeachingTipPage() => InitializeComponent();
 
         void TestButtonClick1(object sender, RoutedEventArgs e)
         {

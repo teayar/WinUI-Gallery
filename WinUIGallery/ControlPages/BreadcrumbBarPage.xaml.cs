@@ -16,7 +16,7 @@ namespace WinUIGallery.ControlPages
 
         public BreadcrumbBarPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             BreadcrumbBar1.ItemsSource = new string[] { "Home", "Documents", "Design", "Northwind", "Images", "Folder1", "Folder2", "Folder3" };
 
             BreadcrumbBar2.ItemsSource = new ObservableCollection<Folder>(folders);
@@ -29,7 +29,6 @@ namespace WinUIGallery.ControlPages
 
             for (int i = items.Count - 1; i >= args.Index + 1; i--)
                 items.RemoveAt(i);
-            
         }
 
         void ResetSampleButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -38,7 +37,6 @@ namespace WinUIGallery.ControlPages
 
             for (int i = items.Count; i < folders.Count; i++)
                 items.Add(folders[i]);
-            
 
             // Announce reset success notifiication.
             UIHelper.AnnounceActionForAccessibility(ResetSampleBtn, "BreadcrumbBar sample reset successful.", "BreadCrumbBarSampleResetNotificationId");

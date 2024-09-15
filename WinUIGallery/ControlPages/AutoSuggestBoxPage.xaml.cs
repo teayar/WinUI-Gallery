@@ -122,7 +122,7 @@ namespace WinUIGallery.ControlPages
             "York Chocolate"
         };
 
-        public AutoSuggestBoxPage() => this.InitializeComponent();
+        public AutoSuggestBoxPage() => InitializeComponent();
 
         void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
@@ -272,7 +272,6 @@ namespace WinUIGallery.ControlPages
 
                 foreach (var item in matchingItems)
                     suggestions.Add(item);
-                
             }
 
             return suggestions.OrderByDescending(i => i.Title.StartsWith(query, StringComparison.CurrentCultureIgnoreCase)).ThenBy(i => i.Title).ToList();

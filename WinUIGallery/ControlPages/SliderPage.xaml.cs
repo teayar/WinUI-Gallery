@@ -27,7 +27,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class SliderPage : Page
     {
-        public SliderPage() => this.InitializeComponent();
+        public SliderPage() => InitializeComponent();
 
         void SnapsToRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

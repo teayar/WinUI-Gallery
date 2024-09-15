@@ -42,7 +42,7 @@ namespace WinUIGallery.ControlPages
 
         public PullToRefreshPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 6))
             {
@@ -112,14 +112,14 @@ namespace WinUIGallery.ControlPages
 
                 lv2.ItemsSource = items2;
 
-                this.Loaded += PullToRefreshPage_Loaded;
+                Loaded += PullToRefreshPage_Loaded;
             }
         }
 
         void PullToRefreshPage_Loaded(object sender, RoutedEventArgs e)
         {
             visualizerContentVisual = ElementCompositionPreview.GetElementVisual(rv2.Content);
-            this.Loaded -= PullToRefreshPage_Loaded;
+            Loaded -= PullToRefreshPage_Loaded;
         }
 
         void Timer1_Tick(object sender, object e)

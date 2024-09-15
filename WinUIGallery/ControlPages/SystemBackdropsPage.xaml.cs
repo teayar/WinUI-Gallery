@@ -19,7 +19,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class SystemBackdropsPage : Page
     {
-        public SystemBackdropsPage() => this.InitializeComponent();
+        public SystemBackdropsPage() => InitializeComponent();
 
         void createBuiltInMicaWindow_Click(object sender, RoutedEventArgs e)
         {

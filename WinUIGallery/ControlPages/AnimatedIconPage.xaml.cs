@@ -18,16 +18,16 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class AnimatedIconPage : Page
     {
-        public AnimatedIconPage() => this.InitializeComponent();
+        public AnimatedIconPage() => InitializeComponent();
 
         void Button_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            AnimatedIcon.SetState(this.SearchAnimatedIcon, "PointerOver");
+            AnimatedIcon.SetState(SearchAnimatedIcon, "PointerOver");
         }
 
         void Button_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            AnimatedIcon.SetState(this.SearchAnimatedIcon, "Normal");
+            AnimatedIcon.SetState(SearchAnimatedIcon, "Normal");
         }
 
         public static IAnimatedVisualSource2 GetAnimationSourceFromString(object selection)

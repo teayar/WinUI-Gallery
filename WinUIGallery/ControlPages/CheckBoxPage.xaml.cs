@@ -17,7 +17,7 @@ namespace WinUIGallery.ControlPages
     {
         public CheckBoxPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             Loaded += CheckBoxPage_Loaded;
         }
 

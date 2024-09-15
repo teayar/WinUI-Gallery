@@ -5,7 +5,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class AnimatedVisualPlayerPage : Page
     {
-        public AnimatedVisualPlayerPage() => this.InitializeComponent();
+        public AnimatedVisualPlayerPage() => InitializeComponent();
 
         void PlayButton_Click(object sender, RoutedEventArgs e)
         {

@@ -27,7 +27,7 @@ namespace WinUIGallery.ControlPages
         };
 
         public List<Tuple<string, FontFamily>> Fonts => _fonts;
-        public ListBoxPage() => this.InitializeComponent();
+        public ListBoxPage() => InitializeComponent();
 
         void ColorListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

@@ -22,7 +22,7 @@ namespace WinUIGallery.ControlPages
 
         public PageTransitionPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             ContentFrame.Navigate(typeof(SamplePages.SamplePage1));
         }

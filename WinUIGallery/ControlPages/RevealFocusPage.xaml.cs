@@ -21,14 +21,14 @@ namespace WinUIGallery.ControlPages
     {
         public RevealFocusPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             // DEMO ONLY: Initialize Color rectangles
             if (Spring2018 && Application.Current.FocusVisualKind == FocusVisualKind.Reveal)
             {
                 RevealFocus.IsChecked = true;
-                myPrimaryColorPicker.Color = (this.Resources["SystemControlRevealFocusVisualBrush"] as SolidColorBrush).Color;
-                mySecondaryColorPicker.Color = (this.Resources["SystemControlFocusVisualSecondaryBrush"] as SolidColorBrush).Color;
+                myPrimaryColorPicker.Color = (Resources["SystemControlRevealFocusVisualBrush"] as SolidColorBrush).Color;
+                mySecondaryColorPicker.Color = (Resources["SystemControlFocusVisualSecondaryBrush"] as SolidColorBrush).Color;
                 primaryColorPickerButton.Background = new SolidColorBrush(myPrimaryColorPicker.Color);
                 secondaryColorPickerButton.Background = new SolidColorBrush(mySecondaryColorPicker.Color);
             }
@@ -66,7 +66,7 @@ namespace WinUIGallery.ControlPages
         {
             if (Spring2018)
             {
-                myPrimaryColorPicker.Color = (this.Resources["SystemControlRevealFocusVisualBrush"] as SolidColorBrush).Color;
+                myPrimaryColorPicker.Color = (Resources["SystemControlRevealFocusVisualBrush"] as SolidColorBrush).Color;
                 primaryColorPickerButton.Background = new SolidColorBrush(myPrimaryColorPicker.Color);
                 primaryBrushText.Value = "{StaticResource SystemControlRevealFocusVisualBrush}";
                 primaryColorKeyText.Value = "SystemControlRevealFocusVisualBrush";

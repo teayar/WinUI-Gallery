@@ -20,7 +20,7 @@ namespace WinUIGallery.Controls
 {
     public sealed partial class TileGallery : UserControl
     {
-        public TileGallery() => this.InitializeComponent();
+        public TileGallery() => InitializeComponent();
 
         void scroller_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
         {

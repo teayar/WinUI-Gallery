@@ -6,7 +6,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class InfoBadgePage : Page
     {
-        public InfoBadgePage() => this.InitializeComponent();
+        public InfoBadgePage() => InitializeComponent();
         public double InfoBadgeOpacity
         {
             get { return (double)GetValue(InfoBadgeOpacityProperty); }

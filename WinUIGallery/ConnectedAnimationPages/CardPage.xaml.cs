@@ -13,14 +13,13 @@ namespace WinUIGallery.ConnectedAnimationPages
 
         public CardPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             // Populate the collection with some items.
             var items = new List<int>();
 
             for (int i = 0; i < 30; i++)
                 items.Add(i);
-            
 
             collection.ItemsSource = items;
         }

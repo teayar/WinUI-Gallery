@@ -19,7 +19,7 @@ namespace WinUIGallery.ControlPages
     {
         IEnumerable<ControlInfoDataGroup> _groups;
 
-        public SemanticZoomPage() => this.InitializeComponent();
+        public SemanticZoomPage() => InitializeComponent();
         public IEnumerable<ControlInfoDataGroup> Groups => _groups;
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

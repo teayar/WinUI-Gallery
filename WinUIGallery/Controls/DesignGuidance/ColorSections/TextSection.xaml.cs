@@ -23,6 +23,6 @@ namespace WinUIGallery.DesktopWap.Controls.DesignGuidance.ColorSections
 {
     public sealed partial class TextSection : Page
     {
-        public TextSection() => this.InitializeComponent();
+        public TextSection() => InitializeComponent();
     }
 }

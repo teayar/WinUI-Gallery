@@ -18,6 +18,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ShapePage : Page
     {
-        public ShapePage() => this.InitializeComponent();
+        public ShapePage() => InitializeComponent();
     }
 }

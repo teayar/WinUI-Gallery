@@ -22,6 +22,6 @@ namespace WinUIGallery.ControlPages
     /// </summary>
     public sealed partial class CompactSpacingPage : Page
     {
-        public CompactSpacingPage() => this.InitializeComponent();
+        public CompactSpacingPage() => InitializeComponent();
     }
 }

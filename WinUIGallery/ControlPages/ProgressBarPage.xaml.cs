@@ -14,7 +14,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ProgressBarPage : Page
     {
-        public ProgressBarPage() => this.InitializeComponent();
+        public ProgressBarPage() => InitializeComponent();
 
         void ProgressValue_ValueChanged(Microsoft.UI.Xaml.Controls.NumberBox sender, Microsoft.UI.Xaml.Controls.NumberBoxValueChangedEventArgs args)
         {

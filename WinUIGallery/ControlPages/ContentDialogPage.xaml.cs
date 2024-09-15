@@ -17,14 +17,14 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ContentDialogPage : Page
     {
-        public ContentDialogPage() => this.InitializeComponent();
+        public ContentDialogPage() => InitializeComponent();
 
         async void ShowDialog_Click(object sender, RoutedEventArgs e)
         {
             ContentDialogExample dialog = new ContentDialogExample();
 
             // XamlRoot must be set in the case of a ContentDialog running in a Desktop app
-            dialog.XamlRoot = this.XamlRoot;
+            dialog.XamlRoot = XamlRoot;
             dialog.Style = Application.Current.Resources["DefaultContentDialogStyle"] as Style;
             dialog.Title = "Save your work?";
             dialog.PrimaryButtonText = "Save";

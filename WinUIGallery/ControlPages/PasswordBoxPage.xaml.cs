@@ -14,7 +14,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class PasswordBoxPage : Page
     {
-        public PasswordBoxPage() => this.InitializeComponent();
+        public PasswordBoxPage() => InitializeComponent();
 
         void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {

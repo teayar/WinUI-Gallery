@@ -6,7 +6,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ParallaxViewPage : ItemsPageBase
     {
-        public ParallaxViewPage() => this.InitializeComponent();
+        public ParallaxViewPage() => InitializeComponent();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

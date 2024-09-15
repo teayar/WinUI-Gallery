@@ -17,7 +17,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class GeometryPage : Page
     {
-        public GeometryPage() => this.InitializeComponent();
+        public GeometryPage() => InitializeComponent();
 
         void ShowGeometryButtonClick1(object sender, RoutedEventArgs e)
         {

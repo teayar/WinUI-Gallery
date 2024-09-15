@@ -14,7 +14,7 @@ namespace WinUIGallery.ControlPages
 
         public SplitButtonPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             myRichEditBox.Document.Selection.CharacterFormat.ForegroundColor = currentColor;
 

@@ -19,7 +19,7 @@ namespace WinUIGallery.ControlPages
     {
         public RadialGradientBrushPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             Loaded += OnPageLoaded;
         }
 

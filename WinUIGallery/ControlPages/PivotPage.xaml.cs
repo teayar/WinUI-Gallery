@@ -17,6 +17,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class PivotPage : Page
     {
-        public PivotPage() => this.InitializeComponent();
+        public PivotPage() => InitializeComponent();
     }
 }

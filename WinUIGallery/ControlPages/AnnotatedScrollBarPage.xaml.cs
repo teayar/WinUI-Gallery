@@ -34,9 +34,9 @@ namespace WinUIGallery.ControlPages
 
         public AnnotatedScrollBarPage()
         {
-            this.InitializeComponent();
-            this.DataContext = this;
-            this.Loaded += AnnotatedScrollBarPage_Loaded;
+            InitializeComponent();
+            DataContext = this;
+            Loaded += AnnotatedScrollBarPage_Loaded;
 
             PopulateColorCollection();
         }
@@ -78,31 +78,26 @@ namespace WinUIGallery.ControlPages
 
             for (int colorInstance = 0; colorInstance < AzureCount; colorInstance++)
                 ColorCollection.Add(solidColorBrush);
-            
 
             solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.Crimson);
 
             for (int colorInstance = 0; colorInstance < CrimsonCount; colorInstance++)
                 ColorCollection.Add(solidColorBrush);
-            
 
             solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.Cyan);
 
             for (int colorInstance = 0; colorInstance < CyanCount; colorInstance++)
                 ColorCollection.Add(solidColorBrush);
-            
 
             solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.Fuchsia);
 
             for (int colorInstance = 0; colorInstance < FuchsiaCount; colorInstance++)
                 ColorCollection.Add(solidColorBrush);
-            
 
             solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.Gold);
 
             for (int colorInstance = 0; colorInstance < GoldCount; colorInstance++)
                 ColorCollection.Add(solidColorBrush);
-            
         }
 
         void PopulateLabelCollection()
@@ -116,10 +111,13 @@ namespace WinUIGallery.ControlPages
                 // The offset value of a label is function of the row that item belongs to.
                 annotatedScrollBar.Labels.Add(new AnnotatedScrollBarLabel("Azure", GetOffsetOfItem(0)));
                 annotatedScrollBar.Labels.Add(new AnnotatedScrollBarLabel("Crimson", GetOffsetOfItem(AzureCount)));
+
                 annotatedScrollBar.Labels
                     .Add(new AnnotatedScrollBarLabel("Cyan", GetOffsetOfItem(AzureCount + CrimsonCount)));
+
                 annotatedScrollBar.Labels
                     .Add(new AnnotatedScrollBarLabel("Fuchsia", GetOffsetOfItem(AzureCount + CrimsonCount + CyanCount)));
+
                 annotatedScrollBar.Labels
                     .Add(new AnnotatedScrollBarLabel("Gold", GetOffsetOfItem(AzureCount + CrimsonCount + CyanCount + FuchsiaCount)));
             }

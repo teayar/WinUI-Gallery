@@ -18,6 +18,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class LinePage : Page
     {
-        public LinePage() => this.InitializeComponent();
+        public LinePage() => InitializeComponent();
     }
 }

@@ -37,7 +37,7 @@ namespace WinUIGallery.ControlPages
 
         public ListViewPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             // Add first item to inverted list so it's not empty
             AddItemToEnd();
             BaseExample.Loaded += BaseExample_Loaded;
@@ -397,7 +397,6 @@ namespace WinUIGallery.ControlPages
 
             for (int i = 0; i < lines.Count - 2; i += 3)
                 contacts.Add(new Contact(lines[i], lines[i + 1], lines[i + 2]));
-            
 
             return contacts;
         }

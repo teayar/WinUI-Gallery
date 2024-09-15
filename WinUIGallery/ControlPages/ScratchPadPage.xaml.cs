@@ -29,7 +29,7 @@ namespace WinUIGallery.ControlPages
     {
         public ScratchPadPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             var xamlStr = ReadScratchPadXAMLinLocalSettings();
 
@@ -88,7 +88,6 @@ namespace WinUIGallery.ControlPages
 
                     for (int i = 0; i < count; i++)
                         xamlStr += compositeStr[i.ToString()];
-                    
 
                     return xamlStr;
                 }
@@ -120,7 +119,7 @@ namespace WinUIGallery.ControlPages
         async void ResetToDefaultClick(object sender, RoutedEventArgs e)
         {
             ContentDialog dialog = new ContentDialog();
-            dialog.XamlRoot = this.XamlRoot;
+            dialog.XamlRoot = XamlRoot;
             dialog.Title = "Are you sure you want to reset?";
             dialog.Content = "Resetting to the default content will replace your current content. Are you sure you want to reset?";
             dialog.PrimaryButtonText = "Reset";

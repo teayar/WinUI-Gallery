@@ -15,7 +15,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class DatePickerPage : Page
     {
-        public DatePickerPage() => this.InitializeComponent();
+        public DatePickerPage() => InitializeComponent();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

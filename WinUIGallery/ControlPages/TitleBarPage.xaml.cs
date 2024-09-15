@@ -38,7 +38,7 @@ namespace WinUIGallery.ControlPages
 
         public TitleBarPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             Loaded += (object sender, RoutedEventArgs e) =>
             {

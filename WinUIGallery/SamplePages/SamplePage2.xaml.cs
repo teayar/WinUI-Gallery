@@ -7,7 +7,7 @@ namespace WinUIGallery.SamplePages
 {
     public sealed partial class SamplePage2 : Page
     {
-        public SamplePage2() => this.InitializeComponent();
+        public SamplePage2() => InitializeComponent();
 
         public void PrepareConnectedAnimation(ConnectedAnimationConfiguration config)
         {

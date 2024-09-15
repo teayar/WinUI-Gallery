@@ -9,7 +9,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class CommandBarFlyoutPage : Page
     {
-        public CommandBarFlyoutPage() => this.InitializeComponent();
+        public CommandBarFlyoutPage() => InitializeComponent();
 
         void OnElementClicked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {

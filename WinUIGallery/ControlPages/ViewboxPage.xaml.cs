@@ -15,7 +15,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ViewboxPage : Page
     {
-        public ViewboxPage() => this.InitializeComponent();
+        public ViewboxPage() => InitializeComponent();
 
         void StretchDirectionButton_Checked(object sender, RoutedEventArgs e)
         {

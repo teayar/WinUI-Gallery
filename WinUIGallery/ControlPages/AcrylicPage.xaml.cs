@@ -11,7 +11,7 @@ namespace WinUIGallery.ControlPages
     {
         public AcrylicPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             Loaded += AcrylicPage_Loaded;
         }
 

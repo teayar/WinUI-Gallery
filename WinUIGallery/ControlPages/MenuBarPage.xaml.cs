@@ -17,7 +17,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class MenuBarPage : Page
     {
-        public MenuBarPage() => this.InitializeComponent();
+        public MenuBarPage() => InitializeComponent();
 
         void OnElementClicked(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {

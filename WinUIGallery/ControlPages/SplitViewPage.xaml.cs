@@ -30,7 +30,7 @@ namespace WinUIGallery.ControlPages
 
         public ObservableCollection<NavLink> NavLinks => _navLinks;
 
-        public SplitViewPage() => this.InitializeComponent();
+        public SplitViewPage() => InitializeComponent();
 
         void NavLinksList_ItemClick(object sender, ItemClickEventArgs e)
         {

@@ -19,9 +19,9 @@ namespace WinUIGallery.ControlPages
     {
         public MapControlPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.Loaded += MapControlPage_Loaded;
+            Loaded += MapControlPage_Loaded;
         }
 
         void MapControlPage_Loaded(object sender, RoutedEventArgs e)

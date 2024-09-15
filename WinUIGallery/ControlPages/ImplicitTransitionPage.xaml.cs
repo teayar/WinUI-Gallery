@@ -14,7 +14,7 @@ namespace WinUIGallery.ControlPages
     {
         public ImplicitTransitionPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             SetupImplicitTransitionsIfAPIAvailable();
         }

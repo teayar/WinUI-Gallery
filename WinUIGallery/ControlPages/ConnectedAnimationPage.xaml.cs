@@ -11,7 +11,7 @@ namespace WinUIGallery.ControlPages
     {
         public ConnectedAnimationPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             // For 1st sample
             CollectionContentFrame.Navigate(typeof(ConnectedAnimationPages.CollectionPage));
@@ -25,7 +25,7 @@ namespace WinUIGallery.ControlPages
 
         ConnectedAnimationConfiguration GetConfiguration()
         {
-            if (this.ConfigurationPanel == null) return null;
+            if (ConfigurationPanel == null) return null;
 
             var selectedName = (ConfigurationPanel.SelectedItem as RadioButton).Content.ToString();
 

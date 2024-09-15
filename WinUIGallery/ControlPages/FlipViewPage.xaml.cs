@@ -18,7 +18,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class FlipViewPage : ItemsPageBase
     {
-        public FlipViewPage() => this.InitializeComponent();
+        public FlipViewPage() => InitializeComponent();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

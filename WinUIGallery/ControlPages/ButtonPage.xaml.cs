@@ -14,7 +14,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ButtonPage : Page
     {
-        public ButtonPage() => this.InitializeComponent();
+        public ButtonPage() => InitializeComponent();
 
         void Button_Click(object sender, RoutedEventArgs e)
         {

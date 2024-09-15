@@ -7,6 +7,6 @@ namespace WinUIGallery.DesktopWap.Controls.DesignGuidance.ColorSections
 {
     public sealed partial class BackgroundSection : Page
     {
-        public BackgroundSection() => this.InitializeComponent();
+        public BackgroundSection() => InitializeComponent();
     }
 }

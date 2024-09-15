@@ -26,6 +26,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class GridPage : Page
     {
-        public GridPage() => this.InitializeComponent();
+        public GridPage() => InitializeComponent();
     }
 }

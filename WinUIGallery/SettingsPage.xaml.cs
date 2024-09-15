@@ -39,7 +39,7 @@ namespace WinUIGallery
 
         public SettingsPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             Loaded += OnSettingsPageLoaded;
         }
 
@@ -158,8 +158,8 @@ namespace WinUIGallery
 
         void soundPageHyperlink_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame
-                .Navigate(typeof(ItemPage), new NavigationRootPageArgs() { Parameter = "Sound", NavigationRootPage = NavigationRootPage.GetForElement(this) });
+            Frame
+.Navigate(typeof(ItemPage), new NavigationRootPageArgs() { Parameter = "Sound", NavigationRootPage = NavigationRootPage.GetForElement(this) });
         }
 
         async void bugRequestCard_Click(object sender, RoutedEventArgs e)

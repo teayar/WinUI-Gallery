@@ -49,8 +49,8 @@ namespace WinUIGallery.SamplePages
     {
         public SampleSystemBackdropsWindow()
         {
-            this.InitializeComponent();
-            ((FrameworkElement)this.Content).RequestedTheme = WinUIGallery.Helper.ThemeHelper.RootTheme;
+            InitializeComponent();
+            ((FrameworkElement)Content).RequestedTheme = WinUIGallery.Helper.ThemeHelper.RootTheme;
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(titleBar);
             m_wsdqHelper = new WindowsSystemDispatcherQueueHelper();
@@ -100,9 +100,9 @@ namespace WinUIGallery.SamplePages
                 m_acrylicController = null;
             }
 
-            this.Activated -= Window_Activated;
-            this.Closed -= Window_Closed;
-            ((FrameworkElement)this.Content).ActualThemeChanged -= Window_ThemeChanged;
+            Activated -= Window_Activated;
+            Closed -= Window_Closed;
+            ((FrameworkElement)Content).ActualThemeChanged -= Window_ThemeChanged;
             m_configurationSource = null;
 
             if (type == BackdropType.Mica)
@@ -173,9 +173,9 @@ namespace WinUIGallery.SamplePages
             {
                 // Hooking up the policy object.
                 m_configurationSource = new Microsoft.UI.Composition.SystemBackdrops.SystemBackdropConfiguration();
-                this.Activated += Window_Activated;
-                this.Closed += Window_Closed;
-                ((FrameworkElement)this.Content).ActualThemeChanged += Window_ThemeChanged;
+                Activated += Window_Activated;
+                Closed += Window_Closed;
+                ((FrameworkElement)Content).ActualThemeChanged += Window_ThemeChanged;
 
                 // Initial configuration state.
                 m_configurationSource.IsInputActive = true;
@@ -201,9 +201,9 @@ namespace WinUIGallery.SamplePages
             {
                 // Hooking up the policy object.
                 m_configurationSource = new Microsoft.UI.Composition.SystemBackdrops.SystemBackdropConfiguration();
-                this.Activated += Window_Activated;
-                this.Closed += Window_Closed;
-                ((FrameworkElement)this.Content).ActualThemeChanged += Window_ThemeChanged;
+                Activated += Window_Activated;
+                Closed += Window_Closed;
+                ((FrameworkElement)Content).ActualThemeChanged += Window_ThemeChanged;
 
                 // Initial configuration state.
                 m_configurationSource.IsInputActive = true;
@@ -244,7 +244,7 @@ namespace WinUIGallery.SamplePages
                 m_acrylicController = null;
             }
 
-            this.Activated -= Window_Activated;
+            Activated -= Window_Activated;
             m_configurationSource = null;
         }
 
@@ -258,7 +258,7 @@ namespace WinUIGallery.SamplePages
 
         void SetConfigurationSourceTheme()
         {
-            switch (((FrameworkElement)this.Content).ActualTheme)
+            switch (((FrameworkElement)Content).ActualTheme)
             {
                 case ElementTheme.Dark: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Dark; break;
                 case ElementTheme.Light: m_configurationSource.Theme = Microsoft.UI.Composition.SystemBackdrops.SystemBackdropTheme.Light; break;

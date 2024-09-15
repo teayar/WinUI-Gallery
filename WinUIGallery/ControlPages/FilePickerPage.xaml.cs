@@ -19,7 +19,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class FilePickerPage : Page
     {
-        public FilePickerPage() => this.InitializeComponent();
+        public FilePickerPage() => InitializeComponent();
 
         async void PickAFileButton_Click(object sender, RoutedEventArgs e)
         {
@@ -254,7 +254,6 @@ namespace WinUIGallery.ControlPages
                 {
                     using (var tw = new StreamWriter(stream))
                         tw.WriteLine(textBox?.Text);
-                    
                 }
                 // Another way to write a string to the file is to use this instead:
                 // await FileIO.WriteTextAsync(file, "Example file contents.");

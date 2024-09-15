@@ -39,7 +39,6 @@ namespace WinUIGallery.DesktopWap.DataModel
         {
             lock (_lock)
                 if (icons.Count != 0) return icons;
-            
 
             var jsonText = await FileLoader.LoadText("DataModel/IconsData.json");
 

@@ -67,7 +67,7 @@ namespace WinUIGallery.Controls
         string actualCode = "";
         static Regex SubstitutionPattern = new Regex(@"\$\(([^\)]+)\)");
 
-        public SampleCodePresenter() => this.InitializeComponent();
+        public SampleCodePresenter() => InitializeComponent();
 
         static void OnDependencyPropertyChanged(DependencyObject target, DependencyPropertyChangedEventArgs args)
         {
@@ -93,7 +93,6 @@ namespace WinUIGallery.Controls
             {
                 foreach (var substitution in Substitutions)
                     substitution.ValueChanged += OnValueChanged;
-                
             }
         }
 
@@ -259,45 +258,45 @@ namespace WinUIGallery.Controls
 
             formatter.Styles
                 .Add(new ColorCode.Styling.Style(ScopeName.XmlAttribute)
-            {
-                Foreground = "#FF87CEFA",
-                ReferenceName = "xmlAttribute"
-            });
+                {
+                    Foreground = "#FF87CEFA",
+                    ReferenceName = "xmlAttribute"
+                });
 
             formatter.Styles
                 .Add(new ColorCode.Styling.Style(ScopeName.XmlAttributeQuotes)
-            {
-                Foreground = "#FFFFA07A",
-                ReferenceName = "xmlAttributeQuotes"
-            });
+                {
+                    Foreground = "#FFFFA07A",
+                    ReferenceName = "xmlAttributeQuotes"
+                });
 
             formatter.Styles
                 .Add(new ColorCode.Styling.Style(ScopeName.XmlAttributeValue)
-            {
-                Foreground = "#FFFFA07A",
-                ReferenceName = "xmlAttributeValue"
-            });
+                {
+                    Foreground = "#FFFFA07A",
+                    ReferenceName = "xmlAttributeValue"
+                });
 
             formatter.Styles
                 .Add(new ColorCode.Styling.Style(ScopeName.HtmlComment)
-            {
-                Foreground = "#FF6B8E23",
-                ReferenceName = "htmlComment"
-            });
+                {
+                    Foreground = "#FF6B8E23",
+                    ReferenceName = "htmlComment"
+                });
 
             formatter.Styles
                 .Add(new ColorCode.Styling.Style(ScopeName.XmlDelimiter)
-            {
-                Foreground = "#FF808080",
-                ReferenceName = "xmlDelimiter"
-            });
+                {
+                    Foreground = "#FF808080",
+                    ReferenceName = "xmlDelimiter"
+                });
 
             formatter.Styles
                 .Add(new ColorCode.Styling.Style(ScopeName.XmlName)
-            {
-                Foreground = "#FF5F82E8",
-                ReferenceName = "xmlName"
-            });
+                {
+                    Foreground = "#FF5F82E8",
+                    ReferenceName = "xmlName"
+                });
         }
 
         void CopyCodeButton_Click(object sender, RoutedEventArgs e)

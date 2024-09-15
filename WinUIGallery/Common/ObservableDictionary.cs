@@ -34,7 +34,7 @@ namespace WinUIGallery.Common
         public void Add(string key, object value)
         {
             _dictionary.Add(key, value);
-            this.InvokeMapChanged(CollectionChange.ItemInserted, key);
+            InvokeMapChanged(CollectionChange.ItemInserted, key);
         }
 
         public void Add(KeyValuePair<string, object> item) => Add(item.Key, item.Value);
@@ -43,7 +43,7 @@ namespace WinUIGallery.Common
         {
             if (_dictionary.Remove(key))
             {
-                this.InvokeMapChanged(CollectionChange.ItemRemoved, key);
+                InvokeMapChanged(CollectionChange.ItemRemoved, key);
                 return true;
             }
 
@@ -55,7 +55,7 @@ namespace WinUIGallery.Common
             if (_dictionary.TryGetValue(item.Key, out object currentValue) &&
                 object.Equals(item.Value, currentValue) && _dictionary.Remove(item.Key))
             {
-                this.InvokeMapChanged(CollectionChange.ItemRemoved, item.Key);
+                InvokeMapChanged(CollectionChange.ItemRemoved, item.Key);
                 return true;
             }
 
@@ -71,7 +71,7 @@ namespace WinUIGallery.Common
             set
             {
                 _dictionary[key] = value;
-                this.InvokeMapChanged(CollectionChange.ItemChanged, key);
+                InvokeMapChanged(CollectionChange.ItemChanged, key);
             }
         }
 
@@ -81,8 +81,7 @@ namespace WinUIGallery.Common
             _dictionary.Clear();
 
             foreach (var key in priorKeys)
-                this.InvokeMapChanged(CollectionChange.ItemRemoved, key);
-            
+                InvokeMapChanged(CollectionChange.ItemRemoved, key);
         }
 
         public ICollection<string> Keys => _dictionary.Keys;

@@ -17,7 +17,7 @@ namespace WinUIGallery.ControlPages
     {
         public NumberBoxPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             SetNumberBoxNumberFormatter();
         }
 

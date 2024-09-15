@@ -9,8 +9,8 @@ namespace WinUIGallery.SamplePages
 
         public SampleBuiltInSystemBackdropsWindow()
         {
-            this.InitializeComponent();
-            ((FrameworkElement)this.Content).RequestedTheme = WinUIGallery.Helper.ThemeHelper.RootTheme;
+            InitializeComponent();
+            ((FrameworkElement)Content).RequestedTheme = WinUIGallery.Helper.ThemeHelper.RootTheme;
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(titleBar);
             SetBackdrop(BackdropType.Mica);
@@ -37,7 +37,7 @@ namespace WinUIGallery.SamplePages
             m_currentBackdrop = BackdropType.DefaultColor;
             tbCurrentBackdrop.Text = "None (default theme color)";
             tbChangeStatus.Text = "";
-            this.SystemBackdrop = null;
+            SystemBackdrop = null;
 
             if (type == BackdropType.Mica)
             {
@@ -93,7 +93,7 @@ namespace WinUIGallery.SamplePages
             {
                 Microsoft.UI.Xaml.Media.MicaBackdrop micaBackdrop = new Microsoft.UI.Xaml.Media.MicaBackdrop();
                 micaBackdrop.Kind = useMicaAlt ? Microsoft.UI.Composition.SystemBackdrops.MicaKind.BaseAlt : Microsoft.UI.Composition.SystemBackdrops.MicaKind.Base;
-                this.SystemBackdrop = micaBackdrop;
+                SystemBackdrop = micaBackdrop;
                 return true;
             }
 
@@ -104,7 +104,7 @@ namespace WinUIGallery.SamplePages
         {
             if (Microsoft.UI.Composition.SystemBackdrops.DesktopAcrylicController.IsSupported())
             {
-                this.SystemBackdrop = new Microsoft.UI.Xaml.Media.DesktopAcrylicBackdrop();
+                SystemBackdrop = new Microsoft.UI.Xaml.Media.DesktopAcrylicBackdrop();
                 return true;
             }
 

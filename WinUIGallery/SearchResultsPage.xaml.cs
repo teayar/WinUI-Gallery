@@ -36,7 +36,7 @@ namespace WinUIGallery
             set { this.SetProperty(ref _filters, value); }
         }
 
-        public SearchResultsPage() => this.InitializeComponent();
+        public SearchResultsPage() => InitializeComponent();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

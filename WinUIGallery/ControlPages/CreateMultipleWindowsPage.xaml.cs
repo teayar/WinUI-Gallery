@@ -18,7 +18,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class CreateMultipleWindowsPage : Page
     {
-        public CreateMultipleWindowsPage() => this.InitializeComponent();
+        public CreateMultipleWindowsPage() => InitializeComponent();
 
         void createNewWindow_Click(object sender, RoutedEventArgs e)
         {

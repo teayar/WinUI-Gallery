@@ -27,7 +27,7 @@ namespace WinUIGallery.DesktopWap.Controls
         public ControlInfoDataItem Item { get; set; }
         public PageHeader()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             CopyLinkAction = OnCopyLink;
         }
 
@@ -59,7 +59,7 @@ namespace WinUIGallery.DesktopWap.Controls
 
             if (ProtocolActivationClipboardHelper.ShowCopyLinkTeachingTip)
             {
-                this.CopyLinkButtonTeachingTip.IsOpen = true;
+                CopyLinkButtonTeachingTip.IsOpen = true;
             }
         }
 
@@ -72,7 +72,7 @@ namespace WinUIGallery.DesktopWap.Controls
         void OnCopyDontShowAgainButtonClick(TeachingTip sender, object args)
         {
             ProtocolActivationClipboardHelper.ShowCopyLinkTeachingTip = false;
-            this.CopyLinkButtonTeachingTip.IsOpen = false;
+            CopyLinkButtonTeachingTip.IsOpen = false;
         }
 
         void OnCopyLink() => ProtocolActivationClipboardHelper.Copy(Item);

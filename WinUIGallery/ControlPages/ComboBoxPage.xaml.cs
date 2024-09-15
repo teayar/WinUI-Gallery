@@ -46,7 +46,7 @@ namespace WinUIGallery.ControlPages
                 72
             };
 
-        public ComboBoxPage() => this.InitializeComponent();
+        public ComboBoxPage() => InitializeComponent();
 
         void ColorComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

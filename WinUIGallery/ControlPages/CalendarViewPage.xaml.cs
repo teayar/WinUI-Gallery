@@ -23,7 +23,7 @@ namespace WinUIGallery.ControlPages
     {
         public CalendarViewPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             List<string> calendarIdentifiers = new List<string>()
             {

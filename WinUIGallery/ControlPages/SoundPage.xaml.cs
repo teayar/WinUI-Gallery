@@ -19,7 +19,7 @@ namespace WinUIGallery.ControlPages
     {
         public SoundPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             if (ElementSoundPlayer.State == ElementSoundPlayerState.On)
                 soundToggle.IsOn = true;

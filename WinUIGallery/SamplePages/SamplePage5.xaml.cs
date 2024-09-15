@@ -4,6 +4,6 @@ namespace WinUIGallery.SamplePages
 {
     public sealed partial class SamplePage5 : Page
     {
-        public SamplePage5() => this.InitializeComponent();
+        public SamplePage5() => InitializeComponent();
     }
 }

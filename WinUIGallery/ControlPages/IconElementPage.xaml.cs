@@ -17,7 +17,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class IconElementPage : Page
     {
-        public IconElementPage() => this.InitializeComponent();
+        public IconElementPage() => InitializeComponent();
 
         void MonochromeButton_CheckedChanged(object sender, RoutedEventArgs e)
         {

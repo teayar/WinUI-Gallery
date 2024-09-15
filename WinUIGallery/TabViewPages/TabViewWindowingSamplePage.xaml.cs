@@ -23,7 +23,7 @@ namespace WinUIGallery.TabViewPages
         Win32WindowHelper win32WindowHelper;
         public TabViewWindowingSamplePage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             Tabs.TabItemsChanged += Tabs_TabItemsChanged;
 

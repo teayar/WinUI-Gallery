@@ -17,7 +17,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class BorderPage : Page
     {
-        public BorderPage() => this.InitializeComponent();
+        public BorderPage() => InitializeComponent();
 
         void ThicknessSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {

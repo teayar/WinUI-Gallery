@@ -16,7 +16,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class AppBarToggleButtonPage : Page
     {
-        public AppBarToggleButtonPage() => this.InitializeComponent();
+        public AppBarToggleButtonPage() => InitializeComponent();
 
         void AppBarButton_Click(object sender, RoutedEventArgs e)
         {

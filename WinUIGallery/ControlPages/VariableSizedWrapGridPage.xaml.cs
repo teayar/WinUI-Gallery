@@ -14,7 +14,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class VariableSizedWrapGridPage : Page
     {
-        public VariableSizedWrapGridPage() => this.InitializeComponent();
+        public VariableSizedWrapGridPage() => InitializeComponent();
 
         void RadioButton_Checked(object sender, RoutedEventArgs e)
         {

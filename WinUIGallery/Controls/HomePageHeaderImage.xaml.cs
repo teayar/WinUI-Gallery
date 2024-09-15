@@ -31,7 +31,7 @@ namespace WinUIGallery.Controls
         Visual _imageGridVisual;
         CompositionVisualSurface _imageGridVisualSurface;
         const string GradientSizeKey = "GradientSize";
-        public HomePageHeaderImage() => this.InitializeComponent();
+        public HomePageHeaderImage() => InitializeComponent();
 
         void OnLoaded(object sender, RoutedEventArgs e)
         {

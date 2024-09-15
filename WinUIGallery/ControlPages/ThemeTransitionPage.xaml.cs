@@ -21,11 +21,10 @@ namespace WinUIGallery.ControlPages
         int _itemCount = 10;
         public ThemeTransitionPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             for (int i = 0; i < _itemCount; i++)
                 AddRemoveListView.Items.Add(new ListViewItem() { Content = "Item " + i });
-            
 
             AddItemsToContentListView();
         }
@@ -53,7 +52,6 @@ namespace WinUIGallery.ControlPages
 
             for (int i = 0; i < 5; i++)
                 items.Add(ShowDifferentContent ? "Updated content " + i : "Item " + i);
-            
 
             ContentList.ItemsSource = items;
         }
@@ -82,6 +80,7 @@ namespace WinUIGallery.ControlPages
             for (int i = 0; i < value; i++)
             {
                 Thickness thickness = new Thickness(5.0);
+
                 EntranceStackPanel.Children
                     .Add(new Rectangle() { Width = 50, Height = 50, Margin = thickness, Fill = new SolidColorBrush(Microsoft.UI.Colors.LightBlue) });
             }

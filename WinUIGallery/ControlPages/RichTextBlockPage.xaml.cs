@@ -28,7 +28,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class RichTextBlockPage : Page
     {
-        public RichTextBlockPage() => this.InitializeComponent();
+        public RichTextBlockPage() => InitializeComponent();
 
         void HighlightColorCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

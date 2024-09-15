@@ -8,7 +8,7 @@ namespace WinUIGallery.ControlPages
     public sealed partial class ToggleSplitButtonPage : Page
     {
         MarkerType _type = MarkerType.Bullet;
-        public ToggleSplitButtonPage() => this.InitializeComponent();
+        public ToggleSplitButtonPage() => InitializeComponent();
 
         void BulletButton_Click(object sender, RoutedEventArgs e)
         {

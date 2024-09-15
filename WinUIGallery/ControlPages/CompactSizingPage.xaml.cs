@@ -7,7 +7,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class CompactSizingPage : Page
     {
-        public CompactSizingPage() => this.InitializeComponent();
+        public CompactSizingPage() => InitializeComponent();
 
         void Example1_Loaded(object sender, RoutedEventArgs e)
         {

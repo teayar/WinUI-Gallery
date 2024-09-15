@@ -14,10 +14,10 @@ namespace WinUIGallery.ConnectedAnimationPages
 
         public CollectionPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             // Ensure that the MainPage is only created once, and cached during navigation.
-            this.NavigationCacheMode = NavigationCacheMode.Enabled;
+            NavigationCacheMode = NavigationCacheMode.Enabled;
 
             collection.ItemsSource = WinUIGallery.ControlPages.CustomDataObject.GetDataObjects();
         }

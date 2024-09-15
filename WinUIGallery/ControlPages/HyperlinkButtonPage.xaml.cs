@@ -14,7 +14,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class HyperlinkButtonPage : Page
     {
-        public HyperlinkButtonPage() => this.InitializeComponent();
+        public HyperlinkButtonPage() => InitializeComponent();
 
         void GoToHyperlinkButton_Click(object sender, RoutedEventArgs e)
         {

@@ -21,7 +21,7 @@ namespace WinUIGallery.ControlPages
 
         public NavigationViewPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             nvSample2.SelectedItem = nvSample2.MenuItems.OfType<Microsoft.UI.Xaml.Controls.NavigationViewItem>().First();
             nvSample5.SelectedItem = nvSample5.MenuItems.OfType<Microsoft.UI.Xaml.Controls.NavigationViewItem>().First();

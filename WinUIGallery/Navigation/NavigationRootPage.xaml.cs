@@ -69,7 +69,7 @@ namespace WinUIGallery
 
         public NavigationRootPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
 
             _navHelper = new RootFrameNavigationHelper(rootFrame, NavigationViewControl);
@@ -77,7 +77,7 @@ namespace WinUIGallery
             SetDeviceFamily();
             AddNavigationMenuItems();
 
-            this.GotFocus += (object sender, RoutedEventArgs e) =>
+            GotFocus += (object sender, RoutedEventArgs e) =>
             {
                 // helpful for debugging focus problems w/ keyboard & gamepad
                 if (FocusManager.GetFocusedElement() is FrameworkElement focus)
@@ -96,7 +96,7 @@ namespace WinUIGallery
                 window.Title = AppTitleText;
                 window.ExtendsContentIntoTitleBar = true;
                 window.Activated += Window_Activated;
-                window.SetTitleBar(this.AppTitleBar);
+                window.SetTitleBar(AppTitleBar);
 
                 AppWindow appWindow = WindowHelper.GetAppWindow(window);
                 appWindow.SetIcon("Assets/Tiles/GalleryIcon.ico");
@@ -207,7 +207,7 @@ namespace WinUIGallery
                 var itemGroup = new NavigationViewItem() { Content = group.Title, Tag = group.UniqueId, DataContext = group, Icon = GetIcon(group.IconGlyph) };
 
                 var groupMenuFlyoutItem = new MenuFlyoutItem() { Text = $"Copy Link to {group.Title} samples", Icon = new FontIcon() { Glyph = "\uE8C8" }, Tag = group };
-                groupMenuFlyoutItem.Click += this.OnMenuFlyoutItemClick;
+                groupMenuFlyoutItem.Click += OnMenuFlyoutItemClick;
                 itemGroup.ContextFlyout = new MenuFlyout() { Items = { groupMenuFlyoutItem } };
 
                 AutomationProperties.SetName(itemGroup, group.Title);
@@ -218,7 +218,7 @@ namespace WinUIGallery
                     var itemInGroup = new NavigationViewItem() { IsEnabled = item.IncludedInBuild, Content = item.Title, Tag = item.UniqueId, DataContext = item };
 
                     var itemInGroupMenuFlyoutItem = new MenuFlyoutItem() { Text = $"Copy Link to {item.Title} sample", Icon = new FontIcon() { Glyph = "\uE8C8" }, Tag = item };
-                    itemInGroupMenuFlyoutItem.Click += this.OnMenuFlyoutItemClick;
+                    itemInGroupMenuFlyoutItem.Click += OnMenuFlyoutItemClick;
                     itemInGroup.ContextFlyout = new MenuFlyout() { Items = { itemInGroupMenuFlyoutItem } };
 
                     itemGroup.MenuItems.Add(itemInGroup);
@@ -415,7 +415,6 @@ namespace WinUIGallery
 
                     foreach (var item in matchingItems)
                         suggestions.Add(item);
-                    
                 }
 
                 if (suggestions.Count > 0)
@@ -564,10 +563,7 @@ namespace WinUIGallery
 
         void GoBackInvokerButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            if (this.rootFrame.CanGoBack)
-            {
-                this.rootFrame.GoBack();
-            }
+            if (rootFrame.CanGoBack) rootFrame.GoBack();
         }
 
         void WaitForDebuggerInvokerButton_Click(object sender, RoutedEventArgs e)
@@ -580,7 +576,6 @@ namespace WinUIGallery
             {
                 while (!IsDebuggerPresent())
                     Thread.Sleep(1000);
-                
 
                 DebugBreak();
 

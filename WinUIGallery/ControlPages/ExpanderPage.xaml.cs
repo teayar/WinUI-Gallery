@@ -4,7 +4,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ExpanderPage : Page
     {
-        public ExpanderPage() => this.InitializeComponent();
+        public ExpanderPage() => InitializeComponent();
 
         void ExpandDirectionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

@@ -23,6 +23,6 @@ namespace WinUIGallery.DesktopWap.Controls.DesignGuidance.ColorSections
 {
     public sealed partial class HighContrastSection : Page
     {
-        public HighContrastSection() => this.InitializeComponent();
+        public HighContrastSection() => InitializeComponent();
     }
 }

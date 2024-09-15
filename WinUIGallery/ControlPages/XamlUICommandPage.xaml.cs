@@ -10,7 +10,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class XamlUICommandPage : Page
     {
-        public XamlUICommandPage() => this.InitializeComponent();
+        public XamlUICommandPage() => InitializeComponent();
 
         void CustomXamlUICommand_ExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {

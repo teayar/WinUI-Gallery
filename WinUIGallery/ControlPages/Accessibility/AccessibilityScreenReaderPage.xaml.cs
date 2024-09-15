@@ -14,6 +14,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class AccessibilityScreenReaderPage : Page
     {
-        public AccessibilityScreenReaderPage() => this.InitializeComponent();
+        public AccessibilityScreenReaderPage() => InitializeComponent();
     }
 }

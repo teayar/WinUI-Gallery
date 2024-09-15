@@ -173,9 +173,9 @@ namespace WinUIGallery
 
         public ControlExample()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             Substitutions = new List<ControlExampleSubstitution>();
-            this.Loaded += ControlExample_Loaded;
+            Loaded += ControlExample_Loaded;
         }
 
         void ControlExample_Loaded(object sender, RoutedEventArgs e)

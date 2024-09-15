@@ -21,7 +21,7 @@ namespace WinUIGallery.ControlPages
     {
         ObservableCollection<ListItemData> collection = new ObservableCollection<ListItemData>();
 
-        public StandardUICommandPage() => this.InitializeComponent();
+        public StandardUICommandPage() => InitializeComponent();
 
         void DeleteCommand_ExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
         {

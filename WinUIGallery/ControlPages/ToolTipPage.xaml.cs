@@ -26,6 +26,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ToolTipPage : Page
     {
-        public ToolTipPage() => this.InitializeComponent();
+        public ToolTipPage() => InitializeComponent();
     }
 }

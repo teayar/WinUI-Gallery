@@ -40,7 +40,6 @@ namespace WinUIGallery.Common
             {
                 for (int i = 0; i < numColumns; i++)
                     m_columnOffsets.Add(0);
-                
             }
 
             m_firstIndex = GetStartIndex(viewport);
@@ -102,7 +101,6 @@ namespace WinUIGallery.Common
 
             for (int i = 0; i < numColumns; i++)
                 m_columnOffsets.Add(0);
-            
 
             for (int index = 0; index < m_cachedBounds.Count; index++)
             {

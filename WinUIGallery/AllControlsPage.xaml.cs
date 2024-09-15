@@ -18,7 +18,7 @@ namespace WinUIGallery
     /// </summary>
     public sealed partial class AllControlsPage : ItemsPageBase
     {
-        public AllControlsPage() => this.InitializeComponent();
+        public AllControlsPage() => InitializeComponent();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

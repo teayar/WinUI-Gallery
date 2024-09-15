@@ -4,7 +4,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ColorPickerPage : Page
     {
-        public ColorPickerPage() => this.InitializeComponent();
+        public ColorPickerPage() => InitializeComponent();
 
         void ColorSpectrumShapeRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

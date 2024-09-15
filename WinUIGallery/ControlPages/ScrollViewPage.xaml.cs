@@ -20,9 +20,9 @@ namespace WinUIGallery.ControlPages
     {
         public ScrollViewPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
-            this.Loaded += ScrollViewPage_Loaded;
+            Loaded += ScrollViewPage_Loaded;
         }
 
         // Example1
@@ -45,7 +45,7 @@ namespace WinUIGallery.ControlPages
 
             nbZoomFactor.NumberFormatter = formatter;
 
-            this.Loaded -= ScrollViewPage_Loaded;
+            Loaded -= ScrollViewPage_Loaded;
         }
 
         void CmbZoomMode_SelectionChanged(object sender, SelectionChangedEventArgs e)

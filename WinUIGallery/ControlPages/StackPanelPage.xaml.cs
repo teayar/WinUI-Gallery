@@ -19,7 +19,7 @@ namespace WinUIGallery.ControlPages
     /// </summary>
     public sealed partial class StackPanelPage : Page
     {
-        public StackPanelPage() => this.InitializeComponent();
+        public StackPanelPage() => InitializeComponent();
 
         void RadioButton_Checked(object sender, RoutedEventArgs e)
         {

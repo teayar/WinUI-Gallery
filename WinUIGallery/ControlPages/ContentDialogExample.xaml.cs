@@ -17,6 +17,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ContentDialogExample : ContentDialog
     {
-        public ContentDialogExample() => this.InitializeComponent();
+        public ContentDialogExample() => InitializeComponent();
     }
 }

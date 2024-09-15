@@ -44,7 +44,7 @@ namespace WinUIGallery.ControlPages
             new NamedEasingFunction("SineEase", new SineEase())
             };
 
-        public EasingFunctionPage() => this.InitializeComponent();
+        public EasingFunctionPage() => InitializeComponent();
 
         void Button1_Click(object sender, RoutedEventArgs e)
         {

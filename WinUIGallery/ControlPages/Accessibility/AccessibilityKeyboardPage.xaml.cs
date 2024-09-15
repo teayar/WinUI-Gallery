@@ -17,7 +17,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class AccessibilityKeyboardPage : Page
     {
-        public AccessibilityKeyboardPage() => this.InitializeComponent();
+        public AccessibilityKeyboardPage() => InitializeComponent();
 
         void MakeRedButton_Click(object sender, RoutedEventArgs e)
         {

@@ -18,7 +18,7 @@ namespace WinUIGallery.ControlPages
     {
         public ScrollViewerPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             ScrollViewerControl.ZoomToFactor(4.0f);
         }
 

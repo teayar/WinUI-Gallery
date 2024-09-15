@@ -13,7 +13,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class XamlCompInteropPage : Page
     {
-        public XamlCompInteropPage() => this.InitializeComponent();
+        public XamlCompInteropPage() => InitializeComponent();
 
         Compositor _compositor = Microsoft.UI.Xaml.Media.CompositionTarget.GetCompositorForCurrentThread();
         SpringVector3NaturalMotionAnimation _springAnimation;

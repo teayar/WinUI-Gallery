@@ -26,7 +26,7 @@ namespace WinUIGallery.ControlPages
     {
         public CaptureElementPreviewPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             StartCaptureElement();
 

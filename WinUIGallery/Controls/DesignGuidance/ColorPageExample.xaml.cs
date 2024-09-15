@@ -50,6 +50,6 @@ namespace WinUIGallery.DesktopWap.Controls.DesignGuidance
         public static readonly DependencyProperty ExampleContentProperty =
             DependencyProperty.Register("ExampleContent", typeof(UIElement), typeof(ColorPageExample), new PropertyMetadata(null));
 
-        public ColorPageExample() => this.InitializeComponent();
+        public ColorPageExample() => InitializeComponent();
     }
 }

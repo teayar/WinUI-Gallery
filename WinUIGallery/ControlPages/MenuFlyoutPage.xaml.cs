@@ -16,7 +16,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class MenuFlyoutPage : Page
     {
-        public MenuFlyoutPage() => this.InitializeComponent();
+        public MenuFlyoutPage() => InitializeComponent();
 
         void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {

@@ -16,7 +16,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class RadioButtonPage : Page
     {
-        public RadioButtonPage() => this.InitializeComponent();
+        public RadioButtonPage() => InitializeComponent();
 
         void RadioButton_Checked(object sender, RoutedEventArgs e)
         {

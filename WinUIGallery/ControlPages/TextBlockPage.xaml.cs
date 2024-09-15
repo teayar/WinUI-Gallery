@@ -26,6 +26,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class TextBlockPage : Page
     {
-        public TextBlockPage() => this.InitializeComponent();
+        public TextBlockPage() => InitializeComponent();
     }
 }

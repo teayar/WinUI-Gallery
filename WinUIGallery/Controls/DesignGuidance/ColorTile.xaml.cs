@@ -63,7 +63,7 @@ namespace WinUIGallery.DesktopWap.Controls.DesignGuidance
         public static readonly DependencyProperty ShowWarningProperty =
             DependencyProperty.Register("ShowWarning", typeof(bool), typeof(ColorTile), new PropertyMetadata(false));
 
-        public ColorTile() => this.InitializeComponent();
+        public ColorTile() => InitializeComponent();
 
         void CopyBrushNameButton_Click(object sender, RoutedEventArgs e)
         {

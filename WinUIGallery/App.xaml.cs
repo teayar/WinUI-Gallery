@@ -77,7 +77,7 @@ namespace WinUIGallery
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
 #if WINUI_PRERELEASE
             this.Suspending += OnSuspending;
@@ -124,7 +124,7 @@ namespace WinUIGallery
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
-                this.DebugSettings.BindingFailed += DebugSettings_BindingFailed;
+                DebugSettings.BindingFailed += DebugSettings_BindingFailed;
             }
 
 #endif

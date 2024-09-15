@@ -15,7 +15,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class RadioButtonsPage : Page
     {
-        public RadioButtonsPage() => this.InitializeComponent();
+        public RadioButtonsPage() => InitializeComponent();
 
         void BackgroundColor_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

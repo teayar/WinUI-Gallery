@@ -15,7 +15,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class TypographyPage : Page
     {
-        public TypographyPage() => this.InitializeComponent();
+        public TypographyPage() => InitializeComponent();
 
         void ShowTypographyButtonClick1(object sender, RoutedEventArgs e)
         {

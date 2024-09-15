@@ -6,7 +6,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class InfoBarPage : Page
     {
-        public InfoBarPage() => this.InitializeComponent();
+        public InfoBarPage() => InitializeComponent();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

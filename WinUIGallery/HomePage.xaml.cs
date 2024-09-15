@@ -17,7 +17,7 @@ namespace WinUIGallery
 {
     public sealed partial class HomePage : ItemsPageBase
     {
-        public HomePage() => this.InitializeComponent();
+        public HomePage() => InitializeComponent();
 
         public string WinAppSdkDetails => App.WinAppSdkDetails;
 

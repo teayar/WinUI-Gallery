@@ -30,7 +30,7 @@ namespace WinUIGallery.ControlPages
         public static extern IntPtr GetActiveWindow();
         Windows.UI.Color currentColor = Microsoft.UI.Colors.Green;
 
-        public RichEditBoxPage() => this.InitializeComponent();
+        public RichEditBoxPage() => InitializeComponent();
 
         void Menu_Opening(object sender, object e)
         {
@@ -83,7 +83,6 @@ namespace WinUIGallery.ControlPages
                     await file.OpenAsync(Windows.Storage.FileAccessMode.Read))
                     // Load the file into the Document property of the RichEditBox.
                     editor.Document.LoadFromStream(TextSetOptions.FormatRtf, randAccStream);
-                
             }
         }
 
@@ -118,7 +117,6 @@ namespace WinUIGallery.ControlPages
                 using (Windows.Storage.Streams.IRandomAccessStream randAccStream =
                     await file.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite))
                     editor.Document.SaveToStream(TextGetOptions.FormatRtf, randAccStream);
-                
 
                 // Let Windows know that we're finished changing the file so the
                 // other app can update the remote version of the file.

@@ -24,7 +24,7 @@ namespace WinUIGallery.DesktopWap.Controls
 {
     public sealed partial class TypographyControl : UserControl
     {
-        public TypographyControl() => this.InitializeComponent();
+        public TypographyControl() => InitializeComponent();
 
         public static readonly DependencyProperty ExampleProperty = DependencyProperty.Register(nameof(Example), typeof(string), typeof(TypographyControl), new PropertyMetadata(""));
 

@@ -16,7 +16,7 @@ namespace WinUIGallery.ControlPages
             "ms-appx:///Assets/SampleMedia/LandscapeImage7.jpg",
             "ms-appx:///Assets/SampleMedia/LandscapeImage8.jpg",
         };
-        public PipsPagerPage() => this.InitializeComponent();
+        public PipsPagerPage() => InitializeComponent();
 
         void OrientationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

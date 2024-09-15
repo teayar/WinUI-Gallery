@@ -26,7 +26,7 @@ namespace WinUIGallery.ControlPages
 
         public SelectorBarPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             PopulateColorCollections();
         }
@@ -85,19 +85,16 @@ namespace WinUIGallery.ControlPages
 
             for (int colorInstance = 0; colorInstance < 5; colorInstance++)
                 PinkColorCollection.Add(solidColorBrush);
-            
 
             solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.Plum);
 
             for (int colorInstance = 0; colorInstance < 7; colorInstance++)
                 PlumColorCollection.Add(solidColorBrush);
-            
 
             solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.PowderBlue);
 
             for (int colorInstance = 0; colorInstance < 4; colorInstance++)
                 PowderBlueColorCollection.Add(solidColorBrush);
-            
         }
     }
 }

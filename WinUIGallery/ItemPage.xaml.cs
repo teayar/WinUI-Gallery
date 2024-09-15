@@ -42,7 +42,7 @@ namespace WinUIGallery
 
         public ItemPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             Loaded += (s, e) => SetInitialVisuals();
         }
 
@@ -55,7 +55,7 @@ namespace WinUIGallery
                 pageHeader.ToggleThemeAction = OnToggleTheme;
                 navigationRootPage.NavigationViewLoaded = OnNavigationViewLoaded;
 
-                this.Focus(FocusState.Programmatic);
+                Focus(FocusState.Programmatic);
             }
         }
         void OnNavigationViewLoaded()
@@ -83,7 +83,7 @@ namespace WinUIGallery
                     pageHeader.SetControlSourceLink(WinUIBaseUrl, item.SourcePath);
                     pageHeader.SetSamplePageSourceLinks(GalleryBaseUrl, pageName);
                     System.Diagnostics.Debug.WriteLine(string.Format("[ItemPage] Navigate to {0}", pageType.ToString()));
-                    this.contentFrame.Navigate(pageType);
+                    contentFrame.Navigate(pageType);
                 }
 
                 args.NavigationRootPage.EnsureNavigationSelection(item?.UniqueId);
@@ -147,7 +147,7 @@ namespace WinUIGallery
 
         void SetControlExamplesTheme(ElementTheme theme)
         {
-            var controlExamples = (this.contentFrame.Content as UIElement)?.GetDescendantsOfType<SampleThemeListener>();
+            var controlExamples = (contentFrame.Content as UIElement)?.GetDescendantsOfType<SampleThemeListener>();
 
             if (controlExamples != null)
             {
@@ -155,11 +155,10 @@ namespace WinUIGallery
 
                 foreach (var controlExample in controlExamples)
                     controlExample.RequestedTheme = theme;
-                
 
                 if (controlExamples.Count() == 0)
                 {
-                    this.RequestedTheme = theme;
+                    RequestedTheme = theme;
                 }
             }
         }

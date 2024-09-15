@@ -22,8 +22,8 @@ namespace WinUIGallery.ControlPages
 
         public GridViewPage()
         {
-            this.InitializeComponent();
-            this.DataContext = this;
+            InitializeComponent();
+            DataContext = this;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -53,7 +53,7 @@ namespace WinUIGallery.ControlPages
             if (tag != null)
             {
                 string template = tag.ToString();
-                ContentGridView.ItemTemplate = (DataTemplate)this.Resources[template];
+                ContentGridView.ItemTemplate = (DataTemplate)Resources[template];
                 itemTemplate.Value = template;
 
                 if (template == "ImageTemplate")

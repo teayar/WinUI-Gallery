@@ -14,6 +14,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class SpacingPage : Page
     {
-        public SpacingPage() => this.InitializeComponent();
+        public SpacingPage() => InitializeComponent();
     }
 }

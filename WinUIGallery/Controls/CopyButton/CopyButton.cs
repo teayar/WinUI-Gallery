@@ -10,7 +10,7 @@ namespace WinUIGallery.DesktopWap.Controls
 {
     public sealed class CopyButton : Button
     {
-        public CopyButton() => this.DefaultStyleKey = typeof(CopyButton);
+        public CopyButton() => DefaultStyleKey = typeof(CopyButton);
 
         void CopyButton_Click(object sender, RoutedEventArgs e)
         {

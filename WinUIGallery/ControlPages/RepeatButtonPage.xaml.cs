@@ -14,7 +14,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class RepeatButtonPage : Page
     {
-        public RepeatButtonPage() => this.InitializeComponent();
+        public RepeatButtonPage() => InitializeComponent();
 
         static int _clicks;
         void RepeatButton_Click(object sender, RoutedEventArgs e)

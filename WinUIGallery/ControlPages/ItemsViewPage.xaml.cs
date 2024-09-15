@@ -29,14 +29,14 @@ namespace WinUIGallery.ControlPages
 
         public ItemsViewPage()
         {
-            this.InitializeComponent();
-            this.DataContext = this;
-            this.Loaded += ItemsViewPage_Loaded;
+            InitializeComponent();
+            DataContext = this;
+            Loaded += ItemsViewPage_Loaded;
         }
 
         void ItemsViewPage_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Loaded -= ItemsViewPage_Loaded;
+            Loaded -= ItemsViewPage_Loaded;
 
             if (SwappableLayoutsItemsView != null)
             {
@@ -171,6 +171,7 @@ namespace WinUIGallery.ControlPages
             {
                 SwappableLayoutsItemsView.ScrollView
                     .ScrollTo(0, 0, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled, ScrollingSnapPointsMode.Ignore));
+
                 applyLinedFlowLayoutLineHeightAsync = true;
             }
             else
@@ -185,6 +186,7 @@ namespace WinUIGallery.ControlPages
             {
                 SwappableLayoutsItemsView.ScrollView
                     .ScrollTo(0, 0, new ScrollingScrollOptions(ScrollingAnimationMode.Disabled, ScrollingSnapPointsMode.Ignore));
+
                 applyLinedFlowLayoutOptionsAsync = true;
             }
             else

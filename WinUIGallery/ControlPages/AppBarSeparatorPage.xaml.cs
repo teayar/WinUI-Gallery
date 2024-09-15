@@ -16,6 +16,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class AppBarSeparatorPage : Page
     {
-        public AppBarSeparatorPage() => this.InitializeComponent();
+        public AppBarSeparatorPage() => InitializeComponent();
     }
 }

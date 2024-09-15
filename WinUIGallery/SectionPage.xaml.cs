@@ -19,7 +19,7 @@ namespace WinUIGallery
     /// </summary>
     public sealed partial class SectionPage : ItemsPageBase
     {
-        public SectionPage() => this.InitializeComponent();
+        public SectionPage() => InitializeComponent();
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {

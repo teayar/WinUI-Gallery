@@ -26,6 +26,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class CanvasPage : Page
     {
-        public CanvasPage() => this.InitializeComponent();
+        public CanvasPage() => InitializeComponent();
     }
 }

@@ -19,7 +19,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class AccessibilityColorContrastPage : Page
     {
-        public AccessibilityColorContrastPage() => this.InitializeComponent();
+        public AccessibilityColorContrastPage() => InitializeComponent();
 
         void RecalculateContrastRatio()
         {

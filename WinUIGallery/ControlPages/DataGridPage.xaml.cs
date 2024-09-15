@@ -7,7 +7,7 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class DataGridPage : Page
     {
-        public DataGridPage() => this.InitializeComponent();
+        public DataGridPage() => InitializeComponent();
 
         async void LaunchToolkitButton_Click(object sender, RoutedEventArgs e)
         {

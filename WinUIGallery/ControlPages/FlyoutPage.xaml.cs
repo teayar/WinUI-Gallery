@@ -16,11 +16,11 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class FlyoutPage : Page
     {
-        public FlyoutPage() => this.InitializeComponent();
+        public FlyoutPage() => InitializeComponent();
 
         void DeleteConfirmation_Click(object sender, RoutedEventArgs e)
         {
-            if (this.Control1.Flyout is Flyout f) f.Hide();
+            if (Control1.Flyout is Flyout f) f.Hide();
         }
     }
 }

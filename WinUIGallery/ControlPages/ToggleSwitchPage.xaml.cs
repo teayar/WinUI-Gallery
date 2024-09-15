@@ -26,6 +26,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ToggleSwitchPage : Page
     {
-        public ToggleSwitchPage() => this.InitializeComponent();
+        public ToggleSwitchPage() => InitializeComponent();
     }
 }

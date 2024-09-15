@@ -12,7 +12,7 @@ namespace WinUIGallery.ControlPages
     {
         int previousSelectedIndex;
 
-        public ColorPage() => this.InitializeComponent();
+        public ColorPage() => InitializeComponent();
 
         void PageSelector_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
         {

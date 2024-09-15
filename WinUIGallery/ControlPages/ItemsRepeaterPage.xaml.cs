@@ -30,7 +30,7 @@ namespace WinUIGallery.ControlPages
 
         public ItemsRepeaterPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             InitializeData();
             repeater2.ItemsSource = Enumerable.Range(0, 500);
         }
@@ -172,7 +172,7 @@ namespace WinUIGallery.ControlPages
 
             var layoutKey = ((FrameworkElement)selected).Tag as string;
 
-            if (layoutKey.Equals(nameof(this.VerticalStackLayout))) // we used x:Name in the resources which both acts as the x:Key value and creates a member field by the same name
+            if (layoutKey.Equals(nameof(VerticalStackLayout))) // we used x:Name in the resources which both acts as the x:Key value and creates a member field by the same name
             {
                 layout.Value = layoutKey;
                 itemTemplateKey = "HorizontalBarTemplate";
@@ -187,7 +187,7 @@ namespace WinUIGallery.ControlPages
     </Border>
 </DataTemplate>";
             }
-            else if (layoutKey.Equals(nameof(this.HorizontalStackLayout)))
+            else if (layoutKey.Equals(nameof(HorizontalStackLayout)))
             {
                 layout.Value = layoutKey;
                 itemTemplateKey = "VerticalBarTemplate";
@@ -202,7 +202,7 @@ namespace WinUIGallery.ControlPages
     </Border>
 </DataTemplate>";
             }
-            else if (layoutKey.Equals(nameof(this.UniformGridLayout)))
+            else if (layoutKey.Equals(nameof(UniformGridLayout)))
             {
                 layout.Value = layoutKey;
                 itemTemplateKey = "CircularTemplate";

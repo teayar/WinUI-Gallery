@@ -16,7 +16,7 @@ namespace WinUIGallery.ControlPages
     {
         public ToggleButtonPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             // Set initial output value.
             Control1Output.Text = (bool)Toggle1.IsChecked ? "On" : "Off";

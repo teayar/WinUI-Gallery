@@ -40,7 +40,7 @@ namespace WinUIGallery.ControlPages
 
         public CommandBarPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             AddKeyboardAccelerators();
         }
 
@@ -74,10 +74,10 @@ namespace WinUIGallery.ControlPages
 
                 newButton.KeyboardAccelerators
                     .Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
-                {
-                    Key = Windows.System.VirtualKey.N,
-                    Modifiers = Windows.System.VirtualKeyModifiers.Control
-                });
+                    {
+                        Key = Windows.System.VirtualKey.N,
+                        Modifiers = Windows.System.VirtualKeyModifiers.Control
+                    });
 
                 PrimaryCommandBar.SecondaryCommands.Add(newButton);
 
@@ -91,9 +91,9 @@ namespace WinUIGallery.ControlPages
 
                 newButton.KeyboardAccelerators
                     .Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
-                {
-                    Key = Windows.System.VirtualKey.Delete
-                });
+                    {
+                        Key = Windows.System.VirtualKey.Delete
+                    });
 
                 PrimaryCommandBar.SecondaryCommands.Add(new AppBarSeparator());
 
@@ -103,10 +103,10 @@ namespace WinUIGallery.ControlPages
 
                 newButton.KeyboardAccelerators
                     .Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
-                {
-                    Key = Windows.System.VirtualKey.Subtract,
-                    Modifiers = Windows.System.VirtualKeyModifiers.Control
-                });
+                    {
+                        Key = Windows.System.VirtualKey.Subtract,
+                        Modifiers = Windows.System.VirtualKeyModifiers.Control
+                    });
 
                 PrimaryCommandBar.SecondaryCommands.Add(newButton);
 
@@ -116,10 +116,10 @@ namespace WinUIGallery.ControlPages
 
                 newButton.KeyboardAccelerators
                     .Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
-                {
-                    Key = Windows.System.VirtualKey.Add,
-                    Modifiers = Windows.System.VirtualKeyModifiers.Control
-                });
+                    {
+                        Key = Windows.System.VirtualKey.Add,
+                        Modifiers = Windows.System.VirtualKeyModifiers.Control
+                    });
 
                 PrimaryCommandBar.SecondaryCommands.Add(newButton);
             }
@@ -152,23 +152,23 @@ namespace WinUIGallery.ControlPages
         {
             editButton.KeyboardAccelerators
                 .Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
-            {
-                Key = Windows.System.VirtualKey.E,
-                Modifiers = Windows.System.VirtualKeyModifiers.Control
-            });
+                {
+                    Key = Windows.System.VirtualKey.E,
+                    Modifiers = Windows.System.VirtualKeyModifiers.Control
+                });
 
             shareButton.KeyboardAccelerators
                 .Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
-            {
-                Key = Windows.System.VirtualKey.F4
-            });
+                {
+                    Key = Windows.System.VirtualKey.F4
+                });
 
             addButton.KeyboardAccelerators
                 .Add(new Microsoft.UI.Xaml.Input.KeyboardAccelerator()
-            {
-                Key = Windows.System.VirtualKey.A,
-                Modifiers = Windows.System.VirtualKeyModifiers.Control
-            });
+                {
+                    Key = Windows.System.VirtualKey.A,
+                    Modifiers = Windows.System.VirtualKeyModifiers.Control
+                });
         }
     }
 }
