@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +30,7 @@ namespace WinUIGallery
 
         public string Key { get; set; }
 
-        private object _value = null;
+        object _value;
         public object Value
         {
             get { return _value; }
@@ -41,7 +41,7 @@ namespace WinUIGallery
             }
         }
 
-        private bool _enabled = true;
+        bool _enabled = true;
         public bool IsEnabled
         {
             get { return _enabled; }
@@ -54,10 +54,7 @@ namespace WinUIGallery
 
         public string ValueAsString()
         {
-            if (!IsEnabled)
-            {
-                return string.Empty;
-            }
+            if (!IsEnabled) return string.Empty;
 
             object value = Value;
 
@@ -67,10 +64,7 @@ namespace WinUIGallery
                 value = ((SolidColorBrush)value).Color;
             }
 
-            if (value == null)
-            {
-                return string.Empty;
-            }
+            if (value == null) return string.Empty;
 
             return value.ToString();
         }
@@ -83,7 +77,8 @@ namespace WinUIGallery
         public string HeaderText
         {
             get { return (string)GetValue(HeaderTextProperty); }
-            set {
+            set
+            {
                 SetValue(HeaderTextProperty, value);
                 HeaderTextPresenter.Visibility = string.IsNullOrEmpty(HeaderText) ? Visibility.Collapsed : Visibility.Visible;
             }
@@ -145,7 +140,7 @@ namespace WinUIGallery
             set { SetValue(SubstitutionsProperty, value); }
         }
 
-        private static readonly GridLength defaultExampleHeight =
+        static readonly GridLength defaultExampleHeight =
             new GridLength(1, GridUnitType.Star);
 
         public static readonly DependencyProperty ExampleHeightProperty = DependencyProperty.Register("ExampleHeight", typeof(GridLength), typeof(ControlExample), new PropertyMetadata(defaultExampleHeight));
@@ -183,18 +178,17 @@ namespace WinUIGallery
             this.Loaded += ControlExample_Loaded;
         }
 
-        private void ControlExample_Loaded(object sender, RoutedEventArgs e)
+        void ControlExample_Loaded(object sender, RoutedEventArgs e)
         {
             HeaderTextPresenter.Visibility = string.IsNullOrEmpty(HeaderText) ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private enum SyntaxHighlightLanguage { Xml, CSharp };
 
-        private void SelectorBarItem_Loaded(object sender, RoutedEventArgs e)
+        void SelectorBarItem_Loaded(object sender, RoutedEventArgs e)
         {
             var item = sender as SelectorBarItem;
-            if (item == null)
-                return;
+            if (item == null) return;
 
             if (item.Tag.ToString().Equals("Xaml", StringComparison.OrdinalIgnoreCase))
             {
@@ -206,6 +200,7 @@ namespace WinUIGallery
             }
 
             var firstVisibileItem = SelectorBarControl.Items.Where(x => x.Visibility == Visibility.Visible).FirstOrDefault();
+
             if (firstVisibileItem != null)
             {
                 firstVisibileItem.IsSelected = true;
@@ -214,31 +209,34 @@ namespace WinUIGallery
             HandlePresenterVisibility();
         }
 
-        private static void OnXamlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnXamlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var ctrl = (ControlExample)d;
+
             if (ctrl != null)
             {
                 ctrl.SelectorBarItem_Loaded(ctrl.SelectorBarXamlItem, null);
             }
         }
-        private static void OnCSharpChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void OnCSharpChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var ctrl = (ControlExample)d;
+
             if (ctrl != null)
             {
                 ctrl.SelectorBarItem_Loaded(ctrl.SelectorBarCSharpItem, null);
             }
         }
 
-        private void SelectorBarControl_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+        void SelectorBarControl_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
         {
             HandlePresenterVisibility();
         }
 
-        private void HandlePresenterVisibility()
+        void HandlePresenterVisibility()
         {
             var selectedItem = SelectorBarControl.SelectedItem;
+
             if (selectedItem != null)
             {
                 if (selectedItem.Tag.ToString().Equals("Xaml", StringComparison.OrdinalIgnoreCase))

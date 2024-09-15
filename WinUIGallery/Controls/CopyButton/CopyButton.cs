@@ -10,12 +10,9 @@ namespace WinUIGallery.DesktopWap.Controls
 {
     public sealed class CopyButton : Button
     {
-        public CopyButton()
-        {
-            this.DefaultStyleKey = typeof(CopyButton);
-        }
+        public CopyButton() => this.DefaultStyleKey = typeof(CopyButton);
 
-        private void CopyButton_Click(object sender, RoutedEventArgs e)
+        void CopyButton_Click(object sender, RoutedEventArgs e)
         {
             if (GetTemplateChild("CopyToClipboardSuccessAnimation") is Storyboard _storyBoard)
             {

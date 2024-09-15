@@ -7,13 +7,10 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ToggleSplitButtonPage : Page
     {
-        private MarkerType _type = MarkerType.Bullet;
-        public ToggleSplitButtonPage()
-        {
-            this.InitializeComponent();
-        }
+        MarkerType _type = MarkerType.Bullet;
+        public ToggleSplitButtonPage() => this.InitializeComponent();
 
-        private void BulletButton_Click(object sender, RoutedEventArgs e)
+        void BulletButton_Click(object sender, RoutedEventArgs e)
         {
             Button clickedBullet = (Button)sender;
             SymbolIcon symbol = (SymbolIcon)clickedBullet.Content;
@@ -30,6 +27,7 @@ namespace WinUIGallery.ControlPages
                 mySymbolIcon.Symbol = Symbol.Bullets;
                 myListButton.SetValue(AutomationProperties.NameProperty, "Roman Numerals");
             }
+
             myRichEditBox.Document.Selection.ParagraphFormat.ListType = _type;
 
             myListButton.IsChecked = true;
@@ -37,16 +35,16 @@ namespace WinUIGallery.ControlPages
             myRichEditBox.Focus(FocusState.Keyboard);
         }
 
-        private void MyListButton_IsCheckedChanged(Microsoft.UI.Xaml.Controls.ToggleSplitButton sender, Microsoft.UI.Xaml.Controls.ToggleSplitButtonIsCheckedChangedEventArgs args)
+        void MyListButton_IsCheckedChanged(Microsoft.UI.Xaml.Controls.ToggleSplitButton sender, Microsoft.UI.Xaml.Controls.ToggleSplitButtonIsCheckedChangedEventArgs args)
         {
             if (sender.IsChecked)
             {
-                //add bulleted list
+                // add bulleted list
                 myRichEditBox.Document.Selection.ParagraphFormat.ListType = _type;
             }
             else
             {
-                //remove bulleted list
+                // remove bulleted list
                 myRichEditBox.Document.Selection.ParagraphFormat.ListType = MarkerType.None;
             }
         }

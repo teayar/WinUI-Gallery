@@ -7,9 +7,6 @@ namespace WinUIGallery.DesktopWap.Controls.DesignGuidance.ColorSections
 {
     public sealed partial class SignalSection : Page
     {
-        public SignalSection()
-        {
-            this.InitializeComponent();
-        }
+        public SignalSection() => this.InitializeComponent();
     }
 }

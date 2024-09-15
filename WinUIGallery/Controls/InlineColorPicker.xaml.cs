@@ -35,7 +35,8 @@ namespace WinUIGallery.DesktopWap.Controls
         public Color Color
         {
             get { return (Color)GetValue(ColorProperty); }
-            set {
+            set
+            {
                 ColorBrush = new SolidColorBrush(value);
                 SetValue(ColorProperty, value);
             }
@@ -50,7 +51,7 @@ namespace WinUIGallery.DesktopWap.Controls
         }
         public static readonly DependencyProperty ColorBrushProperty =
             DependencyProperty.Register("ColorBrush", typeof(SolidColorBrush), typeof(InlineColorPicker), new PropertyMetadata(new SolidColorBrush(Colors.White)));
-        
+
         public event EventHandler<Color> ColorChanged;
 
         public InlineColorPicker()
@@ -59,9 +60,9 @@ namespace WinUIGallery.DesktopWap.Controls
             this.Loaded += InlineColorPicker_Loaded;
         }
 
-        private void InlineColorPicker_Loaded(object sender, RoutedEventArgs e)
+        void InlineColorPicker_Loaded(object sender, RoutedEventArgs e)
         {
-            ColorHex.Text = Color.ToString().Replace("#FF","#");
+            ColorHex.Text = Color.ToString().Replace("#FF", "#");
         }
 
         public SolidColorBrush GetSolidColorBrush(string hex)
@@ -74,7 +75,7 @@ namespace WinUIGallery.DesktopWap.Controls
             return myBrush;
         }
 
-        private void Picker_ColorChanged(ColorPicker sender, ColorChangedEventArgs args)
+        void Picker_ColorChanged(ColorPicker sender, ColorChangedEventArgs args)
         {
             ColorPreview.Fill = new SolidColorBrush(args.NewColor);
             ColorHex.Text = args.NewColor.ToString().Replace("#FF", "#");
@@ -82,12 +83,12 @@ namespace WinUIGallery.DesktopWap.Controls
             ColorChanged?.Invoke(this, args.NewColor);
         }
 
-        private void PickerFlyout_Opened(object sender, object e)
+        void PickerFlyout_Opened(object sender, object e)
         {
             Picker.Color = ((SolidColorBrush)ColorPreview.Fill).Color;
         }
 
-        private void ColorHex_TextChanged(object sender, TextChangedEventArgs e)
+        void ColorHex_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {

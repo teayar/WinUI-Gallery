@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using WinUIGallery.Helper;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
@@ -27,20 +27,19 @@ using System;
 
 namespace WinUIGallery.ControlPages
 {
-
-
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class TitleBarPage : Page
     {
-        private Windows.UI.Color currentBgColor = Colors.Transparent;
-        private Windows.UI.Color currentFgColor = ThemeHelper.ActualTheme == ElementTheme.Dark ? Colors.White : Colors.Black;
-        private bool sizeChangedEventHandlerAdded = false;
+        Windows.UI.Color currentBgColor = Colors.Transparent;
+        Windows.UI.Color currentFgColor = ThemeHelper.ActualTheme == ElementTheme.Dark ? Colors.White : Colors.Black;
+        bool sizeChangedEventHandlerAdded;
 
         public TitleBarPage()
         {
             this.InitializeComponent();
+
             Loaded += (object sender, RoutedEventArgs e) =>
             {
                 (sender as TitleBarPage).UpdateTitleBarColor();
@@ -48,15 +47,13 @@ namespace WinUIGallery.ControlPages
             };
         }
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            ResetTitlebarSettings();
-        }
-        
-        private void SetTitleBar(UIElement titlebar, bool forceCustomTitlebar = false)
+        protected override void OnNavigatedFrom(NavigationEventArgs e) => ResetTitlebarSettings();
+
+        void SetTitleBar(UIElement titlebar, bool forceCustomTitlebar = false)
         {
             var window = WindowHelper.GetWindowForElement(this as UIElement);
             var titleBarElement = UIHelper.FindElementByName(this as UIElement, "AppTitleBar");
+
             if (forceCustomTitlebar || !window.ExtendsContentIntoTitleBar)
             {
                 titleBarElement.Visibility = Visibility.Visible;
@@ -71,11 +68,12 @@ namespace WinUIGallery.ControlPages
                 window.SetTitleBar(null);
                 TitleBarHelper.SetCaptionButtonBackgroundColors(window, null);
             }
+
             UpdateButtonText();
             UpdateTitleBarColor();
         }
 
-        private void ResetTitlebarSettings()
+        void ResetTitlebarSettings()
         {
             var window = WindowHelper.GetWindowForElement(this as UIElement);
             UIElement titleBarElement = UIHelper.FindElementByName(this as UIElement, "AppTitleBar");
@@ -86,14 +84,14 @@ namespace WinUIGallery.ControlPages
             addInteractiveElements.Content = "Add interactive control to titlebar";
         }
 
-        private void SetClickThruRegions(Windows.Graphics.RectInt32[] rects)
+        void SetClickThruRegions(Windows.Graphics.RectInt32[] rects)
         {
             var window = WindowHelper.GetWindowForElement(this as UIElement);
             var nonClientInputSrc = InputNonClientPointerSource.GetForWindowId(window.AppWindow.Id);
             nonClientInputSrc.SetRegionRects(NonClientRegionKind.Passthrough, rects);
         }
 
-        private void ClearClickThruRegions()
+        void ClearClickThruRegions()
         {
             var window = WindowHelper.GetWindowForElement(this as UIElement);
             var noninputsrc = InputNonClientPointerSource.GetForWindowId(window.AppWindow.Id);
@@ -103,7 +101,7 @@ namespace WinUIGallery.ControlPages
         public void UpdateButtonText()
         {
             var window = WindowHelper.GetWindowForElement(this as UIElement);
-            
+
             if (window.ExtendsContentIntoTitleBar)
             {
                 customTitleBar.Content = "Reset to System TitleBar";
@@ -114,10 +112,9 @@ namespace WinUIGallery.ControlPages
                 customTitleBar.Content = "Set Custom TitleBar";
                 defaultTitleBar.Content = "Set Default Custom TitleBar";
             }
-
         }
 
-        private void BgGridView_ItemClick(object sender, ItemClickEventArgs e)
+        void BgGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var rect = (Rectangle)e.ClickedItem;
             var color = ((SolidColorBrush)rect.Fill).Color;
@@ -127,10 +124,11 @@ namespace WinUIGallery.ControlPages
             UpdateTitleBarColor();
 
             // Delay required to circumvent GridView bug: https://github.com/microsoft/microsoft-ui-xaml/issues/6350
-            Task.Delay(10).ContinueWith(_ => myBgColorButton.Flyout.Hide(), TaskScheduler.FromCurrentSynchronizationContext());
+            Task.Delay(10)
+                .ContinueWith(_ => myBgColorButton.Flyout.Hide(), TaskScheduler.FromCurrentSynchronizationContext());
         }
 
-        private void FgGridView_ItemClick(object sender, ItemClickEventArgs e)
+        void FgGridView_ItemClick(object sender, ItemClickEventArgs e)
         {
             var rect = (Rectangle)e.ClickedItem;
             var color = ((SolidColorBrush)rect.Fill).Color;
@@ -141,9 +139,9 @@ namespace WinUIGallery.ControlPages
             UpdateTitleBarColor();
 
             // Delay required to circumvent GridView bug: https://github.com/microsoft/microsoft-ui-xaml/issues/6350
-            Task.Delay(10).ContinueWith(_ => myFgColorButton.Flyout.Hide(), TaskScheduler.FromCurrentSynchronizationContext());
+            Task.Delay(10)
+                .ContinueWith(_ => myFgColorButton.Flyout.Hide(), TaskScheduler.FromCurrentSynchronizationContext());
         }
-
 
         public void UpdateTitleBarColor()
         {
@@ -153,7 +151,7 @@ namespace WinUIGallery.ControlPages
 
             (titleBarElement as Border).Background = new SolidColorBrush(currentBgColor); // Changing titlebar uielement's color.
 
-            if(currentFgColor != Colors.Transparent)
+            if (currentFgColor != Colors.Transparent)
             {
                 (titleBarAppNameElement as TextBlock).Foreground = new SolidColorBrush(currentFgColor);
             }
@@ -164,7 +162,7 @@ namespace WinUIGallery.ControlPages
 
             TitleBarHelper.SetCaptionButtonColors(window, currentFgColor);
 
-            if(currentBgColor == Colors.Transparent)
+            if (currentBgColor == Colors.Transparent)
             {
                 // If the current background is null, we want to revert to the default titlebar which is achieved using null as color.
                 TitleBarHelper.SetBackgroundColor(window, null);
@@ -177,14 +175,14 @@ namespace WinUIGallery.ControlPages
             TitleBarHelper.SetForegroundColor(window, currentFgColor);
         }
 
-        private void customTitleBar_Click(object sender, RoutedEventArgs e)
+        void customTitleBar_Click(object sender, RoutedEventArgs e)
         {
             UIElement titleBarElement = UIHelper.FindElementByName(sender as UIElement, "AppTitleBar");
             SetTitleBar(titleBarElement);
             // announce visual change to automation
             UIHelper.AnnounceActionForAccessibility(sender as UIElement, "TitleBar size and width changed", "TitleBarChangedNotificationActivityId");
         }
-        private void defaultTitleBar_Click(object sender, RoutedEventArgs e)
+        void defaultTitleBar_Click(object sender, RoutedEventArgs e)
         {
             SetTitleBar(null);
 
@@ -192,7 +190,7 @@ namespace WinUIGallery.ControlPages
             UIHelper.AnnounceActionForAccessibility(sender as UIElement, "TitleBar size and width changed", "TitleBarChangedNotificationActivityId");
         }
 
-        private void setTxtBoxAsPasthrough(FrameworkElement txtBoxNonClientArea)
+        void setTxtBoxAsPasthrough(FrameworkElement txtBoxNonClientArea)
         {
             GeneralTransform transformTxtBox = txtBoxNonClientArea.TransformToVisual(null);
             Rect bounds = transformTxtBox.TransformBounds(new Rect(0, 0, txtBoxNonClientArea.ActualWidth, txtBoxNonClientArea.ActualHeight));
@@ -205,11 +203,12 @@ namespace WinUIGallery.ControlPages
                 _Width: (int)Math.Round(bounds.Width * scale),
                 _Height: (int)Math.Round(bounds.Height * scale)
             );
+
             var rectArr = new Windows.Graphics.RectInt32[] { transparentRect };
             SetClickThruRegions(rectArr);
         }
 
-        private void AddInteractiveElements_Click(object sender, RoutedEventArgs e)
+        void AddInteractiveElements_Click(object sender, RoutedEventArgs e)
         {
             var txtBoxNonClientArea = UIHelper.FindElementByName(sender as UIElement, "AppTitleBarTextBox") as FrameworkElement;
 
@@ -221,6 +220,7 @@ namespace WinUIGallery.ControlPages
             {
                 addInteractiveElements.Content = "Remove interactive control from titlebar";
                 txtBoxNonClientArea.Visibility = Visibility.Visible;
+
                 if (sizeChangedEventHandlerAdded)
                 {
                     setTxtBoxAsPasthrough(txtBoxNonClientArea);
@@ -242,6 +242,5 @@ namespace WinUIGallery.ControlPages
                 UIHelper.AnnounceActionForAccessibility(sender as UIElement, "TitleBar size and width changed", "TitleBarChangedNotificationActivityId");
             }
         }
-       
     }
 }

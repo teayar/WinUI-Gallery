@@ -1,4 +1,4 @@
-﻿//*********************************************************
+﻿// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,10 +26,6 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ToolTipPage : Page
     {
-        public ToolTipPage()
-        {
-            this.InitializeComponent();
-        }
-
+        public ToolTipPage() => this.InitializeComponent();
     }
 }

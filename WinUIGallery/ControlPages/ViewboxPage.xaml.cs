@@ -1,4 +1,4 @@
-//*********************************************************
+// *********************************************************
 //
 // Copyright (c) Microsoft. All rights reserved.
 // THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF
@@ -6,7 +6,7 @@
 // IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR
 // PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.
 //
-//*********************************************************
+// *********************************************************
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -15,16 +15,14 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class ViewboxPage : Page
     {
-        public ViewboxPage()
-        {
-            this.InitializeComponent();
-        }
+        public ViewboxPage() => this.InitializeComponent();
 
-        private void StretchDirectionButton_Checked(object sender, RoutedEventArgs e)
+        void StretchDirectionButton_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is RadioButton rb && Control1 != null)
             {
                 string direction = rb.Tag.ToString();
+
                 switch (direction)
                 {
                     case "UpOnly":
@@ -40,11 +38,12 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void StretchButton_Checked(object sender, RoutedEventArgs e)
+        void StretchButton_Checked(object sender, RoutedEventArgs e)
         {
             if (sender is RadioButton rb && Control1 != null)
             {
                 string stretch = rb.Tag.ToString();
+
                 switch (stretch)
                 {
                     case "None":

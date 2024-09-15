@@ -25,7 +25,6 @@ namespace WinUIGallery.DesktopWap.Controls.DesignGuidance
     [ContentProperty(Name = "ExampleContent")]
     public sealed partial class ColorPageExample : UserControl
     {
-
         public string Description
         {
             get { return (string)GetValue(DescriptionProperty); }
@@ -51,9 +50,6 @@ namespace WinUIGallery.DesktopWap.Controls.DesignGuidance
         public static readonly DependencyProperty ExampleContentProperty =
             DependencyProperty.Register("ExampleContent", typeof(UIElement), typeof(ColorPageExample), new PropertyMetadata(null));
 
-        public ColorPageExample()
-        {
-            this.InitializeComponent();
-        }
+        public ColorPageExample() => this.InitializeComponent();
     }
 }

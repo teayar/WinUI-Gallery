@@ -23,9 +23,6 @@ namespace WinUIGallery.DesktopWap.Controls.DesignGuidance.ColorSections
 {
     public sealed partial class FillSection : Page
     {
-        public FillSection()
-        {
-            this.InitializeComponent();
-        }
+        public FillSection() => this.InitializeComponent();
     }
 }

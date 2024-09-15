@@ -22,22 +22,18 @@ namespace WinUIGallery.Controls
     // ATTRIBUTION: @RykenApps
     public sealed partial class HomePageHeaderImage : UserControl
     {
-        private Compositor _compositor;
-        private CompositionLinearGradientBrush _imageGridBottomGradientBrush;
-        private CompositionEffectBrush _imageGridEffectBrush;
-        private ExpressionAnimation _imageGridSizeAnimation;
-        private ExpressionAnimation _bottomGradientStartPointAnimation;
-        private SpriteVisual _imageGridSpriteVisual;
-        private CompositionSurfaceBrush _imageGridSurfaceBrush;
-        private Visual _imageGridVisual;
-        private CompositionVisualSurface _imageGridVisualSurface;
-        private const string GradientSizeKey = "GradientSize";
-        public HomePageHeaderImage()
-        {
-            this.InitializeComponent();
-        }
+        Compositor _compositor;
+        CompositionLinearGradientBrush _imageGridBottomGradientBrush;
+        CompositionEffectBrush _imageGridEffectBrush;
+        ExpressionAnimation _imageGridSizeAnimation, _bottomGradientStartPointAnimation;
+        SpriteVisual _imageGridSpriteVisual;
+        CompositionSurfaceBrush _imageGridSurfaceBrush;
+        Visual _imageGridVisual;
+        CompositionVisualSurface _imageGridVisualSurface;
+        const string GradientSizeKey = "GradientSize";
+        public HomePageHeaderImage() => this.InitializeComponent();
 
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        void OnLoaded(object sender, RoutedEventArgs e)
         {
             _imageGridVisual = ElementCompositionPreview.GetElementVisual(ImageGrid);
             _compositor = _imageGridVisual.Compositor;
@@ -81,7 +77,7 @@ namespace WinUIGallery.Controls
             ElementCompositionPreview.SetElementChildVisual(ImageGridSurfaceRec, _imageGridSpriteVisual);
         }
 
-        private void OnUnloaded(object sender, RoutedEventArgs e)
+        void OnUnloaded(object sender, RoutedEventArgs e)
         {
             ElementCompositionPreview.SetElementChildVisual(ImageGridSurfaceRec, null);
             _imageGridSpriteVisual?.Dispose();
@@ -92,7 +88,7 @@ namespace WinUIGallery.Controls
             _bottomGradientStartPointAnimation?.Dispose();
             _bottomGradientStartPointAnimation = null;
         }
-        private void OnLoading(FrameworkElement sender, object args)
+        void OnLoading(FrameworkElement sender, object args)
         {
             if (HeroImage.Source == null)
             {
@@ -103,17 +99,14 @@ namespace WinUIGallery.Controls
                 AnimateImage();
             }
         }
-        private void SetBottomGradientStartPoint()
+        void SetBottomGradientStartPoint()
         {
             _bottomGradientStartPointAnimation?.Properties.InsertScalar(GradientSizeKey, 180);
         }
 
-        private void OnImageOpened(object sender, RoutedEventArgs e)
-        {
-            AnimateImage();
-        }
+        void OnImageOpened(object sender, RoutedEventArgs e) => AnimateImage();
 
-        private void AnimateImage()
+        void AnimateImage()
         {
             AnimationBuilder.Create()
                 .Opacity(1, 0, duration: TimeSpan.FromMilliseconds(300), easingMode: EasingMode.EaseOut)
@@ -126,8 +119,7 @@ namespace WinUIGallery.Controls
                 .Start(HeroOverlayImage);
         }
 
-
-        private ExpressionAnimation CreateExpressionAnimation(string target, string expression)
+        ExpressionAnimation CreateExpressionAnimation(string target, string expression)
         {
             var ani = _compositor.CreateExpressionAnimation(expression);
             ani.SetReferenceParameter("Visual", _imageGridVisual);
@@ -146,6 +138,7 @@ public static class CompositionGradientBrushExtensions
     {
         var compositor = compositionGradientBrush.Compositor;
         var easingFunc = easingType.ToEasingFunction(easingMode);
+
         if (easingFunc != null)
         {
             for (float i = colorStopBegin; i < colorStopEnd; i += gap)
@@ -161,6 +154,7 @@ public static class CompositionGradientBrushExtensions
             compositionGradientBrush.ColorStops.Add(compositor.CreateColorGradientStop(colorStopBegin, Colors.Black));
         }
 
-        compositionGradientBrush.ColorStops.Add(compositor.CreateColorGradientStop(colorStopEnd, Colors.Transparent));
+        compositionGradientBrush.ColorStops
+            .Add(compositor.CreateColorGradientStop(colorStopEnd, Colors.Transparent));
     }
 }

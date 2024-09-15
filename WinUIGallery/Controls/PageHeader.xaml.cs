@@ -24,14 +24,7 @@ namespace WinUIGallery.DesktopWap.Controls
         public Action CopyLinkAction { get; set; }
         public Action ToggleThemeAction { get; set; }
 
-        public ControlInfoDataItem Item
-        {
-            get { return _item; }
-            set { _item = value; }
-        }
-
-        private ControlInfoDataItem _item;
-
+        public ControlInfoDataItem Item { get; set; }
         public PageHeader()
         {
             this.InitializeComponent();
@@ -58,12 +51,11 @@ namespace WinUIGallery.DesktopWap.Controls
             {
                 ControlSourcePanel.Visibility = Visibility.Collapsed;
             }
-
         }
 
-        private void OnCopyLinkButtonClick(object sender, RoutedEventArgs e)
+        void OnCopyLinkButtonClick(object sender, RoutedEventArgs e)
         {
-            this.CopyLinkAction?.Invoke();
+            CopyLinkAction?.Invoke();
 
             if (ProtocolActivationClipboardHelper.ShowCopyLinkTeachingTip)
             {
@@ -77,19 +69,16 @@ namespace WinUIGallery.DesktopWap.Controls
             UIHelper.AnnounceActionForAccessibility(ThemeButton, "Theme changed.", "ThemeChangedSuccessNotificationId");
         }
 
-        private void OnCopyDontShowAgainButtonClick(TeachingTip sender, object args)
+        void OnCopyDontShowAgainButtonClick(TeachingTip sender, object args)
         {
             ProtocolActivationClipboardHelper.ShowCopyLinkTeachingTip = false;
             this.CopyLinkButtonTeachingTip.IsOpen = false;
         }
 
-        private void OnCopyLink()
-        {
-            ProtocolActivationClipboardHelper.Copy(this.Item);
-        }
+        void OnCopyLink() => ProtocolActivationClipboardHelper.Copy(Item);
         public async void OnFeedBackButtonClick(object sender, RoutedEventArgs e)
         {
-             await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/microsoft/WinUI-Gallery/issues/new/choose"));
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/microsoft/WinUI-Gallery/issues/new/choose"));
         }
     }
 }

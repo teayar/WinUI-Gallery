@@ -24,10 +24,7 @@ namespace WinUIGallery.DesktopWap.Controls
 {
     public sealed partial class TypographyControl : UserControl
     {
-        public TypographyControl()
-        {
-            this.InitializeComponent();
-        }
+        public TypographyControl() => this.InitializeComponent();
 
         public static readonly DependencyProperty ExampleProperty = DependencyProperty.Register(nameof(Example), typeof(string), typeof(TypographyControl), new PropertyMetadata(""));
 
@@ -77,7 +74,7 @@ namespace WinUIGallery.DesktopWap.Controls
             set => SetValue(ResourceNameProperty, value);
         }
 
-        private void CopyToClipboardButton_Click(object sender, RoutedEventArgs e)
+        void CopyToClipboardButton_Click(object sender, RoutedEventArgs e)
         {
             DataPackage package = new DataPackage();
             package.SetText(ResourceName);

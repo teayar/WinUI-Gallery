@@ -8,9 +8,8 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class TreeViewPage : Page
     {
-        TreeViewNode personalFolder;
-        TreeViewNode personalFolder2;
-        private ObservableCollection<ExplorerItem> DataSource;
+        TreeViewNode personalFolder, personalFolder2;
+        ObservableCollection<ExplorerItem> DataSource;
 
         public TreeViewPage()
         {
@@ -22,7 +21,7 @@ namespace WinUIGallery.ControlPages
             InitializeSampleTreeView2();
         }
 
-        private void InitializeSampleTreeView()
+        void InitializeSampleTreeView()
         {
             TreeViewNode workFolder = new TreeViewNode() { Content = "Work Documents" };
             workFolder.IsExpanded = true;
@@ -47,7 +46,7 @@ namespace WinUIGallery.ControlPages
             sampleTreeView.RootNodes.Add(workFolder);
             sampleTreeView.RootNodes.Add(personalFolder);
         }
-        private void InitializeSampleTreeView2()
+        void InitializeSampleTreeView2()
         {
             TreeViewNode workFolder = new TreeViewNode() { Content = "Work Documents" };
             workFolder.IsExpanded = true;
@@ -73,14 +72,15 @@ namespace WinUIGallery.ControlPages
             sampleTreeView2.RootNodes.Add(personalFolder2);
         }
 
-        private void sampleTreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
+        void sampleTreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
         {
             return;
         }
-        
-        private ObservableCollection<ExplorerItem> GetData()
+
+        ObservableCollection<ExplorerItem> GetData()
         {
             var list = new ObservableCollection<ExplorerItem>();
+
             ExplorerItem folder1 = new ExplorerItem()
             {
                 Name = "Work Documents",
@@ -117,6 +117,7 @@ namespace WinUIGallery.ControlPages
                     }
                 }
             };
+
             ExplorerItem folder2 = new ExplorerItem()
             {
                 Name = "Personal Folder",
@@ -158,7 +159,6 @@ namespace WinUIGallery.ControlPages
             list.Add(folder2);
             return list;
         }
-
     }
 
     public class ExplorerItem : INotifyPropertyChanged
@@ -167,7 +167,7 @@ namespace WinUIGallery.ControlPages
         public enum ExplorerItemType { Folder, File };
         public string Name { get; set; }
         public ExplorerItemType Type { get; set; }
-        private ObservableCollection<ExplorerItem> m_children;
+        ObservableCollection<ExplorerItem> m_children;
         public ObservableCollection<ExplorerItem> Children
         {
             get
@@ -176,6 +176,7 @@ namespace WinUIGallery.ControlPages
                 {
                     m_children = new ObservableCollection<ExplorerItem>();
                 }
+
                 return m_children;
             }
             set
@@ -184,7 +185,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private bool m_isExpanded;
+        bool m_isExpanded;
         public bool IsExpanded
         {
             get { return m_isExpanded; }
@@ -198,7 +199,7 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void NotifyPropertyChanged(string propertyName)
+        void NotifyPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

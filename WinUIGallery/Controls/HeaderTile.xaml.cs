@@ -58,10 +58,6 @@ namespace WinUIGallery.Controls
         public static readonly DependencyProperty LinkProperty =
             DependencyProperty.Register("Link", typeof(string), typeof(HeaderTile), new PropertyMetadata(null));
 
-
-        public HeaderTile()
-        {
-            this.InitializeComponent();
-        }
+        public HeaderTile() => this.InitializeComponent();
     }
 }

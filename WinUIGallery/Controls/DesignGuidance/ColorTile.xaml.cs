@@ -53,7 +53,6 @@ namespace WinUIGallery.DesktopWap.Controls.DesignGuidance
         public static readonly DependencyProperty ShowSeparatorProperty =
             DependencyProperty.Register("ShowSeparator", typeof(bool), typeof(ColorTile), new PropertyMetadata(true));
 
-
         public bool ShowWarning
         {
             get { return (bool)GetValue(ShowWarningProperty); }
@@ -64,13 +63,9 @@ namespace WinUIGallery.DesktopWap.Controls.DesignGuidance
         public static readonly DependencyProperty ShowWarningProperty =
             DependencyProperty.Register("ShowWarning", typeof(bool), typeof(ColorTile), new PropertyMetadata(false));
 
+        public ColorTile() => this.InitializeComponent();
 
-        public ColorTile()
-        {
-            this.InitializeComponent();
-        }
-
-        private void CopyBrushNameButton_Click(object sender, RoutedEventArgs e)
+        void CopyBrushNameButton_Click(object sender, RoutedEventArgs e)
         {
             DataPackage package = new DataPackage();
             package.SetText(ColorBrushName);

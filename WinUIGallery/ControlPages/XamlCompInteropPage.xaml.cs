@@ -13,20 +13,17 @@ namespace WinUIGallery.ControlPages
 {
     public sealed partial class XamlCompInteropPage : Page
     {
-        public XamlCompInteropPage()
-        {
-            this.InitializeComponent();
-        }
+        public XamlCompInteropPage() => this.InitializeComponent();
 
         Compositor _compositor = Microsoft.UI.Xaml.Media.CompositionTarget.GetCompositorForCurrentThread();
-        private SpringVector3NaturalMotionAnimation _springAnimation;
+        SpringVector3NaturalMotionAnimation _springAnimation;
 
-        private void NaturalMotionExample_Loaded(object sender, RoutedEventArgs e)
+        void NaturalMotionExample_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateSpringAnimation(1.0f);
         }
 
-        private void UpdateSpringAnimation(float finalValue)
+        void UpdateSpringAnimation(float finalValue)
         {
             if (_springAnimation == null)
             {
@@ -41,52 +38,49 @@ namespace WinUIGallery.ControlPages
 
         float GetDampingRatio()
         {
-            if(DampingStackPanel.SelectedItem != null)
+            if (DampingStackPanel.SelectedItem != null)
             {
                 // We need to specify the InvariantCulture since the decimal point depends on the
                 // system language and might parse "0.8" to 8 since the decimal point is a different character
                 return (float)Convert.ToDouble((DampingStackPanel.SelectedItem as RadioButton).Content, CultureInfo.InvariantCulture);
             }
+
             return 0.6f;
         }
 
-        TimeSpan GetPeriod()
-        {
-            return TimeSpan.FromMilliseconds(PeriodSlider.Value);
-        }
+        TimeSpan GetPeriod() => TimeSpan.FromMilliseconds(PeriodSlider.Value);
 
-        private void StartAnimationIfAPIPresent(UIElement sender, Microsoft.UI.Composition.CompositionAnimation animation)
+        void StartAnimationIfAPIPresent(UIElement sender, Microsoft.UI.Composition.CompositionAnimation animation)
         {
             (sender as UIElement).StartAnimation(animation);
         }
 
-        private void element_PointerEntered(object sender, PointerRoutedEventArgs e)
+        void element_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             UpdateSpringAnimation(1.5f);
 
             StartAnimationIfAPIPresent((sender as UIElement), _springAnimation);
         }
 
-        private void element_PointerExited(object sender, PointerRoutedEventArgs e)
+        void element_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             UpdateSpringAnimation(1f);
 
             StartAnimationIfAPIPresent((sender as UIElement), _springAnimation);
         }
 
-
-        private void ExpressionSample_Loaded(object sender, RoutedEventArgs e)
+        void ExpressionSample_Loaded(object sender, RoutedEventArgs e)
         {
             var anim = _compositor.CreateExpressionAnimation();
             anim.Expression = "Vector3(1/scaleElement.Scale.X, 1/scaleElement.Scale.Y, 1)";
             anim.Target = "Scale";
 
-            anim.SetExpressionReferenceParameter("scaleElement", rectangle);            
+            anim.SetExpressionReferenceParameter("scaleElement", rectangle);
 
             StartAnimationIfAPIPresent(ellipse, anim);
         }
 
-        private void StackedButtonsExample_Loaded(object sender, RoutedEventArgs e)
+        void StackedButtonsExample_Loaded(object sender, RoutedEventArgs e)
         {
             var anim = _compositor.CreateExpressionAnimation();
             anim.Expression = "(above.Scale.Y - 1) * 50 + above.Translation.Y % (50 * index)";
@@ -105,7 +99,7 @@ namespace WinUIGallery.ControlPages
             ExpressionButton4.StartAnimation(anim);
         }
 
-        private void ActualSizeExample_Loaded(object sender, RoutedEventArgs e)
+        void ActualSizeExample_Loaded(object sender, RoutedEventArgs e)
         {
             // We will lay out some buttons in a circle.
             // The formulas we will use are:
@@ -116,15 +110,16 @@ namespace WinUIGallery.ControlPages
             //   xOffset = The starting horizontal offset for the element. 
             //   yOffset = The starting vertical offset for the element.
 
-            String radius = "(source.ActualSize.X / 2)"; // Since the layout is a circle, width and height are equivalent meaning we could use X or Y. We'll use X.
-            String theta = ".02 * " + radius + " + ((2 * Pi)/total)*index"; // The first value is the rate of angular change based on radius. The last value spaces the buttons equally.
-            String xOffset = radius; // We offset x by radius because the buttons naturally layout along the left edge. We need to move them to center of the circle first.
-            String yOffset = "0"; // We don't need to offset y because the buttons naturally layout vertically centered.
+            string radius = "(source.ActualSize.X / 2)"; // Since the layout is a circle, width and height are equivalent meaning we could use X or Y. We'll use X.
+            string theta = ".02 * " + radius + " + ((2 * Pi)/total)*index"; // The first value is the rate of angular change based on radius. The last value spaces the buttons equally.
+            string xOffset = radius; // We offset x by radius because the buttons naturally layout along the left edge. We need to move them to center of the circle first.
+            string yOffset = "0"; // We don't need to offset y because the buttons naturally layout vertically centered.
 
             // We combine X, Y, and Z subchannels into a single animation because we can only start a single animation on Translation.
-            String expression = string.Format("Vector3({0}*cos({1})+{2}, {0}*sin({1})+{3},0)", radius, theta, xOffset, yOffset);
+            string expression = string.Format("Vector3({0}*cos({1})+{2}, {0}*sin({1})+{3},0)", radius, theta, xOffset, yOffset);
 
             int totalElements = 8;
+
             for (int i = 0; i < totalElements; i++)
             {
                 Button element = new Button() { Content = "Button" };
@@ -144,13 +139,13 @@ namespace WinUIGallery.ControlPages
             }
         }
 
-        private void RadiusSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+        void RadiusSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             if (LayoutPanel == null) return;
             LayoutPanel.Width = LayoutPanel.Height = e.NewValue;
         }
 
-        private void ActualOffsetExample_Loaded(object sender, RoutedEventArgs e)
+        void ActualOffsetExample_Loaded(object sender, RoutedEventArgs e)
         {
             // This sample positions a popup relative to a block of text that has variable layout size based on font size.
             var anim = _compositor.CreateExpressionAnimation();
