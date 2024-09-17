@@ -2,7 +2,7 @@
     <Sdk Name="Microsoft.Build.CentralPackageVersions" Version="2.0.1" />
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>$(SamplesTargetFrameworkMoniker)</TargetFramework>
+        <TargetFramework>net9.0-windows10.0.26100.0</TargetFramework>
         <TargetPlatformVersion>$(WindowsSdkTargetPlatformVersion)</TargetPlatformVersion>
         <TargetPlatformMinVersion>$(WindowsAppSdkTargetPlatformVersion)</TargetPlatformMinVersion>
         <UseWinUI>true</UseWinUI>
@@ -37,6 +37,7 @@
         <!-- Enable ExplicitlyIncludeVersionInfo workaround by setting WindowsAppSdkSelfContained earlier than the mock package would -->
         <WindowsAppSdkSelfContained Condition="'$(IsInWinUIRepo)' == 'true' and '$(WindowsAppSdkSelfContained)'==''">true</WindowsAppSdkSelfContained>
         <ApplicationIcon>Assets\Tiles\GalleryIcon.ico</ApplicationIcon>
+        <WindowsSdkPackageVersion>10.0.26100.38</WindowsSdkPackageVersion>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(Packaged)' != 'true' and '$(SingleProject)'=='true'">
@@ -87,12 +88,12 @@
     <Import Project="Common.props" />
 
     <ItemGroup>
-      <Compile Remove="Assets\ControlIcons\**" />
-      <Content Remove="Assets\ControlIcons\**" />
-      <EmbeddedResource Remove="Assets\ControlIcons\**" />
-      <None Remove="Assets\ControlIcons\**" />
-      <Page Remove="Assets\ControlIcons\**" />
-      <PRIResource Remove="Assets\ControlIcons\**" />
+        <Compile Remove="Assets\ControlIcons\**" />
+        <Content Remove="Assets\ControlIcons\**" />
+        <EmbeddedResource Remove="Assets\ControlIcons\**" />
+        <None Remove="Assets\ControlIcons\**" />
+        <Page Remove="Assets\ControlIcons\**" />
+        <PRIResource Remove="Assets\ControlIcons\**" />
     </ItemGroup>
 
     <!-- In the WinUI repo, package reference versions are controlled centrally by a Packages.props.  We will
@@ -115,18 +116,18 @@
     </ItemGroup>
 
     <ItemGroup Condition="'$(IsInWinUIRepo)' != 'true'">
-        <PackageReference Update="Microsoft.WindowsAppSDK" Version="$(WindowsAppSdkPackageVersion)" />
+        <PackageReference Update="Microsoft.WindowsAppSDK" Version="1.6.240829007" />
         <PackageReference Remove="ColorCode.Core" />
-        <PackageReference Include="ColorCode.WinUI" Version="$(ColorCodeVersion)" />
-        <PackageReference Update="CommunityToolkit.WinUI.Controls.Segmented" Version="$(CommunityToolkitWinUIVersion)" />
-        <PackageReference Update="CommunityToolkit.WinUI.Controls.SettingsControls" Version="$(CommunityToolkitWinUIVersion)" />
-        <PackageReference Update="CommunityToolkit.WinUI.Converters" Version="$(CommunityToolkitWinUIVersion)" />
-        <PackageReference Update="CommunityToolkit.WinUI.Animations" Version="$(CommunityToolkitWinUIVersion)" />
-        <PackageReference Update="Microsoft.Graphics.Win2D" Version="$(GraphicsWin2DVersion)" />
+        <PackageReference Include="ColorCode.WinUI" Version="2.0.15" />
+        <PackageReference Update="CommunityToolkit.WinUI.Controls.Segmented" Version="8.1.240916" />
+        <PackageReference Update="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.1.240916" />
+        <PackageReference Update="CommunityToolkit.WinUI.Converters" Version="8.1.240916" />
+        <PackageReference Update="CommunityToolkit.WinUI.Animations" Version="8.1.240916" />
+        <PackageReference Update="Microsoft.Graphics.Win2D" Version="1.2.0" />
         <!-- Get latest WinRT.Runtime.dll from C#/WinRT -->
-        <PackageReference Update="Microsoft.Windows.CsWinRT" Version="$(MicrosoftCsWinRTPackageVersion)" />
+        <PackageReference Update="Microsoft.Windows.CsWinRT" Version="2.1.3" />
         <PackageReference Update="System.Private.Uri" Version="4.3.2" />
-      </ItemGroup>
+    </ItemGroup>
 
     <ItemGroup>
         <Compile Remove="CollectionsInterop.cs" />
@@ -205,8 +206,8 @@
     </ItemGroup>
     <ItemGroup>
         <Page Update="ControlPages\DesignGuidance\SpacingPage.xaml">
-          <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-          <SubType>Designer</SubType>
+            <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+            <SubType>Designer</SubType>
         </Page>
         <Page Update="Controls\CopyButton\CopyButton.xaml">
             <Generator>MSBuild:Compile</Generator>
@@ -217,7 +218,7 @@
             <Generator>MSBuild:Compile</Generator>
         </Page>
         <Page Update="Controls\DesignGuidance\ColorSections\HighContrastSection.xaml">
-          <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+            <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
         </Page>
     </ItemGroup>
     <ItemGroup>
@@ -291,7 +292,7 @@
         </Page>
     </ItemGroup>
     <ItemGroup>
-      <Folder Include="ControlPages\Accessibility\" />
+        <Folder Include="ControlPages\Accessibility\" />
     </ItemGroup>
     <Import Project="ContentIncludes.props" />
     <!--Per comment in Microsoft.Common.CurrentVersion.targets, the default GetCopyToPublishDirectoryItems 
@@ -312,5 +313,5 @@
                 <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
             </_NoneWithTargetPath>
         </ItemGroup>
-    </Target> 
+    </Target>
 </Project>
