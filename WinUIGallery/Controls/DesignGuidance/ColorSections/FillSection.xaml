@@ -103,6 +103,7 @@
             <designguidance:ColorTile
                 Background="{ThemeResource ControlAltFillColorTransparentBrush}"
                 ColorBrushName="ControlAltFillColorTransparentBrush"
+                ColorExplanation="None"
                 ColorName="Control Alt / Transparent"
                 ColorValue="#FFFFFF (00, 0%)" />
             <designguidance:ColorTile

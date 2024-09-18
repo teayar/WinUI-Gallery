@@ -163,6 +163,7 @@
                 Grid.Column="2"
                 Background="{ThemeResource SystemFillColorSolidAttentionBackgroundBrush}"
                 ColorBrushName="SystemFillColorSolidAttentionBackgroundBrush"
+                ColorExplanation="None"
                 ColorName="System / Solid Attention Background"
                 ColorValue="#2E2E2E"
                 ShowSeparator="False" />
