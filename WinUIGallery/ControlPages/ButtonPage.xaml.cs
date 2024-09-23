@@ -12,27 +12,27 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class ButtonPage : Page
-    {
-        public ButtonPage() => InitializeComponent();
+	public sealed partial class ButtonPage : Page
+	{
+		public ButtonPage() => InitializeComponent();
 
-        void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button b)
-            {
-                string name = b.Name;
+		void Button_Click(object sender, RoutedEventArgs e)
+		{
+			if (sender is Button b)
+			{
+				string name = b.Name;
 
-                switch (name)
-                {
-                    case "Button1":
-                        Control1Output.Text = "You clicked: " + name;
-                        break;
-                    case "Button2":
-                        Control2Output.Text = "You clicked: " + name;
-                        break;
+				switch (name)
+				{
+					case "Button1":
+						Control1Output.Text = "You clicked: " + name;
+						break;
+					case "Button2":
+						Control2Output.Text = "You clicked: " + name;
+						break;
 
-                }
-            }
-        }
-    }
+				}
+			}
+		}
+	}
 }

@@ -15,21 +15,21 @@ using Microsoft.UI.Xaml.Media;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class AccessibilityKeyboardPage : Page
-    {
-        public AccessibilityKeyboardPage() => InitializeComponent();
+	public sealed partial class AccessibilityKeyboardPage : Page
+	{
+		public AccessibilityKeyboardPage() => InitializeComponent();
 
-        void MakeRedButton_Click(object sender, RoutedEventArgs e)
-        {
-            ColorRectangle.Fill = new SolidColorBrush(Colors.Red);
-        }
-        void MakeBlueButton_Click(object sender, RoutedEventArgs e)
-        {
-            ColorRectangle.Fill = new SolidColorBrush(Colors.Blue);
-        }
-        void MakeChartreuseButton_Click(object sender, RoutedEventArgs e)
-        {
-            ColorRectangle.Fill = new SolidColorBrush(Colors.Chartreuse);
-        }
-    }
+		void MakeRedButton_Click(object sender, RoutedEventArgs e)
+		{
+			ColorRectangle.Fill = new SolidColorBrush(Colors.Red);
+		}
+		void MakeBlueButton_Click(object sender, RoutedEventArgs e)
+		{
+			ColorRectangle.Fill = new SolidColorBrush(Colors.Blue);
+		}
+		void MakeChartreuseButton_Click(object sender, RoutedEventArgs e)
+		{
+			ColorRectangle.Fill = new SolidColorBrush(Colors.Chartreuse);
+		}
+	}
 }

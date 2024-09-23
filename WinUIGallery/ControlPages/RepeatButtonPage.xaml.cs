@@ -12,15 +12,15 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class RepeatButtonPage : Page
-    {
-        public RepeatButtonPage() => InitializeComponent();
+	public sealed partial class RepeatButtonPage : Page
+	{
+		public RepeatButtonPage() => InitializeComponent();
 
-        static int _clicks;
-        void RepeatButton_Click(object sender, RoutedEventArgs e)
-        {
-            _clicks += 1;
-            Control1Output.Text = "Number of clicks: " + _clicks;
-        }
-    }
+		static int _clicks;
+		void RepeatButton_Click(object sender, RoutedEventArgs e)
+		{
+			_clicks += 1;
+			Control1Output.Text = "Number of clicks: " + _clicks;
+		}
+	}
 }

@@ -15,54 +15,54 @@ using Windows.Devices.Geolocation;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class MapControlPage : Page
-    {
-        public MapControlPage()
-        {
-            InitializeComponent();
+	public sealed partial class MapControlPage : Page
+	{
+		public MapControlPage()
+		{
+			InitializeComponent();
 
-            Loaded += MapControlPage_Loaded;
-        }
+			Loaded += MapControlPage_Loaded;
+		}
 
-        void MapControlPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            var myLandmarks = new List<MapElement>();
+		void MapControlPage_Loaded(object sender, RoutedEventArgs e)
+		{
+			var myLandmarks = new List<MapElement>();
 
-            BasicGeoposition centerPosition = new BasicGeoposition { Latitude = 0, Longitude = 0 };
-            Geopoint centerPoint = new Geopoint(centerPosition);
+			BasicGeoposition centerPosition = new BasicGeoposition { Latitude = 0, Longitude = 0 };
+			Geopoint centerPoint = new Geopoint(centerPosition);
 
-            map1.Center = centerPoint;
-            map1.ZoomLevel = 1;
+			map1.Center = centerPoint;
+			map1.ZoomLevel = 1;
 
-            BasicGeoposition position = new BasicGeoposition { Latitude = -30.034647, Longitude = -51.217659 };
-            Geopoint point = new Geopoint(position);
+			BasicGeoposition position = new BasicGeoposition { Latitude = -30.034647, Longitude = -51.217659 };
+			Geopoint point = new Geopoint(position);
 
-            var icon = new MapIcon
-            {
-                Location = point,
-            };
+			var icon = new MapIcon
+			{
+				Location = point,
+			};
 
-            myLandmarks.Add(icon);
+			myLandmarks.Add(icon);
 
-            var LandmarksLayer = new MapElementsLayer
-            {
-                MapElements = myLandmarks
-            };
+			var LandmarksLayer = new MapElementsLayer
+			{
+				MapElements = myLandmarks
+			};
 
-            map1.Layers.Add(LandmarksLayer);
-        }
+			map1.Layers.Add(LandmarksLayer);
+		}
 
-        void Button_Click(object sender, RoutedEventArgs e)
-        {
-            map1.MapServiceToken = MapToken.Password;
-        }
+		void Button_Click(object sender, RoutedEventArgs e)
+		{
+			map1.MapServiceToken = MapToken.Password;
+		}
 
-        void MapToken_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.Enter)
-            {
-                map1.MapServiceToken = MapToken.Password;
-            }
-        }
-    }
+		void MapToken_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
+		{
+			if (e.Key == Windows.System.VirtualKey.Enter)
+			{
+				map1.MapServiceToken = MapToken.Password;
+			}
+		}
+	}
 }

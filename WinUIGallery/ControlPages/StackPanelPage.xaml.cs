@@ -14,29 +14,29 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace WinUIGallery.ControlPages
 {
-    /// <summary>
-    /// A basic page that provides characteristics common to most applications.
-    /// </summary>
-    public sealed partial class StackPanelPage : Page
-    {
-        public StackPanelPage() => InitializeComponent();
+	/// <summary>
+	/// A basic page that provides characteristics common to most applications.
+	/// </summary>
+	public sealed partial class StackPanelPage : Page
+	{
+		public StackPanelPage() => InitializeComponent();
 
-        void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            if (sender is RadioButton rb && Control1 != null)
-            {
-                string orientationName = rb.Tag.ToString();
+		void RadioButton_Checked(object sender, RoutedEventArgs e)
+		{
+			if (sender is RadioButton rb && Control1 != null)
+			{
+				string orientationName = rb.Tag.ToString();
 
-                switch (orientationName)
-                {
-                    case "Horizontal":
-                        Control1.Orientation = Orientation.Horizontal;
-                        break;
-                    case "Vertical":
-                        Control1.Orientation = Orientation.Vertical;
-                        break;
-                }
-            }
-        }
-    }
+				switch (orientationName)
+				{
+					case "Horizontal":
+						Control1.Orientation = Orientation.Horizontal;
+						break;
+					case "Vertical":
+						Control1.Orientation = Orientation.Vertical;
+						break;
+				}
+			}
+		}
+	}
 }

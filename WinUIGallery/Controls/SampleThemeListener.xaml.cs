@@ -21,8 +21,8 @@ using Windows.Foundation.Collections;
 
 namespace WinUIGallery.DesktopWap.Controls
 {
-    public sealed partial class SampleThemeListener : UserControl
-    {
-        public SampleThemeListener() => InitializeComponent();
-    }
+	public sealed partial class SampleThemeListener : UserControl
+	{
+		public SampleThemeListener() => InitializeComponent();
+	}
 }

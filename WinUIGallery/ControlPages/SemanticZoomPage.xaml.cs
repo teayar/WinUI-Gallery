@@ -15,20 +15,20 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class SemanticZoomPage : Page
-    {
-        IEnumerable<ControlInfoDataGroup> _groups;
+	public sealed partial class SemanticZoomPage : Page
+	{
+		IEnumerable<ControlInfoDataGroup> _groups;
 
-        public SemanticZoomPage() => InitializeComponent();
-        public IEnumerable<ControlInfoDataGroup> Groups => _groups;
+		public SemanticZoomPage() => InitializeComponent();
+		public IEnumerable<ControlInfoDataGroup> Groups => _groups;
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
 
-            _groups = ControlInfoDataSource.Instance.Groups;
-        }
+			_groups = ControlInfoDataSource.Instance.Groups;
+		}
 
-        void List_GotFocus(object sender, RoutedEventArgs e) => Control1.StartBringIntoView();
-    }
+		void List_GotFocus(object sender, RoutedEventArgs e) => Control1.StartBringIntoView();
+	}
 }

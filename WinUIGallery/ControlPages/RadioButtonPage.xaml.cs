@@ -14,13 +14,13 @@ using Microsoft.UI.Xaml.Media;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class RadioButtonPage : Page
-    {
-        public RadioButtonPage() => InitializeComponent();
+	public sealed partial class RadioButtonPage : Page
+	{
+		public RadioButtonPage() => InitializeComponent();
 
-        void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            Control1Output.Text = string.Format("You selected {0}", (sender as RadioButton).Content.ToString());
-        }
-    }
+		void RadioButton_Checked(object sender, RoutedEventArgs e)
+		{
+			Control1Output.Text = string.Format("You selected {0}", (sender as RadioButton).Content.ToString());
+		}
+	}
 }

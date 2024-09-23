@@ -8,16 +8,16 @@ using Microsoft.UI.Xaml.Input;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class XamlUICommandPage : Page
-    {
-        public XamlUICommandPage() => InitializeComponent();
+	public sealed partial class XamlUICommandPage : Page
+	{
+		public XamlUICommandPage() => InitializeComponent();
 
-        void CustomXamlUICommand_ExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
-        {
-            XamlUICommandOutput.Text = "You fired the custom command";
-        }
-        void ControlExample_Loaded(object sender, RoutedEventArgs e)
-        {
-        }
-    }
+		void CustomXamlUICommand_ExecuteRequested(XamlUICommand sender, ExecuteRequestedEventArgs args)
+		{
+			XamlUICommandOutput.Text = "You fired the custom command";
+		}
+		void ControlExample_Loaded(object sender, RoutedEventArgs e)
+		{
+		}
+	}
 }

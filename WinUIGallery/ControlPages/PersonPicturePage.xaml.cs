@@ -2,8 +2,8 @@
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class PersonPicturePage : Page
-    {
-        public PersonPicturePage() => InitializeComponent();
-    }
+	public sealed partial class PersonPicturePage : Page
+	{
+		public PersonPicturePage() => InitializeComponent();
+	}
 }

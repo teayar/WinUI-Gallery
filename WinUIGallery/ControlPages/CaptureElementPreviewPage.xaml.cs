@@ -22,115 +22,115 @@ using WinUIGallery.Helper;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class CaptureElementPreviewPage : Page, INotifyPropertyChanged
-    {
-        public CaptureElementPreviewPage()
-        {
-            InitializeComponent();
+	public sealed partial class CaptureElementPreviewPage : Page, INotifyPropertyChanged
+	{
+		public CaptureElementPreviewPage()
+		{
+			InitializeComponent();
 
-            StartCaptureElement();
+			StartCaptureElement();
 
-            // Move the ScrollViewer from the captureContainer under an ExpandToFillContainer.
-            // This will allow the snapshots column to use all available height without
-            // influencing the height.
-            var expandToFillContainer = new ExpandToFillContainer();
-            var sv = captureContainer.Children[0];
-            captureContainer.Children.Remove(sv);
-            captureContainer.Children.Add(expandToFillContainer);
-            expandToFillContainer.Children.Add(sv);
-        }
+			// Move the ScrollViewer from the captureContainer under an ExpandToFillContainer.
+			// This will allow the snapshots column to use all available height without
+			// influencing the height.
+			var expandToFillContainer = new ExpandToFillContainer();
+			var sv = captureContainer.Children[0];
+			captureContainer.Children.Remove(sv);
+			captureContainer.Children.Add(expandToFillContainer);
+			expandToFillContainer.Children.Add(sv);
+		}
 
-        MediaFrameSourceGroup mediaFrameSourceGroup;
-        MediaCapture mediaCapture;
+		MediaFrameSourceGroup mediaFrameSourceGroup;
+		MediaCapture mediaCapture;
 
-        async void StartCaptureElement()
-        {
-            var groups = await MediaFrameSourceGroup.FindAllAsync();
+		async void StartCaptureElement()
+		{
+			var groups = await MediaFrameSourceGroup.FindAllAsync();
 
-            if (groups.Count == 0)
-            {
-                frameSourceName.Text = "No camera devices found.";
-                return;
-            }
+			if (groups.Count == 0)
+			{
+				frameSourceName.Text = "No camera devices found.";
+				return;
+			}
 
-            mediaFrameSourceGroup = groups.First();
+			mediaFrameSourceGroup = groups.First();
 
-            frameSourceName.Text = "Viewing: " + mediaFrameSourceGroup.DisplayName;
-            mediaCapture = new MediaCapture();
+			frameSourceName.Text = "Viewing: " + mediaFrameSourceGroup.DisplayName;
+			mediaCapture = new MediaCapture();
 
-            var mediaCaptureInitializationSettings = new MediaCaptureInitializationSettings()
-            {
-                SourceGroup = mediaFrameSourceGroup,
-                SharingMode = MediaCaptureSharingMode.SharedReadOnly,
-                StreamingCaptureMode = StreamingCaptureMode.Video,
-                MemoryPreference = MediaCaptureMemoryPreference.Cpu
-            };
+			var mediaCaptureInitializationSettings = new MediaCaptureInitializationSettings()
+			{
+				SourceGroup = mediaFrameSourceGroup,
+				SharingMode = MediaCaptureSharingMode.SharedReadOnly,
+				StreamingCaptureMode = StreamingCaptureMode.Video,
+				MemoryPreference = MediaCaptureMemoryPreference.Cpu
+			};
 
-            await mediaCapture.InitializeAsync(mediaCaptureInitializationSettings);
+			await mediaCapture.InitializeAsync(mediaCaptureInitializationSettings);
 
-            // Set the MediaPlayerElement's Source property to the MediaSource for the mediaCapture.
-            var frameSource = mediaCapture.FrameSources[mediaFrameSourceGroup.SourceInfos[0].Id];
-            captureElement.Source = Windows.Media.Core.MediaSource.CreateFromMediaFrameSource(frameSource);
-        }
+			// Set the MediaPlayerElement's Source property to the MediaSource for the mediaCapture.
+			var frameSource = mediaCapture.FrameSources[mediaFrameSourceGroup.SourceInfos[0].Id];
+			captureElement.Source = Windows.Media.Core.MediaSource.CreateFromMediaFrameSource(frameSource);
+		}
 
-        public string MirrorTextReplacement = ""; // starts not mirrored, so no text in that case
+		public string MirrorTextReplacement = ""; // starts not mirrored, so no text in that case
 
-        public event PropertyChangedEventHandler PropertyChanged;
+		public event PropertyChangedEventHandler PropertyChanged;
 
-        public void OnPropertyChanged(string PropertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
-        }
+		public void OnPropertyChanged(string PropertyName)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
+		}
 
-        void MirrorToggleSwitch_Toggled(object sender, RoutedEventArgs e)
-        {
-            if (mirrorSwitch.IsOn)
-            {
-                captureElement.RenderTransform = new ScaleTransform() { ScaleX = -1 };
-                captureElement.RenderTransformOrigin = new Point(0.5, 0.5);
+		void MirrorToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+		{
+			if (mirrorSwitch.IsOn)
+			{
+				captureElement.RenderTransform = new ScaleTransform() { ScaleX = -1 };
+				captureElement.RenderTransformOrigin = new Point(0.5, 0.5);
 
-                MirrorTextReplacement =
-                    "\n" +
-                    "        // Mirror the preview\n" +
-                    "        captureElement.RenderTransform = new ScaleTransform() { ScaleX = -1 };\n" +
-                    "        captureElement.RenderTransformOrigin = new Point(0.5, 0.5);\n";
-            }
-            else
-            {
-                captureElement.RenderTransform = null;
-                MirrorTextReplacement = "";
-            }
+				MirrorTextReplacement =
+					"\n" +
+					"        // Mirror the preview\n" +
+					"        captureElement.RenderTransform = new ScaleTransform() { ScaleX = -1 };\n" +
+					"        captureElement.RenderTransformOrigin = new Point(0.5, 0.5);\n";
+			}
+			else
+			{
+				captureElement.RenderTransform = null;
+				MirrorTextReplacement = "";
+			}
 
-            OnPropertyChanged("MirrorTextReplacement");
-        }
+			OnPropertyChanged("MirrorTextReplacement");
+		}
 
-        async void CapturePhoto_Click(object sender, RoutedEventArgs e)
-        {
-            // Capture a photo to a stream
-            var imgFormat = ImageEncodingProperties.CreateJpeg();
-            var stream = new InMemoryRandomAccessStream();
-            await mediaCapture.CapturePhotoToStreamAsync(imgFormat, stream);
-            stream.Seek(0);
+		async void CapturePhoto_Click(object sender, RoutedEventArgs e)
+		{
+			// Capture a photo to a stream
+			var imgFormat = ImageEncodingProperties.CreateJpeg();
+			var stream = new InMemoryRandomAccessStream();
+			await mediaCapture.CapturePhotoToStreamAsync(imgFormat, stream);
+			stream.Seek(0);
 
-            // Show the photo in an Image element
-            BitmapImage bmpImage = new BitmapImage();
-            await bmpImage.SetSourceAsync(stream);
-            var image = new Image() { Source = bmpImage };
-            snapshots.Children.Insert(0, image);
+			// Show the photo in an Image element
+			BitmapImage bmpImage = new BitmapImage();
+			await bmpImage.SetSourceAsync(stream);
+			var image = new Image() { Source = bmpImage };
+			snapshots.Children.Insert(0, image);
 
-            capturedText.Visibility = Visibility.Visible;
+			capturedText.Visibility = Visibility.Visible;
 
-            UIHelper.AnnounceActionForAccessibility(captureButton, "Photo successfully captured.", "CameraPreviewSampleCaptureNotificationId");
-        }
-    }
+			UIHelper.AnnounceActionForAccessibility(captureButton, "Photo successfully captured.", "CameraPreviewSampleCaptureNotificationId");
+		}
+	}
 
-    class ExpandToFillContainer : Grid
-    {
-        protected override Size MeasureOverride(Size availableSize)
-        {
-            // Measure with the minimum height so it will just expand to whatever space is available.
-            var desiredSize = base.MeasureOverride(new Size(availableSize.Width, 100));
-            return desiredSize;
-        }
-    }
+	class ExpandToFillContainer : Grid
+	{
+		protected override Size MeasureOverride(Size availableSize)
+		{
+			// Measure with the minimum height so it will just expand to whatever space is available.
+			var desiredSize = base.MeasureOverride(new Size(availableSize.Width, 100));
+			return desiredSize;
+		}
+	}
 }

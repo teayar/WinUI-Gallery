@@ -16,15 +16,15 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class FlipViewPage : ItemsPageBase
-    {
-        public FlipViewPage() => InitializeComponent();
+	public sealed partial class FlipViewPage : ItemsPageBase
+	{
+		public FlipViewPage() => InitializeComponent();
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
 
-            Items = ControlInfoDataSource.Instance.Groups.Take(3).SelectMany(g => g.Items).ToList();
-        }
-    }
+			Items = ControlInfoDataSource.Instance.Groups.Take(3).SelectMany(g => g.Items).ToList();
+		}
+	}
 }

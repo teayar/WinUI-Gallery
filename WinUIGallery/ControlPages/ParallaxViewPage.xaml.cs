@@ -4,15 +4,15 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class ParallaxViewPage : ItemsPageBase
-    {
-        public ParallaxViewPage() => InitializeComponent();
+	public sealed partial class ParallaxViewPage : ItemsPageBase
+	{
+		public ParallaxViewPage() => InitializeComponent();
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
+		protected override void OnNavigatedTo(NavigationEventArgs e)
+		{
+			base.OnNavigatedTo(e);
 
-            Items = ControlInfoDataSource.Instance.Groups.SelectMany(g => g.Items).OrderBy(i => i.Title).ToList();
-        }
-    }
+			Items = ControlInfoDataSource.Instance.Groups.SelectMany(g => g.Items).OrderBy(i => i.Title).ToList();
+		}
+	}
 }

@@ -21,8 +21,8 @@ using Windows.Foundation.Collections;
 
 namespace WinUIGallery.DesktopWap.Controls.DesignGuidance.ColorSections
 {
-    public sealed partial class FillSection : Page
-    {
-        public FillSection() => InitializeComponent();
-    }
+	public sealed partial class FillSection : Page
+	{
+		public FillSection() => InitializeComponent();
+	}
 }

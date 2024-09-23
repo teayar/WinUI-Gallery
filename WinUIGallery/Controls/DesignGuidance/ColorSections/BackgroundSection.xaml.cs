@@ -5,8 +5,8 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace WinUIGallery.DesktopWap.Controls.DesignGuidance.ColorSections
 {
-    public sealed partial class BackgroundSection : Page
-    {
-        public BackgroundSection() => InitializeComponent();
-    }
+	public sealed partial class BackgroundSection : Page
+	{
+		public BackgroundSection() => InitializeComponent();
+	}
 }

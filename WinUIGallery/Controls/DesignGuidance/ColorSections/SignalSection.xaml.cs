@@ -5,8 +5,8 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace WinUIGallery.DesktopWap.Controls.DesignGuidance.ColorSections
 {
-    public sealed partial class SignalSection : Page
-    {
-        public SignalSection() => InitializeComponent();
-    }
+	public sealed partial class SignalSection : Page
+	{
+		public SignalSection() => InitializeComponent();
+	}
 }

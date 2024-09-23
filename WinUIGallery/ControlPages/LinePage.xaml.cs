@@ -16,8 +16,8 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class LinePage : Page
-    {
-        public LinePage() => InitializeComponent();
-    }
+	public sealed partial class LinePage : Page
+	{
+		public LinePage() => InitializeComponent();
+	}
 }

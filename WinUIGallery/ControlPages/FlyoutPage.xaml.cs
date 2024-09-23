@@ -14,13 +14,13 @@ using Microsoft.UI.Xaml.Input;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class FlyoutPage : Page
-    {
-        public FlyoutPage() => InitializeComponent();
+	public sealed partial class FlyoutPage : Page
+	{
+		public FlyoutPage() => InitializeComponent();
 
-        void DeleteConfirmation_Click(object sender, RoutedEventArgs e)
-        {
-            if (Control1.Flyout is Flyout f) f.Hide();
-        }
-    }
+		void DeleteConfirmation_Click(object sender, RoutedEventArgs e)
+		{
+			if (Control1.Flyout is Flyout f) f.Hide();
+		}
+	}
 }

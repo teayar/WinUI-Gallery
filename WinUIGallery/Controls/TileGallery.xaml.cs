@@ -18,61 +18,61 @@ using Windows.Foundation.Collections;
 
 namespace WinUIGallery.Controls
 {
-    public sealed partial class TileGallery : UserControl
-    {
-        public TileGallery() => InitializeComponent();
+	public sealed partial class TileGallery : UserControl
+	{
+		public TileGallery() => InitializeComponent();
 
-        void scroller_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
-        {
-            if (e.FinalView.HorizontalOffset < 1)
-            {
-                ScrollBackBtn.Visibility = Visibility.Collapsed;
-            }
-            else if (e.FinalView.HorizontalOffset > 1)
-            {
-                ScrollBackBtn.Visibility = Visibility.Visible;
-            }
+		void scroller_ViewChanging(object sender, ScrollViewerViewChangingEventArgs e)
+		{
+			if (e.FinalView.HorizontalOffset < 1)
+			{
+				ScrollBackBtn.Visibility = Visibility.Collapsed;
+			}
+			else if (e.FinalView.HorizontalOffset > 1)
+			{
+				ScrollBackBtn.Visibility = Visibility.Visible;
+			}
 
-            if (e.FinalView.HorizontalOffset > scroller.ScrollableWidth - 1)
-            {
-                ScrollForwardBtn.Visibility = Visibility.Collapsed;
-            }
-            else if (e.FinalView.HorizontalOffset < scroller.ScrollableWidth - 1)
-            {
-                ScrollForwardBtn.Visibility = Visibility.Visible;
-            }
-        }
+			if (e.FinalView.HorizontalOffset > scroller.ScrollableWidth - 1)
+			{
+				ScrollForwardBtn.Visibility = Visibility.Collapsed;
+			}
+			else if (e.FinalView.HorizontalOffset < scroller.ScrollableWidth - 1)
+			{
+				ScrollForwardBtn.Visibility = Visibility.Visible;
+			}
+		}
 
-        void ScrollBackBtn_Click(object sender, RoutedEventArgs e)
-        {
-            scroller.ChangeView(scroller.HorizontalOffset - scroller.ViewportWidth, null, null);
-            // Manually focus to ScrollForwardBtn since this button disappears after scrolling to the end.          
-            ScrollForwardBtn.Focus(FocusState.Programmatic);
-        }
+		void ScrollBackBtn_Click(object sender, RoutedEventArgs e)
+		{
+			scroller.ChangeView(scroller.HorizontalOffset - scroller.ViewportWidth, null, null);
+			// Manually focus to ScrollForwardBtn since this button disappears after scrolling to the end.          
+			ScrollForwardBtn.Focus(FocusState.Programmatic);
+		}
 
-        void ScrollForwardBtn_Click(object sender, RoutedEventArgs e)
-        {
-            scroller.ChangeView(scroller.HorizontalOffset + scroller.ViewportWidth, null, null);
+		void ScrollForwardBtn_Click(object sender, RoutedEventArgs e)
+		{
+			scroller.ChangeView(scroller.HorizontalOffset + scroller.ViewportWidth, null, null);
 
-            // Manually focus to ScrollBackBtn since this button disappears after scrolling to the end.    
-            ScrollBackBtn.Focus(FocusState.Programmatic);
-        }
+			// Manually focus to ScrollBackBtn since this button disappears after scrolling to the end.    
+			ScrollBackBtn.Focus(FocusState.Programmatic);
+		}
 
-        void scroller_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            UpdateScrollButtonsVisibility();
-        }
+		void scroller_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			UpdateScrollButtonsVisibility();
+		}
 
-        void UpdateScrollButtonsVisibility()
-        {
-            if (scroller.ScrollableWidth > 0)
-            {
-                ScrollForwardBtn.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                ScrollForwardBtn.Visibility = Visibility.Collapsed;
-            }
-        }
-    }
+		void UpdateScrollButtonsVisibility()
+		{
+			if (scroller.ScrollableWidth > 0)
+			{
+				ScrollForwardBtn.Visibility = Visibility.Visible;
+			}
+			else
+			{
+				ScrollForwardBtn.Visibility = Visibility.Collapsed;
+			}
+		}
+	}
 }

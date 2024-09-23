@@ -13,53 +13,53 @@ using Microsoft.UI.Xaml.Media;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class ViewboxPage : Page
-    {
-        public ViewboxPage() => InitializeComponent();
+	public sealed partial class ViewboxPage : Page
+	{
+		public ViewboxPage() => InitializeComponent();
 
-        void StretchDirectionButton_Checked(object sender, RoutedEventArgs e)
-        {
-            if (sender is RadioButton rb && Control1 != null)
-            {
-                string direction = rb.Tag.ToString();
+		void StretchDirectionButton_Checked(object sender, RoutedEventArgs e)
+		{
+			if (sender is RadioButton rb && Control1 != null)
+			{
+				string direction = rb.Tag.ToString();
 
-                switch (direction)
-                {
-                    case "UpOnly":
-                        Control1.StretchDirection = StretchDirection.UpOnly;
-                        break;
-                    case "DownOnly":
-                        Control1.StretchDirection = StretchDirection.DownOnly;
-                        break;
-                    case "Both":
-                        Control1.StretchDirection = StretchDirection.Both;
-                        break;
-                }
-            }
-        }
+				switch (direction)
+				{
+					case "UpOnly":
+						Control1.StretchDirection = StretchDirection.UpOnly;
+						break;
+					case "DownOnly":
+						Control1.StretchDirection = StretchDirection.DownOnly;
+						break;
+					case "Both":
+						Control1.StretchDirection = StretchDirection.Both;
+						break;
+				}
+			}
+		}
 
-        void StretchButton_Checked(object sender, RoutedEventArgs e)
-        {
-            if (sender is RadioButton rb && Control1 != null)
-            {
-                string stretch = rb.Tag.ToString();
+		void StretchButton_Checked(object sender, RoutedEventArgs e)
+		{
+			if (sender is RadioButton rb && Control1 != null)
+			{
+				string stretch = rb.Tag.ToString();
 
-                switch (stretch)
-                {
-                    case "None":
-                        Control1.Stretch = Stretch.None;
-                        break;
-                    case "Fill":
-                        Control1.Stretch = Stretch.Fill;
-                        break;
-                    case "Uniform":
-                        Control1.Stretch = Stretch.Uniform;
-                        break;
-                    case "UniformToFill":
-                        Control1.Stretch = Stretch.UniformToFill;
-                        break;
-                }
-            }
-        }
-    }
+				switch (stretch)
+				{
+					case "None":
+						Control1.Stretch = Stretch.None;
+						break;
+					case "Fill":
+						Control1.Stretch = Stretch.Fill;
+						break;
+					case "Uniform":
+						Control1.Stretch = Stretch.Uniform;
+						break;
+					case "UniformToFill":
+						Control1.Stretch = Stretch.UniformToFill;
+						break;
+				}
+			}
+		}
+	}
 }

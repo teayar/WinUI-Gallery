@@ -24,8 +24,8 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class TimePickerPage : Page
-    {
-        public TimePickerPage() => InitializeComponent();
-    }
+	public sealed partial class TimePickerPage : Page
+	{
+		public TimePickerPage() => InitializeComponent();
+	}
 }

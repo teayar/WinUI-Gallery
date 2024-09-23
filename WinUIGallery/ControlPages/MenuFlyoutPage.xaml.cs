@@ -14,35 +14,35 @@ using Microsoft.UI.Xaml.Input;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class MenuFlyoutPage : Page
-    {
-        public MenuFlyoutPage() => InitializeComponent();
+	public sealed partial class MenuFlyoutPage : Page
+	{
+		public MenuFlyoutPage() => InitializeComponent();
 
-        void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is MenuFlyoutItem selectedItem)
-            {
-                string sortOption = selectedItem.Tag.ToString();
+		void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+		{
+			if (sender is MenuFlyoutItem selectedItem)
+			{
+				string sortOption = selectedItem.Tag.ToString();
 
-                switch (sortOption)
-                {
-                    case "rating":
-                        // SortByRating();
-                        break;
-                    case "match":
-                        // SortByMatch();
-                        break;
-                    case "distance":
-                        // SortByDistance();
-                        break;
-                }
+				switch (sortOption)
+				{
+					case "rating":
+						// SortByRating();
+						break;
+					case "match":
+						// SortByMatch();
+						break;
+					case "distance":
+						// SortByDistance();
+						break;
+				}
 
-                Control1Output.Text = "Sort by: " + sortOption;
-            }
-        }
+				Control1Output.Text = "Sort by: " + sortOption;
+			}
+		}
 
-        void Example5_Loaded(object sender, RoutedEventArgs e)
-        {
-        }
-    }
+		void Example5_Loaded(object sender, RoutedEventArgs e)
+		{
+		}
+	}
 }

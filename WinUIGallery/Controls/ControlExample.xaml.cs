@@ -19,237 +19,237 @@ using Windows.Foundation.Metadata;
 
 namespace WinUIGallery
 {
-    /// <summary>
-    /// Describes a textual substitution in sample content.
-    /// If enabled (default), then $(Key) is replaced with the stringified value.
-    /// If disabled, then $(Key) is replaced with the empty string.
-    /// </summary>
-    public sealed class ControlExampleSubstitution : DependencyObject
-    {
-        public event TypedEventHandler<ControlExampleSubstitution, object> ValueChanged;
+	/// <summary>
+	/// Describes a textual substitution in sample content.
+	/// If enabled (default), then $(Key) is replaced with the stringified value.
+	/// If disabled, then $(Key) is replaced with the empty string.
+	/// </summary>
+	public sealed class ControlExampleSubstitution : DependencyObject
+	{
+		public event TypedEventHandler<ControlExampleSubstitution, object> ValueChanged;
 
-        public string Key { get; set; }
+		public string Key { get; set; }
 
-        object _value;
-        public object Value
-        {
-            get { return _value; }
-            set
-            {
-                _value = value;
-                ValueChanged?.Invoke(this, null);
-            }
-        }
+		object _value;
+		public object Value
+		{
+			get { return _value; }
+			set
+			{
+				_value = value;
+				ValueChanged?.Invoke(this, null);
+			}
+		}
 
-        bool _enabled = true;
-        public bool IsEnabled
-        {
-            get { return _enabled; }
-            set
-            {
-                _enabled = value;
-                ValueChanged?.Invoke(this, null);
-            }
-        }
+		bool _enabled = true;
+		public bool IsEnabled
+		{
+			get { return _enabled; }
+			set
+			{
+				_enabled = value;
+				ValueChanged?.Invoke(this, null);
+			}
+		}
 
-        public string ValueAsString()
-        {
-            if (!IsEnabled) return string.Empty;
+		public string ValueAsString()
+		{
+			if (!IsEnabled) return string.Empty;
 
-            object value = Value;
+			object value = Value;
 
-            // For solid color brushes, use the underlying color.
-            if (value is SolidColorBrush)
-            {
-                value = ((SolidColorBrush)value).Color;
-            }
+			// For solid color brushes, use the underlying color.
+			if (value is SolidColorBrush)
+			{
+				value = ((SolidColorBrush)value).Color;
+			}
 
-            if (value == null) return string.Empty;
+			if (value == null) return string.Empty;
 
-            return value.ToString();
-        }
-    }
+			return value.ToString();
+		}
+	}
 
-    [ContentProperty(Name = "Example")]
-    public sealed partial class ControlExample : UserControl
-    {
-        public static readonly DependencyProperty HeaderTextProperty = DependencyProperty.Register("HeaderText", typeof(string), typeof(ControlExample), new PropertyMetadata(null));
-        public string HeaderText
-        {
-            get { return (string)GetValue(HeaderTextProperty); }
-            set
-            {
-                SetValue(HeaderTextProperty, value);
-                HeaderTextPresenter.Visibility = string.IsNullOrEmpty(HeaderText) ? Visibility.Collapsed : Visibility.Visible;
-            }
-        }
+	[ContentProperty(Name = "Example")]
+	public sealed partial class ControlExample : UserControl
+	{
+		public static readonly DependencyProperty HeaderTextProperty = DependencyProperty.Register("HeaderText", typeof(string), typeof(ControlExample), new PropertyMetadata(null));
+		public string HeaderText
+		{
+			get { return (string)GetValue(HeaderTextProperty); }
+			set
+			{
+				SetValue(HeaderTextProperty, value);
+				HeaderTextPresenter.Visibility = string.IsNullOrEmpty(HeaderText) ? Visibility.Collapsed : Visibility.Visible;
+			}
+		}
 
-        public static readonly DependencyProperty ExampleProperty = DependencyProperty.Register("Example", typeof(object), typeof(ControlExample), new PropertyMetadata(null));
-        public object Example
-        {
-            get { return GetValue(ExampleProperty); }
-            set { SetValue(ExampleProperty, value); }
-        }
+		public static readonly DependencyProperty ExampleProperty = DependencyProperty.Register("Example", typeof(object), typeof(ControlExample), new PropertyMetadata(null));
+		public object Example
+		{
+			get { return GetValue(ExampleProperty); }
+			set { SetValue(ExampleProperty, value); }
+		}
 
-        public static readonly DependencyProperty OutputProperty = DependencyProperty.Register("Output", typeof(object), typeof(ControlExample), new PropertyMetadata(null));
-        public object Output
-        {
-            get { return GetValue(OutputProperty); }
-            set { SetValue(OutputProperty, value); }
-        }
+		public static readonly DependencyProperty OutputProperty = DependencyProperty.Register("Output", typeof(object), typeof(ControlExample), new PropertyMetadata(null));
+		public object Output
+		{
+			get { return GetValue(OutputProperty); }
+			set { SetValue(OutputProperty, value); }
+		}
 
-        public static readonly DependencyProperty OptionsProperty = DependencyProperty.Register("Options", typeof(object), typeof(ControlExample), new PropertyMetadata(null));
-        public object Options
-        {
-            get { return GetValue(OptionsProperty); }
-            set { SetValue(OptionsProperty, value); }
-        }
+		public static readonly DependencyProperty OptionsProperty = DependencyProperty.Register("Options", typeof(object), typeof(ControlExample), new PropertyMetadata(null));
+		public object Options
+		{
+			get { return GetValue(OptionsProperty); }
+			set { SetValue(OptionsProperty, value); }
+		}
 
-        public static readonly DependencyProperty XamlProperty = DependencyProperty.Register("Xaml", typeof(string), typeof(ControlExample), new PropertyMetadata(null, OnXamlChanged));
-        public string Xaml
-        {
-            get { return (string)GetValue(XamlProperty); }
-            set { SetValue(XamlProperty, value); }
-        }
+		public static readonly DependencyProperty XamlProperty = DependencyProperty.Register("Xaml", typeof(string), typeof(ControlExample), new PropertyMetadata(null, OnXamlChanged));
+		public string Xaml
+		{
+			get { return (string)GetValue(XamlProperty); }
+			set { SetValue(XamlProperty, value); }
+		}
 
-        public static readonly DependencyProperty XamlSourceProperty = DependencyProperty.Register("XamlSource", typeof(object), typeof(ControlExample), new PropertyMetadata(null, OnXamlChanged));
-        public string XamlSource
-        {
-            get { return (string)GetValue(XamlSourceProperty); }
-            set { SetValue(XamlSourceProperty, value); }
-        }
+		public static readonly DependencyProperty XamlSourceProperty = DependencyProperty.Register("XamlSource", typeof(object), typeof(ControlExample), new PropertyMetadata(null, OnXamlChanged));
+		public string XamlSource
+		{
+			get { return (string)GetValue(XamlSourceProperty); }
+			set { SetValue(XamlSourceProperty, value); }
+		}
 
-        public static readonly DependencyProperty CSharpProperty = DependencyProperty.Register("CSharp", typeof(string), typeof(ControlExample), new PropertyMetadata(null, OnCSharpChanged));
-        public string CSharp
-        {
-            get { return (string)GetValue(CSharpProperty); }
-            set { SetValue(CSharpProperty, value); }
-        }
+		public static readonly DependencyProperty CSharpProperty = DependencyProperty.Register("CSharp", typeof(string), typeof(ControlExample), new PropertyMetadata(null, OnCSharpChanged));
+		public string CSharp
+		{
+			get { return (string)GetValue(CSharpProperty); }
+			set { SetValue(CSharpProperty, value); }
+		}
 
-        public static readonly DependencyProperty CSharpSourceProperty = DependencyProperty.Register("CSharpSource", typeof(object), typeof(ControlExample), new PropertyMetadata(null, OnCSharpChanged));
-        public string CSharpSource
-        {
-            get { return (string)GetValue(CSharpSourceProperty); }
-            set { SetValue(CSharpSourceProperty, value); }
-        }
+		public static readonly DependencyProperty CSharpSourceProperty = DependencyProperty.Register("CSharpSource", typeof(object), typeof(ControlExample), new PropertyMetadata(null, OnCSharpChanged));
+		public string CSharpSource
+		{
+			get { return (string)GetValue(CSharpSourceProperty); }
+			set { SetValue(CSharpSourceProperty, value); }
+		}
 
-        public static readonly DependencyProperty SubstitutionsProperty = DependencyProperty.Register("Substitutions", typeof(IList<ControlExampleSubstitution>), typeof(ControlExample), new PropertyMetadata(null));
-        public IList<ControlExampleSubstitution> Substitutions
-        {
-            get { return (IList<ControlExampleSubstitution>)GetValue(SubstitutionsProperty); }
-            set { SetValue(SubstitutionsProperty, value); }
-        }
+		public static readonly DependencyProperty SubstitutionsProperty = DependencyProperty.Register("Substitutions", typeof(IList<ControlExampleSubstitution>), typeof(ControlExample), new PropertyMetadata(null));
+		public IList<ControlExampleSubstitution> Substitutions
+		{
+			get { return (IList<ControlExampleSubstitution>)GetValue(SubstitutionsProperty); }
+			set { SetValue(SubstitutionsProperty, value); }
+		}
 
-        static readonly GridLength defaultExampleHeight =
-            new GridLength(1, GridUnitType.Star);
+		static readonly GridLength defaultExampleHeight =
+			new GridLength(1, GridUnitType.Star);
 
-        public static readonly DependencyProperty ExampleHeightProperty = DependencyProperty.Register("ExampleHeight", typeof(GridLength), typeof(ControlExample), new PropertyMetadata(defaultExampleHeight));
-        public GridLength ExampleHeight
-        {
-            get { return (GridLength)GetValue(ExampleHeightProperty); }
-            set { SetValue(ExampleHeightProperty, value); }
-        }
+		public static readonly DependencyProperty ExampleHeightProperty = DependencyProperty.Register("ExampleHeight", typeof(GridLength), typeof(ControlExample), new PropertyMetadata(defaultExampleHeight));
+		public GridLength ExampleHeight
+		{
+			get { return (GridLength)GetValue(ExampleHeightProperty); }
+			set { SetValue(ExampleHeightProperty, value); }
+		}
 
-        public static readonly DependencyProperty WebViewHeightProperty = DependencyProperty.Register("WebViewHeight", typeof(int), typeof(ControlExample), new PropertyMetadata(400));
-        public int WebViewHeight
-        {
-            get { return (int)GetValue(WebViewHeightProperty); }
-            set { SetValue(WebViewHeightProperty, value); }
-        }
+		public static readonly DependencyProperty WebViewHeightProperty = DependencyProperty.Register("WebViewHeight", typeof(int), typeof(ControlExample), new PropertyMetadata(400));
+		public int WebViewHeight
+		{
+			get { return (int)GetValue(WebViewHeightProperty); }
+			set { SetValue(WebViewHeightProperty, value); }
+		}
 
-        public static readonly DependencyProperty WebViewWidthProperty = DependencyProperty.Register("WebViewWidth", typeof(int), typeof(ControlExample), new PropertyMetadata(800));
-        public int WebViewWidth
-        {
-            get { return (int)GetValue(WebViewWidthProperty); }
-            set { SetValue(WebViewWidthProperty, value); }
-        }
+		public static readonly DependencyProperty WebViewWidthProperty = DependencyProperty.Register("WebViewWidth", typeof(int), typeof(ControlExample), new PropertyMetadata(800));
+		public int WebViewWidth
+		{
+			get { return (int)GetValue(WebViewWidthProperty); }
+			set { SetValue(WebViewWidthProperty, value); }
+		}
 
-        public new static readonly DependencyProperty HorizontalContentAlignmentProperty = DependencyProperty.Register("HorizontalContentAlignment", typeof(HorizontalAlignment), typeof(ControlExample), new PropertyMetadata(HorizontalAlignment.Left));
-        public new HorizontalAlignment HorizontalContentAlignment
-        {
-            get { return (HorizontalAlignment)GetValue(HorizontalContentAlignmentProperty); }
-            set { SetValue(HorizontalContentAlignmentProperty, value); }
-        }
+		public new static readonly DependencyProperty HorizontalContentAlignmentProperty = DependencyProperty.Register("HorizontalContentAlignment", typeof(HorizontalAlignment), typeof(ControlExample), new PropertyMetadata(HorizontalAlignment.Left));
+		public new HorizontalAlignment HorizontalContentAlignment
+		{
+			get { return (HorizontalAlignment)GetValue(HorizontalContentAlignmentProperty); }
+			set { SetValue(HorizontalContentAlignmentProperty, value); }
+		}
 
-        public ControlExample()
-        {
-            InitializeComponent();
-            Substitutions = new List<ControlExampleSubstitution>();
-            Loaded += ControlExample_Loaded;
-        }
+		public ControlExample()
+		{
+			InitializeComponent();
+			Substitutions = new List<ControlExampleSubstitution>();
+			Loaded += ControlExample_Loaded;
+		}
 
-        void ControlExample_Loaded(object sender, RoutedEventArgs e)
-        {
-            HeaderTextPresenter.Visibility = string.IsNullOrEmpty(HeaderText) ? Visibility.Collapsed : Visibility.Visible;
-        }
+		void ControlExample_Loaded(object sender, RoutedEventArgs e)
+		{
+			HeaderTextPresenter.Visibility = string.IsNullOrEmpty(HeaderText) ? Visibility.Collapsed : Visibility.Visible;
+		}
 
-        private enum SyntaxHighlightLanguage { Xml, CSharp };
+		private enum SyntaxHighlightLanguage { Xml, CSharp };
 
-        void SelectorBarItem_Loaded(object sender, RoutedEventArgs e)
-        {
-            var item = sender as SelectorBarItem;
-            if (item == null) return;
+		void SelectorBarItem_Loaded(object sender, RoutedEventArgs e)
+		{
+			var item = sender as SelectorBarItem;
+			if (item == null) return;
 
-            if (item.Tag.ToString().Equals("Xaml", StringComparison.OrdinalIgnoreCase))
-            {
-                item.Visibility = string.IsNullOrEmpty(Xaml) && string.IsNullOrEmpty(XamlSource) ? Visibility.Collapsed : Visibility.Visible;
-            }
-            else if (item.Tag.ToString().Equals("CSharp", StringComparison.OrdinalIgnoreCase))
-            {
-                item.Visibility = string.IsNullOrEmpty(CSharp) && string.IsNullOrEmpty(CSharpSource) ? Visibility.Collapsed : Visibility.Visible;
-            }
+			if (item.Tag.ToString().Equals("Xaml", StringComparison.OrdinalIgnoreCase))
+			{
+				item.Visibility = string.IsNullOrEmpty(Xaml) && string.IsNullOrEmpty(XamlSource) ? Visibility.Collapsed : Visibility.Visible;
+			}
+			else if (item.Tag.ToString().Equals("CSharp", StringComparison.OrdinalIgnoreCase))
+			{
+				item.Visibility = string.IsNullOrEmpty(CSharp) && string.IsNullOrEmpty(CSharpSource) ? Visibility.Collapsed : Visibility.Visible;
+			}
 
-            var firstVisibileItem = SelectorBarControl.Items.Where(x => x.Visibility == Visibility.Visible).FirstOrDefault();
+			var firstVisibileItem = SelectorBarControl.Items.Where(x => x.Visibility == Visibility.Visible).FirstOrDefault();
 
-            if (firstVisibileItem != null)
-            {
-                firstVisibileItem.IsSelected = true;
-            }
+			if (firstVisibileItem != null)
+			{
+				firstVisibileItem.IsSelected = true;
+			}
 
-            HandlePresenterVisibility();
-        }
+			HandlePresenterVisibility();
+		}
 
-        static void OnXamlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var ctrl = (ControlExample)d;
+		static void OnXamlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var ctrl = (ControlExample)d;
 
-            if (ctrl != null)
-            {
-                ctrl.SelectorBarItem_Loaded(ctrl.SelectorBarXamlItem, null);
-            }
-        }
-        static void OnCSharpChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var ctrl = (ControlExample)d;
+			if (ctrl != null)
+			{
+				ctrl.SelectorBarItem_Loaded(ctrl.SelectorBarXamlItem, null);
+			}
+		}
+		static void OnCSharpChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			var ctrl = (ControlExample)d;
 
-            if (ctrl != null)
-            {
-                ctrl.SelectorBarItem_Loaded(ctrl.SelectorBarCSharpItem, null);
-            }
-        }
+			if (ctrl != null)
+			{
+				ctrl.SelectorBarItem_Loaded(ctrl.SelectorBarCSharpItem, null);
+			}
+		}
 
-        void SelectorBarControl_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
-        {
-            HandlePresenterVisibility();
-        }
+		void SelectorBarControl_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+		{
+			HandlePresenterVisibility();
+		}
 
-        void HandlePresenterVisibility()
-        {
-            var selectedItem = SelectorBarControl.SelectedItem;
+		void HandlePresenterVisibility()
+		{
+			var selectedItem = SelectorBarControl.SelectedItem;
 
-            if (selectedItem != null)
-            {
-                if (selectedItem.Tag.ToString().Equals("Xaml", StringComparison.OrdinalIgnoreCase))
-                {
-                    XamlPresenter.Visibility = Visibility.Visible;
-                    CSharpPresenter.Visibility = Visibility.Collapsed;
-                }
-                else if (selectedItem.Tag.ToString().Equals("CSharp", StringComparison.OrdinalIgnoreCase))
-                {
-                    CSharpPresenter.Visibility = Visibility.Visible;
-                    XamlPresenter.Visibility = Visibility.Collapsed;
-                }
-            }
-        }
-    }
+			if (selectedItem != null)
+			{
+				if (selectedItem.Tag.ToString().Equals("Xaml", StringComparison.OrdinalIgnoreCase))
+				{
+					XamlPresenter.Visibility = Visibility.Visible;
+					CSharpPresenter.Visibility = Visibility.Collapsed;
+				}
+				else if (selectedItem.Tag.ToString().Equals("CSharp", StringComparison.OrdinalIgnoreCase))
+				{
+					CSharpPresenter.Visibility = Visibility.Visible;
+					XamlPresenter.Visibility = Visibility.Collapsed;
+				}
+			}
+		}
+	}
 }

@@ -15,8 +15,8 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class PivotPage : Page
-    {
-        public PivotPage() => InitializeComponent();
-    }
+	public sealed partial class PivotPage : Page
+	{
+		public PivotPage() => InitializeComponent();
+	}
 }

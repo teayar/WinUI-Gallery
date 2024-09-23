@@ -5,39 +5,39 @@ using WinUIGallery.SamplePages;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class CompactSizingPage : Page
-    {
-        public CompactSizingPage() => InitializeComponent();
+	public sealed partial class CompactSizingPage : Page
+	{
+		public CompactSizingPage() => InitializeComponent();
 
-        void Example1_Loaded(object sender, RoutedEventArgs e)
-        {
-            ContentFrame.Navigate(typeof(SampleStandardSizingPage), null, new SuppressNavigationTransitionInfo());
-        }
+		void Example1_Loaded(object sender, RoutedEventArgs e)
+		{
+			ContentFrame.Navigate(typeof(SampleStandardSizingPage), null, new SuppressNavigationTransitionInfo());
+		}
 
-        void Standard_Checked(object sender, RoutedEventArgs e)
-        {
-            var oldPage = ContentFrame.Content as SampleCompactSizingPage;
+		void Standard_Checked(object sender, RoutedEventArgs e)
+		{
+			var oldPage = ContentFrame.Content as SampleCompactSizingPage;
 
-            ContentFrame.Navigate(typeof(SampleStandardSizingPage), null, new SuppressNavigationTransitionInfo());
+			ContentFrame.Navigate(typeof(SampleStandardSizingPage), null, new SuppressNavigationTransitionInfo());
 
-            if (oldPage != null)
-            {
-                var page = ContentFrame.Content as SampleStandardSizingPage;
-                page.CopyState(oldPage);
-            }
-        }
+			if (oldPage != null)
+			{
+				var page = ContentFrame.Content as SampleStandardSizingPage;
+				page.CopyState(oldPage);
+			}
+		}
 
-        void Compact_Checked(object sender, RoutedEventArgs e)
-        {
-            var oldPage = ContentFrame.Content as SampleStandardSizingPage;
+		void Compact_Checked(object sender, RoutedEventArgs e)
+		{
+			var oldPage = ContentFrame.Content as SampleStandardSizingPage;
 
-            ContentFrame.Navigate(typeof(SampleCompactSizingPage), null, new SuppressNavigationTransitionInfo());
+			ContentFrame.Navigate(typeof(SampleCompactSizingPage), null, new SuppressNavigationTransitionInfo());
 
-            if (oldPage != null)
-            {
-                var page = ContentFrame.Content as SampleCompactSizingPage;
-                page.CopyState(oldPage);
-            }
-        }
-    }
+			if (oldPage != null)
+			{
+				var page = ContentFrame.Content as SampleCompactSizingPage;
+				page.CopyState(oldPage);
+			}
+		}
+	}
 }

@@ -16,8 +16,8 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class ShapePage : Page
-    {
-        public ShapePage() => InitializeComponent();
-    }
+	public sealed partial class ShapePage : Page
+	{
+		public ShapePage() => InitializeComponent();
+	}
 }

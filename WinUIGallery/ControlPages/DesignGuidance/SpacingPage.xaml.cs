@@ -12,8 +12,8 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class SpacingPage : Page
-    {
-        public SpacingPage() => InitializeComponent();
-    }
+	public sealed partial class SpacingPage : Page
+	{
+		public SpacingPage() => InitializeComponent();
+	}
 }

@@ -6,214 +6,214 @@ using System.ComponentModel;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class TreeViewPage : Page
-    {
-        TreeViewNode personalFolder, personalFolder2;
-        ObservableCollection<ExplorerItem> DataSource;
+	public sealed partial class TreeViewPage : Page
+	{
+		TreeViewNode personalFolder, personalFolder2;
+		ObservableCollection<ExplorerItem> DataSource;
 
-        public TreeViewPage()
-        {
-            InitializeComponent();
-            DataContext = this;
-            DataSource = GetData();
+		public TreeViewPage()
+		{
+			InitializeComponent();
+			DataContext = this;
+			DataSource = GetData();
 
-            InitializeSampleTreeView();
-            InitializeSampleTreeView2();
-        }
+			InitializeSampleTreeView();
+			InitializeSampleTreeView2();
+		}
 
-        void InitializeSampleTreeView()
-        {
-            TreeViewNode workFolder = new TreeViewNode() { Content = "Work Documents" };
-            workFolder.IsExpanded = true;
+		void InitializeSampleTreeView()
+		{
+			TreeViewNode workFolder = new TreeViewNode() { Content = "Work Documents" };
+			workFolder.IsExpanded = true;
 
-            workFolder.Children.Add(new TreeViewNode() { Content = "XYZ Functional Spec" });
-            workFolder.Children.Add(new TreeViewNode() { Content = "Feature Schedule" });
-            workFolder.Children.Add(new TreeViewNode() { Content = "Overall Project Plan" });
-            workFolder.Children.Add(new TreeViewNode() { Content = "Feature Resources Allocation" });
+			workFolder.Children.Add(new TreeViewNode() { Content = "XYZ Functional Spec" });
+			workFolder.Children.Add(new TreeViewNode() { Content = "Feature Schedule" });
+			workFolder.Children.Add(new TreeViewNode() { Content = "Overall Project Plan" });
+			workFolder.Children.Add(new TreeViewNode() { Content = "Feature Resources Allocation" });
 
-            TreeViewNode remodelFolder = new TreeViewNode() { Content = "Home Remodel" };
-            remodelFolder.IsExpanded = true;
+			TreeViewNode remodelFolder = new TreeViewNode() { Content = "Home Remodel" };
+			remodelFolder.IsExpanded = true;
 
-            remodelFolder.Children.Add(new TreeViewNode() { Content = "Contractor Contact Info" });
-            remodelFolder.Children.Add(new TreeViewNode() { Content = "Paint Color Scheme" });
-            remodelFolder.Children.Add(new TreeViewNode() { Content = "Flooring woodgrain type" });
-            remodelFolder.Children.Add(new TreeViewNode() { Content = "Kitchen cabinet style" });
+			remodelFolder.Children.Add(new TreeViewNode() { Content = "Contractor Contact Info" });
+			remodelFolder.Children.Add(new TreeViewNode() { Content = "Paint Color Scheme" });
+			remodelFolder.Children.Add(new TreeViewNode() { Content = "Flooring woodgrain type" });
+			remodelFolder.Children.Add(new TreeViewNode() { Content = "Kitchen cabinet style" });
 
-            personalFolder = new TreeViewNode() { Content = "Personal Documents" };
-            personalFolder.IsExpanded = true;
-            personalFolder.Children.Add(remodelFolder);
+			personalFolder = new TreeViewNode() { Content = "Personal Documents" };
+			personalFolder.IsExpanded = true;
+			personalFolder.Children.Add(remodelFolder);
 
-            sampleTreeView.RootNodes.Add(workFolder);
-            sampleTreeView.RootNodes.Add(personalFolder);
-        }
-        void InitializeSampleTreeView2()
-        {
-            TreeViewNode workFolder = new TreeViewNode() { Content = "Work Documents" };
-            workFolder.IsExpanded = true;
+			sampleTreeView.RootNodes.Add(workFolder);
+			sampleTreeView.RootNodes.Add(personalFolder);
+		}
+		void InitializeSampleTreeView2()
+		{
+			TreeViewNode workFolder = new TreeViewNode() { Content = "Work Documents" };
+			workFolder.IsExpanded = true;
 
-            workFolder.Children.Add(new TreeViewNode() { Content = "XYZ Functional Spec" });
-            workFolder.Children.Add(new TreeViewNode() { Content = "Feature Schedule" });
-            workFolder.Children.Add(new TreeViewNode() { Content = "Overall Project Plan" });
-            workFolder.Children.Add(new TreeViewNode() { Content = "Feature Resources Allocation" });
+			workFolder.Children.Add(new TreeViewNode() { Content = "XYZ Functional Spec" });
+			workFolder.Children.Add(new TreeViewNode() { Content = "Feature Schedule" });
+			workFolder.Children.Add(new TreeViewNode() { Content = "Overall Project Plan" });
+			workFolder.Children.Add(new TreeViewNode() { Content = "Feature Resources Allocation" });
 
-            TreeViewNode remodelFolder = new TreeViewNode() { Content = "Home Remodel" };
-            remodelFolder.IsExpanded = true;
+			TreeViewNode remodelFolder = new TreeViewNode() { Content = "Home Remodel" };
+			remodelFolder.IsExpanded = true;
 
-            remodelFolder.Children.Add(new TreeViewNode() { Content = "Contractor Contact Info" });
-            remodelFolder.Children.Add(new TreeViewNode() { Content = "Paint Color Scheme" });
-            remodelFolder.Children.Add(new TreeViewNode() { Content = "Flooring woodgrain type" });
-            remodelFolder.Children.Add(new TreeViewNode() { Content = "Kitchen cabinet style" });
+			remodelFolder.Children.Add(new TreeViewNode() { Content = "Contractor Contact Info" });
+			remodelFolder.Children.Add(new TreeViewNode() { Content = "Paint Color Scheme" });
+			remodelFolder.Children.Add(new TreeViewNode() { Content = "Flooring woodgrain type" });
+			remodelFolder.Children.Add(new TreeViewNode() { Content = "Kitchen cabinet style" });
 
-            personalFolder2 = new TreeViewNode() { Content = "Personal Documents" };
-            personalFolder2.IsExpanded = true;
-            personalFolder2.Children.Add(remodelFolder);
+			personalFolder2 = new TreeViewNode() { Content = "Personal Documents" };
+			personalFolder2.IsExpanded = true;
+			personalFolder2.Children.Add(remodelFolder);
 
-            sampleTreeView2.RootNodes.Add(workFolder);
-            sampleTreeView2.RootNodes.Add(personalFolder2);
-        }
+			sampleTreeView2.RootNodes.Add(workFolder);
+			sampleTreeView2.RootNodes.Add(personalFolder2);
+		}
 
-        void sampleTreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
-        {
-            return;
-        }
+		void sampleTreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
+		{
+			return;
+		}
 
-        ObservableCollection<ExplorerItem> GetData()
-        {
-            var list = new ObservableCollection<ExplorerItem>();
+		ObservableCollection<ExplorerItem> GetData()
+		{
+			var list = new ObservableCollection<ExplorerItem>();
 
-            ExplorerItem folder1 = new ExplorerItem()
-            {
-                Name = "Work Documents",
-                Type = ExplorerItem.ExplorerItemType.Folder,
-                Children =
-                {
-                    new ExplorerItem()
-                    {
-                        Name = "Functional Specifications",
-                        Type = ExplorerItem.ExplorerItemType.Folder,
-                        Children =
-                        {
-                            new ExplorerItem()
-                            {
-                                Name = "TreeView spec",
-                                Type = ExplorerItem.ExplorerItemType.File,
-                              }
-                        }
-                    },
-                    new ExplorerItem()
-                    {
-                        Name = "Feature Schedule",
-                        Type = ExplorerItem.ExplorerItemType.File,
-                    },
-                    new ExplorerItem()
-                    {
-                        Name = "Overall Project Plan",
-                        Type = ExplorerItem.ExplorerItemType.File,
-                    },
-                    new ExplorerItem()
-                    {
-                        Name = "Feature Resources Allocation",
-                        Type = ExplorerItem.ExplorerItemType.File,
-                    }
-                }
-            };
+			ExplorerItem folder1 = new ExplorerItem()
+			{
+				Name = "Work Documents",
+				Type = ExplorerItem.ExplorerItemType.Folder,
+				Children =
+				{
+					new ExplorerItem()
+					{
+						Name = "Functional Specifications",
+						Type = ExplorerItem.ExplorerItemType.Folder,
+						Children =
+						{
+							new ExplorerItem()
+							{
+								Name = "TreeView spec",
+								Type = ExplorerItem.ExplorerItemType.File,
+							  }
+						}
+					},
+					new ExplorerItem()
+					{
+						Name = "Feature Schedule",
+						Type = ExplorerItem.ExplorerItemType.File,
+					},
+					new ExplorerItem()
+					{
+						Name = "Overall Project Plan",
+						Type = ExplorerItem.ExplorerItemType.File,
+					},
+					new ExplorerItem()
+					{
+						Name = "Feature Resources Allocation",
+						Type = ExplorerItem.ExplorerItemType.File,
+					}
+				}
+			};
 
-            ExplorerItem folder2 = new ExplorerItem()
-            {
-                Name = "Personal Folder",
-                Type = ExplorerItem.ExplorerItemType.Folder,
-                Children =
-                        {
-                            new ExplorerItem()
-                            {
-                                Name = "Home Remodel Folder",
-                                Type = ExplorerItem.ExplorerItemType.Folder,
-                                Children =
-                                {
-                                    new ExplorerItem()
-                                    {
-                                        Name = "Contractor Contact Info",
-                                        Type = ExplorerItem.ExplorerItemType.File,
-                                    },
-                                    new ExplorerItem()
-                                    {
-                                        Name = "Paint Color Scheme",
-                                        Type = ExplorerItem.ExplorerItemType.File,
-                                    },
-                                    new ExplorerItem()
-                                    {
-                                        Name = "Flooring Woodgrain type",
-                                        Type = ExplorerItem.ExplorerItemType.File,
-                                    },
-                                    new ExplorerItem()
-                                    {
-                                        Name = "Kitchen Cabinet Style",
-                                        Type = ExplorerItem.ExplorerItemType.File,
-                                    }
-                                }
-                            }
-                        }
-            };
+			ExplorerItem folder2 = new ExplorerItem()
+			{
+				Name = "Personal Folder",
+				Type = ExplorerItem.ExplorerItemType.Folder,
+				Children =
+						{
+							new ExplorerItem()
+							{
+								Name = "Home Remodel Folder",
+								Type = ExplorerItem.ExplorerItemType.Folder,
+								Children =
+								{
+									new ExplorerItem()
+									{
+										Name = "Contractor Contact Info",
+										Type = ExplorerItem.ExplorerItemType.File,
+									},
+									new ExplorerItem()
+									{
+										Name = "Paint Color Scheme",
+										Type = ExplorerItem.ExplorerItemType.File,
+									},
+									new ExplorerItem()
+									{
+										Name = "Flooring Woodgrain type",
+										Type = ExplorerItem.ExplorerItemType.File,
+									},
+									new ExplorerItem()
+									{
+										Name = "Kitchen Cabinet Style",
+										Type = ExplorerItem.ExplorerItemType.File,
+									}
+								}
+							}
+						}
+			};
 
-            list.Add(folder1);
-            list.Add(folder2);
-            return list;
-        }
-    }
+			list.Add(folder1);
+			list.Add(folder2);
+			return list;
+		}
+	}
 
-    public class ExplorerItem : INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged;
-        public enum ExplorerItemType { Folder, File };
-        public string Name { get; set; }
-        public ExplorerItemType Type { get; set; }
-        ObservableCollection<ExplorerItem> m_children;
-        public ObservableCollection<ExplorerItem> Children
-        {
-            get
-            {
-                if (m_children == null)
-                {
-                    m_children = new ObservableCollection<ExplorerItem>();
-                }
+	public class ExplorerItem : INotifyPropertyChanged
+	{
+		public event PropertyChangedEventHandler PropertyChanged;
+		public enum ExplorerItemType { Folder, File };
+		public string Name { get; set; }
+		public ExplorerItemType Type { get; set; }
+		ObservableCollection<ExplorerItem> m_children;
+		public ObservableCollection<ExplorerItem> Children
+		{
+			get
+			{
+				if (m_children == null)
+				{
+					m_children = new ObservableCollection<ExplorerItem>();
+				}
 
-                return m_children;
-            }
-            set
-            {
-                m_children = value;
-            }
-        }
+				return m_children;
+			}
+			set
+			{
+				m_children = value;
+			}
+		}
 
-        bool m_isExpanded;
-        public bool IsExpanded
-        {
-            get { return m_isExpanded; }
-            set
-            {
-                if (m_isExpanded != value)
-                {
-                    m_isExpanded = value;
-                    NotifyPropertyChanged("IsExpanded");
-                }
-            }
-        }
+		bool m_isExpanded;
+		public bool IsExpanded
+		{
+			get { return m_isExpanded; }
+			set
+			{
+				if (m_isExpanded != value)
+				{
+					m_isExpanded = value;
+					NotifyPropertyChanged("IsExpanded");
+				}
+			}
+		}
 
-        void NotifyPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
+		void NotifyPropertyChanged(string propertyName)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
 
-    class ExplorerItemTemplateSelector : DataTemplateSelector
-    {
-        public DataTemplate FolderTemplate { get; set; }
-        public DataTemplate FileTemplate { get; set; }
+	class ExplorerItemTemplateSelector : DataTemplateSelector
+	{
+		public DataTemplate FolderTemplate { get; set; }
+		public DataTemplate FileTemplate { get; set; }
 
-        protected override DataTemplate SelectTemplateCore(object item)
-        {
-            var explorerItem = (ExplorerItem)item;
-            return explorerItem.Type == ExplorerItem.ExplorerItemType.Folder ? FolderTemplate : FileTemplate;
-        }
-    }
+		protected override DataTemplate SelectTemplateCore(object item)
+		{
+			var explorerItem = (ExplorerItem)item;
+			return explorerItem.Type == ExplorerItem.ExplorerItemType.Folder ? FolderTemplate : FileTemplate;
+		}
+	}
 }

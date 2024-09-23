@@ -5,8 +5,8 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace WinUIGallery.TabViewPages
 {
-    public sealed partial class MyTabContentControl : UserControl
-    {
-        public MyTabContentControl() => InitializeComponent();
-    }
+	public sealed partial class MyTabContentControl : UserControl
+	{
+		public MyTabContentControl() => InitializeComponent();
+	}
 }

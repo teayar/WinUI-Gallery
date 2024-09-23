@@ -13,32 +13,32 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class TypographyPage : Page
-    {
-        public TypographyPage() => InitializeComponent();
+	public sealed partial class TypographyPage : Page
+	{
+		public TypographyPage() => InitializeComponent();
 
-        void ShowTypographyButtonClick1(object sender, RoutedEventArgs e)
-        {
-            ShowTypographyInfoTooltip1.IsOpen = !ShowTypographyInfoTooltip1.IsOpen;
-        }
+		void ShowTypographyButtonClick1(object sender, RoutedEventArgs e)
+		{
+			ShowTypographyInfoTooltip1.IsOpen = !ShowTypographyInfoTooltip1.IsOpen;
+		}
 
-        void ShowTypographyButtonClick2(object sender, RoutedEventArgs e)
-        {
-            ShowTypographyInfoTooltip2.IsOpen = !ShowTypographyInfoTooltip2.IsOpen;
-        }
+		void ShowTypographyButtonClick2(object sender, RoutedEventArgs e)
+		{
+			ShowTypographyInfoTooltip2.IsOpen = !ShowTypographyInfoTooltip2.IsOpen;
+		}
 
-        void ShowTypographyButtonClick3(object sender, RoutedEventArgs e)
-        {
-            ShowTypographyInfoTooltip3.IsOpen = !ShowTypographyInfoTooltip3.IsOpen;
-        }
+		void ShowTypographyButtonClick3(object sender, RoutedEventArgs e)
+		{
+			ShowTypographyInfoTooltip3.IsOpen = !ShowTypographyInfoTooltip3.IsOpen;
+		}
 
-        void ShowTypographyButtonClick4(object sender, RoutedEventArgs e)
-        {
-            ShowTypographyInfoTooltip4.IsOpen = !ShowTypographyInfoTooltip4.IsOpen;
-        }
-        void ShowTypographyButtonClick5(object sender, RoutedEventArgs e)
-        {
-            ShowTypographyInfoTooltip5.IsOpen = !ShowTypographyInfoTooltip5.IsOpen;
-        }
-    }
+		void ShowTypographyButtonClick4(object sender, RoutedEventArgs e)
+		{
+			ShowTypographyInfoTooltip4.IsOpen = !ShowTypographyInfoTooltip4.IsOpen;
+		}
+		void ShowTypographyButtonClick5(object sender, RoutedEventArgs e)
+		{
+			ShowTypographyInfoTooltip5.IsOpen = !ShowTypographyInfoTooltip5.IsOpen;
+		}
+	}
 }

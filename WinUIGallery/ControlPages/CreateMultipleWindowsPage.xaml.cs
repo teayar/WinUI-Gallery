@@ -16,21 +16,21 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class CreateMultipleWindowsPage : Page
-    {
-        public CreateMultipleWindowsPage() => InitializeComponent();
+	public sealed partial class CreateMultipleWindowsPage : Page
+	{
+		public CreateMultipleWindowsPage() => InitializeComponent();
 
-        void createNewWindow_Click(object sender, RoutedEventArgs e)
-        {
-            var newWindow = WindowHelper.CreateWindow();
-            var rootPage = new NavigationRootPage();
-            rootPage.RequestedTheme = ThemeHelper.RootTheme;
-            newWindow.Content = rootPage;
-            newWindow.Activate();
+		void createNewWindow_Click(object sender, RoutedEventArgs e)
+		{
+			var newWindow = WindowHelper.CreateWindow();
+			var rootPage = new NavigationRootPage();
+			rootPage.RequestedTheme = ThemeHelper.RootTheme;
+			newWindow.Content = rootPage;
+			newWindow.Activate();
 
-            var targetPageType = typeof(HomePage);
-            string targetPageArguments = string.Empty;
-            rootPage.Navigate(targetPageType, targetPageArguments);
-        }
-    }
+			var targetPageType = typeof(HomePage);
+			string targetPageArguments = string.Empty;
+			rootPage.Navigate(targetPageType, targetPageArguments);
+		}
+	}
 }

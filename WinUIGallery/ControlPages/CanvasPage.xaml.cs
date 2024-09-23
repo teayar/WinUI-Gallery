@@ -24,8 +24,8 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class CanvasPage : Page
-    {
-        public CanvasPage() => InitializeComponent();
-    }
+	public sealed partial class CanvasPage : Page
+	{
+		public CanvasPage() => InitializeComponent();
+	}
 }

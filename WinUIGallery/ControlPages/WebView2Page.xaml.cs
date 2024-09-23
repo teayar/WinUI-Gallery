@@ -13,8 +13,8 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class WebView2Page : Page
-    {
-        public WebView2Page() => InitializeComponent();
-    }
+	public sealed partial class WebView2Page : Page
+	{
+		public WebView2Page() => InitializeComponent();
+	}
 }

@@ -14,8 +14,8 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class AppBarSeparatorPage : Page
-    {
-        public AppBarSeparatorPage() => InitializeComponent();
-    }
+	public sealed partial class AppBarSeparatorPage : Page
+	{
+		public AppBarSeparatorPage() => InitializeComponent();
+	}
 }

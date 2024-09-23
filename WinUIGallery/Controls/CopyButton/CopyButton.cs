@@ -8,24 +8,24 @@ using Microsoft.UI.Xaml.Media.Animation;
 
 namespace WinUIGallery.DesktopWap.Controls
 {
-    public sealed class CopyButton : Button
-    {
-        public CopyButton() => DefaultStyleKey = typeof(CopyButton);
+	public sealed class CopyButton : Button
+	{
+		public CopyButton() => DefaultStyleKey = typeof(CopyButton);
 
-        void CopyButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (GetTemplateChild("CopyToClipboardSuccessAnimation") is Storyboard _storyBoard)
-            {
-                _storyBoard.Begin();
-                UIHelper.AnnounceActionForAccessibility(this, "Copied to clipboard", "CopiedToClipboardActivityId");
-            }
-        }
+		void CopyButton_Click(object sender, RoutedEventArgs e)
+		{
+			if (GetTemplateChild("CopyToClipboardSuccessAnimation") is Storyboard _storyBoard)
+			{
+				_storyBoard.Begin();
+				UIHelper.AnnounceActionForAccessibility(this, "Copied to clipboard", "CopiedToClipboardActivityId");
+			}
+		}
 
-        protected override void OnApplyTemplate()
-        {
-            Click -= CopyButton_Click;
-            base.OnApplyTemplate();
-            Click += CopyButton_Click;
-        }
-    }
+		protected override void OnApplyTemplate()
+		{
+			Click -= CopyButton_Click;
+			base.OnApplyTemplate();
+			Click += CopyButton_Click;
+		}
+	}
 }

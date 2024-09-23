@@ -17,198 +17,198 @@ using DispatcherQueueHandler = Microsoft.UI.Dispatching.DispatcherQueueHandler;
 
 namespace WinUIGallery.TabViewPages
 {
-    public sealed partial class TabViewWindowingSamplePage : Page
-    {
-        const string DataIdentifier = "MyTabItem";
-        Win32WindowHelper win32WindowHelper;
-        public TabViewWindowingSamplePage()
-        {
-            InitializeComponent();
+	public sealed partial class TabViewWindowingSamplePage : Page
+	{
+		const string DataIdentifier = "MyTabItem";
+		Win32WindowHelper win32WindowHelper;
+		public TabViewWindowingSamplePage()
+		{
+			InitializeComponent();
 
-            Tabs.TabItemsChanged += Tabs_TabItemsChanged;
+			Tabs.TabItemsChanged += Tabs_TabItemsChanged;
 
-            Loaded += TabViewWindowingSamplePage_Loaded;
-        }
+			Loaded += TabViewWindowingSamplePage_Loaded;
+		}
 
-        public void SetupWindowMinSize(Window window)
-        {
-            win32WindowHelper = new Win32WindowHelper(window);
-            win32WindowHelper.SetWindowMinMaxSize(new Win32WindowHelper.POINT() { x = 500, y = 300 });
-        }
+		public void SetupWindowMinSize(Window window)
+		{
+			win32WindowHelper = new Win32WindowHelper(window);
+			win32WindowHelper.SetWindowMinMaxSize(new Win32WindowHelper.POINT() { x = 500, y = 300 });
+		}
 
-        void TabViewWindowingSamplePage_Loaded(object sender, RoutedEventArgs e)
-        {
-            var currentWindow = WindowHelper.GetWindowForElement(this);
-            currentWindow.ExtendsContentIntoTitleBar = true;
-            currentWindow.SetTitleBar(CustomDragRegion);
-            CustomDragRegion.MinWidth = 188;
-        }
+		void TabViewWindowingSamplePage_Loaded(object sender, RoutedEventArgs e)
+		{
+			var currentWindow = WindowHelper.GetWindowForElement(this);
+			currentWindow.ExtendsContentIntoTitleBar = true;
+			currentWindow.SetTitleBar(CustomDragRegion);
+			CustomDragRegion.MinWidth = 188;
+		}
 
-        void Tabs_TabItemsChanged(TabView sender, Windows.Foundation.Collections.IVectorChangedEventArgs args)
-        {
-            // If there are no more tabs, close the window.
-            if (sender.TabItems.Count == 0)
-            {
-                WindowHelper.GetWindowForElement(this).Close();
-            }
-        }
+		void Tabs_TabItemsChanged(TabView sender, Windows.Foundation.Collections.IVectorChangedEventArgs args)
+		{
+			// If there are no more tabs, close the window.
+			if (sender.TabItems.Count == 0)
+			{
+				WindowHelper.GetWindowForElement(this).Close();
+			}
+		}
 
-        public void LoadDemoData()
-        {
-            // Main Window -- add some default items
-            for (int i = 0; i < 3; i++)
-            {
-                Tabs.TabItems
-                    .Add(new TabViewItem() { IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = Symbol.Placeholder }, Header = $"Item {i}", Content = new MyTabContentControl() { DataContext = $"Page {i}" } });
-            }
+		public void LoadDemoData()
+		{
+			// Main Window -- add some default items
+			for (int i = 0; i < 3; i++)
+			{
+				Tabs.TabItems
+				    .Add(new TabViewItem() { IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = Symbol.Placeholder }, Header = $"Item {i}", Content = new MyTabContentControl() { DataContext = $"Page {i}" } });
+			}
 
-            Tabs.SelectedIndex = 0;
-        }
+			Tabs.SelectedIndex = 0;
+		}
 
-        public void AddTabToTabs(TabViewItem tab) => Tabs.TabItems.Add(tab);
+		public void AddTabToTabs(TabViewItem tab) => Tabs.TabItems.Add(tab);
 
-        // Create a new Window once the Tab is dragged outside.
-        void Tabs_TabDroppedOutside(TabView sender, TabViewTabDroppedOutsideEventArgs args)
-        {
-            var newPage = new TabViewWindowingSamplePage();
+		// Create a new Window once the Tab is dragged outside.
+		void Tabs_TabDroppedOutside(TabView sender, TabViewTabDroppedOutsideEventArgs args)
+		{
+			var newPage = new TabViewWindowingSamplePage();
 
-            Tabs.TabItems.Remove(args.Tab);
-            newPage.AddTabToTabs(args.Tab);
+			Tabs.TabItems.Remove(args.Tab);
+			newPage.AddTabToTabs(args.Tab);
 
-            var newWindow = WindowHelper.CreateWindow();
-            newWindow.ExtendsContentIntoTitleBar = true;
-            newWindow.Content = newPage;
-            newPage.SetupWindowMinSize(newWindow);
+			var newWindow = WindowHelper.CreateWindow();
+			newWindow.ExtendsContentIntoTitleBar = true;
+			newWindow.Content = newPage;
+			newPage.SetupWindowMinSize(newWindow);
 
-            newWindow.Activate();
-        }
+			newWindow.Activate();
+		}
 
-        void Tabs_TabDragStarting(TabView sender, TabViewTabDragStartingEventArgs args)
-        {
-            // We can only drag one tab at a time, so grab the first one...
-            var firstItem = args.Tab;
+		void Tabs_TabDragStarting(TabView sender, TabViewTabDragStartingEventArgs args)
+		{
+			// We can only drag one tab at a time, so grab the first one...
+			var firstItem = args.Tab;
 
-            // ... set the drag data to the tab...
-            args.Data.Properties.Add(DataIdentifier, firstItem);
+			// ... set the drag data to the tab...
+			args.Data.Properties.Add(DataIdentifier, firstItem);
 
-            // ... and indicate that we can move it
-            args.Data.RequestedOperation = DataPackageOperation.Move;
-        }
+			// ... and indicate that we can move it
+			args.Data.RequestedOperation = DataPackageOperation.Move;
+		}
 
-        async void Tabs_TabStripDrop(object sender, DragEventArgs e)
-        {
-            // This event is called when we're dragging between different TabViews
-            // It is responsible for handling the drop of the item into the second TabView
+		async void Tabs_TabStripDrop(object sender, DragEventArgs e)
+		{
+			// This event is called when we're dragging between different TabViews
+			// It is responsible for handling the drop of the item into the second TabView
 
-            if (e.DataView.Properties.TryGetValue(DataIdentifier, out object obj))
-            {
-                // Ensure that the obj property is set before continuing.
-                if (obj == null)
-                {
-                    return;
-                }
+			if (e.DataView.Properties.TryGetValue(DataIdentifier, out object obj))
+			{
+				// Ensure that the obj property is set before continuing.
+				if (obj == null)
+				{
+					return;
+				}
 
-                var destinationTabView = sender as TabView;
-                var destinationItems = destinationTabView.TabItems;
+				var destinationTabView = sender as TabView;
+				var destinationItems = destinationTabView.TabItems;
 
-                if (destinationItems != null)
-                {
-                    // First we need to get the position in the List to drop to
-                    var index = -1;
+				if (destinationItems != null)
+				{
+					// First we need to get the position in the List to drop to
+					var index = -1;
 
-                    // Determine which items in the list our pointer is between.
-                    for (int i = 0; i < destinationTabView.TabItems.Count; i++)
-                    {
-                        var item = destinationTabView.ContainerFromIndex(i) as TabViewItem;
+					// Determine which items in the list our pointer is between.
+					for (int i = 0; i < destinationTabView.TabItems.Count; i++)
+					{
+						var item = destinationTabView.ContainerFromIndex(i) as TabViewItem;
 
-                        if (e.GetPosition(item).X - item.ActualWidth < 0)
-                        {
-                            index = i;
-                            break;
-                        }
-                    }
+						if (e.GetPosition(item).X - item.ActualWidth < 0)
+						{
+							index = i;
+							break;
+						}
+					}
 
-                    // The TabViewItem can only be in one tree at a time. Before moving it to the new TabView, remove it from the old.
-                    // Note that this call can happen on a different thread if moving across windows. So make sure you call methods on
-                    // the same thread as where the UI Elements were created.
+					// The TabViewItem can only be in one tree at a time. Before moving it to the new TabView, remove it from the old.
+					// Note that this call can happen on a different thread if moving across windows. So make sure you call methods on
+					// the same thread as where the UI Elements were created.
 
-                    object header = null;
-                    object dataContext = null;
-                    var element = (obj as UIElement);
+					object header = null;
+					object dataContext = null;
+					var element = (obj as UIElement);
 
-                    var taskCompletionSource = new TaskCompletionSource();
+					var taskCompletionSource = new TaskCompletionSource();
 
-                    element.DispatcherQueue
-                        .TryEnqueue(
-                        Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal,
-                        new DispatcherQueueHandler(() =>
-                        {
-                            var tabItem = obj as TabViewItem;
-                            var destinationTabViewListView = (tabItem.Parent as TabViewListView);
-                            destinationTabViewListView.Items.Remove(obj);
-                            header = tabItem.Header;
-                            dataContext = (tabItem.Content as MyTabContentControl).DataContext;
+					element.DispatcherQueue
+					    .TryEnqueue(
+						Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal,
+						new DispatcherQueueHandler(() =>
+						{
+							var tabItem = obj as TabViewItem;
+							var destinationTabViewListView = (tabItem.Parent as TabViewListView);
+							destinationTabViewListView.Items.Remove(obj);
+							header = tabItem.Header;
+							dataContext = (tabItem.Content as MyTabContentControl).DataContext;
 
-                            taskCompletionSource.SetResult();
-                        }));
+							taskCompletionSource.SetResult();
+						}));
 
-                    await taskCompletionSource.Task;
+					await taskCompletionSource.Task;
 
-                    var insertedItem = CreateNewTVI(header.ToString(), dataContext.ToString());
+					var insertedItem = CreateNewTVI(header.ToString(), dataContext.ToString());
 
-                    if (index < 0)
-                    {
-                        // We didn't find a transition point, so we're at the end of the list
-                        destinationItems.Add(insertedItem);
-                    }
-                    else if (index < destinationTabView.TabItems.Count)
-                    {
-                        // Otherwise, insert at the provided index.
-                        destinationItems.Insert(index, insertedItem);
-                    }
+					if (index < 0)
+					{
+						// We didn't find a transition point, so we're at the end of the list
+						destinationItems.Add(insertedItem);
+					}
+					else if (index < destinationTabView.TabItems.Count)
+					{
+						// Otherwise, insert at the provided index.
+						destinationItems.Insert(index, insertedItem);
+					}
 
-                    // Select the newly dragged tab
-                    destinationTabView.SelectedItem = insertedItem;
-                }
-            }
-        }
+					// Select the newly dragged tab
+					destinationTabView.SelectedItem = insertedItem;
+				}
+			}
+		}
 
-        TabViewItem CreateNewTVI(string header, string dataContext)
-        {
-            var newTab = new TabViewItem()
-            {
-                IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource()
-                {
-                    Symbol = Symbol.Placeholder
-                },
-                Header = header,
-                Content = new MyTabContentControl()
-                {
-                    DataContext = dataContext
-                }
-            };
+		TabViewItem CreateNewTVI(string header, string dataContext)
+		{
+			var newTab = new TabViewItem()
+			{
+				IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource()
+				{
+					Symbol = Symbol.Placeholder
+				},
+				Header = header,
+				Content = new MyTabContentControl()
+				{
+					DataContext = dataContext
+				}
+			};
 
-            return newTab;
-        }
+			return newTab;
+		}
 
-        // This method prevents the TabView from handling things that aren't text (ie. files, images, etc.)
-        void Tabs_TabStripDragOver(object sender, DragEventArgs e)
-        {
-            if (e.DataView.Properties.ContainsKey(DataIdentifier))
-            {
-                e.AcceptedOperation = DataPackageOperation.Move;
-            }
-        }
+		// This method prevents the TabView from handling things that aren't text (ie. files, images, etc.)
+		void Tabs_TabStripDragOver(object sender, DragEventArgs e)
+		{
+			if (e.DataView.Properties.ContainsKey(DataIdentifier))
+			{
+				e.AcceptedOperation = DataPackageOperation.Move;
+			}
+		}
 
-        void Tabs_AddTabButtonClick(TabView sender, object args)
-        {
-            var tab = CreateNewTVI("New Item", "New Item");
-            sender.TabItems.Add(tab);
-        }
+		void Tabs_AddTabButtonClick(TabView sender, object args)
+		{
+			var tab = CreateNewTVI("New Item", "New Item");
+			sender.TabItems.Add(tab);
+		}
 
-        void Tabs_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
-        {
-            sender.TabItems.Remove(args.Tab);
-        }
-    }
+		void Tabs_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+		{
+			sender.TabItems.Remove(args.Tab);
+		}
+	}
 }

@@ -29,138 +29,138 @@ using WASDK = Microsoft.WindowsAppSDK;
 
 namespace WinUIGallery
 {
-    /// <summary>
-    /// A page that displays details for a single item within a group.
-    /// </summary>
-    public sealed partial class ItemPage : Page
-    {
-        static string WinUIBaseUrl = string.Format("https://github.com/microsoft/microsoft-ui-xaml/tree/winui3/release/{0}.{1}-stable/controls/dev", WASDK.Release.Major, WASDK.Release.Minor);
-        static string GalleryBaseUrl = "https://github.com/microsoft/WinUI-Gallery/tree/main/WinUIGallery/ControlPages/";
+	/// <summary>
+	/// A page that displays details for a single item within a group.
+	/// </summary>
+	public sealed partial class ItemPage : Page
+	{
+		static string WinUIBaseUrl = string.Format("https://github.com/microsoft/microsoft-ui-xaml/tree/winui3/release/{0}.{1}-stable/controls/dev", WASDK.Release.Major, WASDK.Release.Minor);
+		static string GalleryBaseUrl = "https://github.com/microsoft/WinUI-Gallery/tree/main/WinUIGallery/ControlPages/";
 
-        public ControlInfoDataItem Item { get; set; }
-        ElementTheme? _currentElementTheme;
+		public ControlInfoDataItem Item { get; set; }
+		ElementTheme? _currentElementTheme;
 
-        public ItemPage()
-        {
-            InitializeComponent();
-            Loaded += (s, e) => SetInitialVisuals();
-        }
+		public ItemPage()
+		{
+			InitializeComponent();
+			Loaded += (s, e) => SetInitialVisuals();
+		}
 
-        public void SetInitialVisuals()
-        {
-            var navigationRootPage = NavigationRootPage.GetForElement(this);
+		public void SetInitialVisuals()
+		{
+			var navigationRootPage = NavigationRootPage.GetForElement(this);
 
-            if (navigationRootPage != null)
-            {
-                pageHeader.ToggleThemeAction = OnToggleTheme;
-                navigationRootPage.NavigationViewLoaded = OnNavigationViewLoaded;
+			if (navigationRootPage != null)
+			{
+				pageHeader.ToggleThemeAction = OnToggleTheme;
+				navigationRootPage.NavigationViewLoaded = OnNavigationViewLoaded;
 
-                Focus(FocusState.Programmatic);
-            }
-        }
-        void OnNavigationViewLoaded()
-        {
-            NavigationRootPage.GetForElement(this).EnsureNavigationSelection(Item.UniqueId);
-        }
+				Focus(FocusState.Programmatic);
+			}
+		}
+		void OnNavigationViewLoaded()
+		{
+			NavigationRootPage.GetForElement(this).EnsureNavigationSelection(Item.UniqueId);
+		}
 
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
-        {
-            NavigationRootPageArgs args = (NavigationRootPageArgs)e.Parameter;
-            var uniqueId = (string)args.Parameter;
-            var group = await ControlInfoDataSource.GetGroupFromItemAsync(uniqueId);
-            var item = group?.Items.FirstOrDefault(x => x.UniqueId.Equals(uniqueId));
+		protected override async void OnNavigatedTo(NavigationEventArgs e)
+		{
+			NavigationRootPageArgs args = (NavigationRootPageArgs)e.Parameter;
+			var uniqueId = (string)args.Parameter;
+			var group = await ControlInfoDataSource.GetGroupFromItemAsync(uniqueId);
+			var item = group?.Items.FirstOrDefault(x => x.UniqueId.Equals(uniqueId));
 
-            if (item != null)
-            {
-                Item = item;
+			if (item != null)
+			{
+				Item = item;
 
-                // Load control page into frame.
-                Type pageType = Type.GetType("WinUIGallery.ControlPages." + item.UniqueId + "Page");
+				// Load control page into frame.
+				Type pageType = Type.GetType("WinUIGallery.ControlPages." + item.UniqueId + "Page");
 
-                if (pageType != null)
-                {
-                    var pageName = string.IsNullOrEmpty(group.Folder) ? pageType.Name : $"{group.Folder}/{pageType.Name}";
-                    pageHeader.SetControlSourceLink(WinUIBaseUrl, item.SourcePath);
-                    pageHeader.SetSamplePageSourceLinks(GalleryBaseUrl, pageName);
-                    System.Diagnostics.Debug.WriteLine(string.Format("[ItemPage] Navigate to {0}", pageType.ToString()));
-                    contentFrame.Navigate(pageType);
-                }
+				if (pageType != null)
+				{
+					var pageName = string.IsNullOrEmpty(group.Folder) ? pageType.Name : $"{group.Folder}/{pageType.Name}";
+					pageHeader.SetControlSourceLink(WinUIBaseUrl, item.SourcePath);
+					pageHeader.SetSamplePageSourceLinks(GalleryBaseUrl, pageName);
+					System.Diagnostics.Debug.WriteLine(string.Format("[ItemPage] Navigate to {0}", pageType.ToString()));
+					contentFrame.Navigate(pageType);
+				}
 
-                args.NavigationRootPage.EnsureNavigationSelection(item?.UniqueId);
-            }
+				args.NavigationRootPage.EnsureNavigationSelection(item?.UniqueId);
+			}
 
-            base.OnNavigatedTo(e);
-        }
+			base.OnNavigatedTo(e);
+		}
 
-        protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
-        {
-            SetControlExamplesTheme(ThemeHelper.ActualTheme);
-            base.OnNavigatingFrom(e);
-        }
+		protected override void OnNavigatingFrom(NavigatingCancelEventArgs e)
+		{
+			SetControlExamplesTheme(ThemeHelper.ActualTheme);
+			base.OnNavigatingFrom(e);
+		}
 
-        protected override void OnNavigatedFrom(NavigationEventArgs e)
-        {
-            var navigationRootPage = NavigationRootPage.GetForElement(this);
+		protected override void OnNavigatedFrom(NavigationEventArgs e)
+		{
+			var navigationRootPage = NavigationRootPage.GetForElement(this);
 
-            if (navigationRootPage != null)
-            {
-                navigationRootPage.NavigationViewLoaded = null;
-                pageHeader.ToggleThemeAction = null;
-                pageHeader.CopyLinkAction = null;
-            }
+			if (navigationRootPage != null)
+			{
+				navigationRootPage.NavigationViewLoaded = null;
+				pageHeader.ToggleThemeAction = null;
+				pageHeader.CopyLinkAction = null;
+			}
 
-            // We use reflection to call the OnNavigatedFrom function the user leaves this page
-            // See this PR for more information: https://github.com/microsoft/WinUI-Gallery/pull/145
-            Frame contentFrameAsFrame = contentFrame as Frame;
-            Page innerPage = contentFrameAsFrame.Content as Page;
+			// We use reflection to call the OnNavigatedFrom function the user leaves this page
+			// See this PR for more information: https://github.com/microsoft/WinUI-Gallery/pull/145
+			Frame contentFrameAsFrame = contentFrame as Frame;
+			Page innerPage = contentFrameAsFrame.Content as Page;
 
-            if (innerPage != null)
-            {
-                MethodInfo dynMethod = innerPage.GetType().GetMethod("OnNavigatedFrom",
-                    BindingFlags.NonPublic | BindingFlags.Instance);
+			if (innerPage != null)
+			{
+				MethodInfo dynMethod = innerPage.GetType().GetMethod("OnNavigatedFrom",
+					BindingFlags.NonPublic | BindingFlags.Instance);
 
-                dynMethod.Invoke(innerPage, new object[] { e });
-            }
+				dynMethod.Invoke(innerPage, new object[] { e });
+			}
 
-            base.OnNavigatedFrom(e);
-        }
+			base.OnNavigatedFrom(e);
+		}
 
-        public static ItemPage GetForElement(object obj)
-        {
-            UIElement element = (UIElement)obj;
-            Window window = WindowHelper.GetWindowForElement(element);
+		public static ItemPage GetForElement(object obj)
+		{
+			UIElement element = (UIElement)obj;
+			Window window = WindowHelper.GetWindowForElement(element);
 
-            if (window != null)
-            {
-                return (ItemPage)window.Content;
-            }
+			if (window != null)
+			{
+				return (ItemPage)window.Content;
+			}
 
-            return null;
-        }
+			return null;
+		}
 
-        void OnToggleTheme()
-        {
-            var currentElementTheme = ((_currentElementTheme ?? ElementTheme.Default) == ElementTheme.Default) ? ThemeHelper.ActualTheme : _currentElementTheme.Value;
-            var newTheme = currentElementTheme == ElementTheme.Dark ? ElementTheme.Light : ElementTheme.Dark;
-            SetControlExamplesTheme(newTheme);
-        }
+		void OnToggleTheme()
+		{
+			var currentElementTheme = ((_currentElementTheme ?? ElementTheme.Default) == ElementTheme.Default) ? ThemeHelper.ActualTheme : _currentElementTheme.Value;
+			var newTheme = currentElementTheme == ElementTheme.Dark ? ElementTheme.Light : ElementTheme.Dark;
+			SetControlExamplesTheme(newTheme);
+		}
 
-        void SetControlExamplesTheme(ElementTheme theme)
-        {
-            var controlExamples = (contentFrame.Content as UIElement)?.GetDescendantsOfType<SampleThemeListener>();
+		void SetControlExamplesTheme(ElementTheme theme)
+		{
+			var controlExamples = (contentFrame.Content as UIElement)?.GetDescendantsOfType<SampleThemeListener>();
 
-            if (controlExamples != null)
-            {
-                _currentElementTheme = theme;
+			if (controlExamples != null)
+			{
+				_currentElementTheme = theme;
 
-                foreach (var controlExample in controlExamples)
-                    controlExample.RequestedTheme = theme;
+				foreach (var controlExample in controlExamples)
+					controlExample.RequestedTheme = theme;
 
-                if (controlExamples.Count() == 0)
-                {
-                    RequestedTheme = theme;
-                }
-            }
-        }
-    }
+				if (controlExamples.Count() == 0)
+				{
+					RequestedTheme = theme;
+				}
+			}
+		}
+	}
 }

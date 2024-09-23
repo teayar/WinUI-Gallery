@@ -8,52 +8,52 @@ using Windows.ApplicationModel.DataTransfer;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class ClipboardPage : Page
-    {
-        string textToCopy = "";
+	public sealed partial class ClipboardPage : Page
+	{
+		string textToCopy = "";
 
-        public ClipboardPage()
-        {
-            InitializeComponent();
+		public ClipboardPage()
+		{
+			InitializeComponent();
 
-            richEditBox.Document
-                .SetText(Microsoft.UI.Text.TextSetOptions.None, "This text will be copied to the clipboard.");
-        }
+			richEditBox.Document
+			    .SetText(Microsoft.UI.Text.TextSetOptions.None, "This text will be copied to the clipboard.");
+		}
 
-        void CopyText_Click(object sender, RoutedEventArgs args)
-        {
-            richEditBox.Document.GetText(Microsoft.UI.Text.TextGetOptions.None, out textToCopy);
-            var package = new DataPackage();
-            package.SetText(textToCopy);
-            Clipboard.SetContent(package);
+		void CopyText_Click(object sender, RoutedEventArgs args)
+		{
+			richEditBox.Document.GetText(Microsoft.UI.Text.TextGetOptions.None, out textToCopy);
+			var package = new DataPackage();
+			package.SetText(textToCopy);
+			Clipboard.SetContent(package);
 
-            UIHelper.AnnounceActionForAccessibility(sender as Button, "Text copied to clipboard", "TextCopiedSuccessNotificationId");
+			UIHelper.AnnounceActionForAccessibility(sender as Button, "Text copied to clipboard", "TextCopiedSuccessNotificationId");
 
-            VisualStateManager.GoToState(this, "ConfirmationClipboardVisible", false);
-            Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
+			VisualStateManager.GoToState(this, "ConfirmationClipboardVisible", false);
+			Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue = Microsoft.UI.Dispatching.DispatcherQueue.GetForCurrentThread();
 
-            // Automatically hide the confirmation text after 2 seconds
-            if (dispatcherQueue != null)
-            {
-                dispatcherQueue.TryEnqueue(async () =>
-                {
-                    await Task.Delay(2000);
-                    VisualStateManager.GoToState(this, "ConfirmationClipboardCollapsed", false);
-                });
-            }
-        }
+			// Automatically hide the confirmation text after 2 seconds
+			if (dispatcherQueue != null)
+			{
+				dispatcherQueue.TryEnqueue(async () =>
+				{
+					await Task.Delay(2000);
+					VisualStateManager.GoToState(this, "ConfirmationClipboardCollapsed", false);
+				});
+			}
+		}
 
-        async void PasteText_Click(object sender, RoutedEventArgs args)
-        {
-            var package = Clipboard.GetContent();
+		async void PasteText_Click(object sender, RoutedEventArgs args)
+		{
+			var package = Clipboard.GetContent();
 
-            if (package.Contains(StandardDataFormats.Text))
-            {
-                var text = await package.GetTextAsync();
-                PasteClipboard2.Text = text;
+			if (package.Contains(StandardDataFormats.Text))
+			{
+				var text = await package.GetTextAsync();
+				PasteClipboard2.Text = text;
 
-                UIHelper.AnnounceActionForAccessibility(sender as Button, "Text pasted from clipboard", "TextPastedSuccessNotificationId");
-            }
-        }
-    }
+				UIHelper.AnnounceActionForAccessibility(sender as Button, "Text pasted from clipboard", "TextPastedSuccessNotificationId");
+			}
+		}
+	}
 }

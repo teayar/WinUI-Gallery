@@ -13,48 +13,48 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class NumberBoxPage : Page
-    {
-        public NumberBoxPage()
-        {
-            InitializeComponent();
-            SetNumberBoxNumberFormatter();
-        }
+	public sealed partial class NumberBoxPage : Page
+	{
+		public NumberBoxPage()
+		{
+			InitializeComponent();
+			SetNumberBoxNumberFormatter();
+		}
 
-        void SetNumberBoxNumberFormatter()
-        {
-            IncrementNumberRounder rounder = new IncrementNumberRounder
-            {
-                Increment = 0.25,
-                RoundingAlgorithm = RoundingAlgorithm.RoundHalfUp
-            };
+		void SetNumberBoxNumberFormatter()
+		{
+			IncrementNumberRounder rounder = new IncrementNumberRounder
+			{
+				Increment = 0.25,
+				RoundingAlgorithm = RoundingAlgorithm.RoundHalfUp
+			};
 
-            DecimalFormatter formatter = new DecimalFormatter
-            {
-                IntegerDigits = 1,
-                FractionDigits = 2,
-                NumberRounder = rounder
-            };
+			DecimalFormatter formatter = new DecimalFormatter
+			{
+				IntegerDigits = 1,
+				FractionDigits = 2,
+				NumberRounder = rounder
+			};
 
-            FormattedNumberBox.NumberFormatter = formatter;
-        }
+			FormattedNumberBox.NumberFormatter = formatter;
+		}
 
-        void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            if (sender is RadioButton rb && NumberBoxSpinButtonPlacementExample != null)
-            {
-                string spinButtonPlacementModeName = rb.Tag.ToString();
+		void RadioButton_Checked(object sender, RoutedEventArgs e)
+		{
+			if (sender is RadioButton rb && NumberBoxSpinButtonPlacementExample != null)
+			{
+				string spinButtonPlacementModeName = rb.Tag.ToString();
 
-                switch (spinButtonPlacementModeName)
-                {
-                    case "Inline":
-                        NumberBoxSpinButtonPlacementExample.SpinButtonPlacementMode = NumberBoxSpinButtonPlacementMode.Inline;
-                        break;
-                    case "Compact":
-                        NumberBoxSpinButtonPlacementExample.SpinButtonPlacementMode = NumberBoxSpinButtonPlacementMode.Compact;
-                        break;
-                }
-            }
-        }
-    }
+				switch (spinButtonPlacementModeName)
+				{
+					case "Inline":
+						NumberBoxSpinButtonPlacementExample.SpinButtonPlacementMode = NumberBoxSpinButtonPlacementMode.Inline;
+						break;
+					case "Compact":
+						NumberBoxSpinButtonPlacementExample.SpinButtonPlacementMode = NumberBoxSpinButtonPlacementMode.Compact;
+						break;
+				}
+			}
+		}
+	}
 }

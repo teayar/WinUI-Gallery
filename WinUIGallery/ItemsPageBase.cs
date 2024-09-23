@@ -22,80 +22,80 @@ using System.ComponentModel;
 
 namespace WinUIGallery
 {
-    public abstract class ItemsPageBase : Page, INotifyPropertyChanged
-    {
-        public event PropertyChangedEventHandler PropertyChanged;
+	public abstract class ItemsPageBase : Page, INotifyPropertyChanged
+	{
+		public event PropertyChangedEventHandler PropertyChanged;
 
-        string _itemId;
-        IEnumerable<ControlInfoDataItem> _items;
+		string _itemId;
+		IEnumerable<ControlInfoDataItem> _items;
 
-        public IEnumerable<ControlInfoDataItem> Items
-        {
-            get { return _items; }
-            set { SetProperty(ref _items, value); }
-        }
+		public IEnumerable<ControlInfoDataItem> Items
+		{
+			get { return _items; }
+			set { SetProperty(ref _items, value); }
+		}
 
-        /// <summary>
-        /// Gets a value indicating whether the application's view is currently in "narrow" mode - i.e. on a mobile-ish device.
-        /// </summary>
-        protected virtual bool GetIsNarrowLayoutState()
-        {
-            throw new NotImplementedException();
-        }
+		/// <summary>
+		/// Gets a value indicating whether the application's view is currently in "narrow" mode - i.e. on a mobile-ish device.
+		/// </summary>
+		protected virtual bool GetIsNarrowLayoutState()
+		{
+			throw new NotImplementedException();
+		}
 
-        protected void OnItemGridViewContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
-        {
-            if (sender.ContainerFromItem(sender.Items.LastOrDefault()) is GridViewItem container)
-            {
-                container.XYFocusDown = container;
-            }
+		protected void OnItemGridViewContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+		{
+			if (sender.ContainerFromItem(sender.Items.LastOrDefault()) is GridViewItem container)
+			{
+				container.XYFocusDown = container;
+			}
 
-            var item = args.Item as ControlInfoDataItem;
+			var item = args.Item as ControlInfoDataItem;
 
-            if (item != null)
-            {
-                args.ItemContainer.IsEnabled = item.IncludedInBuild;
-            }
-        }
+			if (item != null)
+			{
+				args.ItemContainer.IsEnabled = item.IncludedInBuild;
+			}
+		}
 
-        protected void OnItemGridViewItemClick(object sender, ItemClickEventArgs e)
-        {
-            var item = (ControlInfoDataItem)e.ClickedItem;
+		protected void OnItemGridViewItemClick(object sender, ItemClickEventArgs e)
+		{
+			var item = (ControlInfoDataItem)e.ClickedItem;
 
-            _itemId = item.UniqueId;
+			_itemId = item.UniqueId;
 
-            NavigationRootPage.GetForElement(this)
-                .Navigate(typeof(ItemPage), _itemId, new DrillInNavigationTransitionInfo());
-        }
+			NavigationRootPage.GetForElement(this)
+			    .Navigate(typeof(ItemPage), _itemId, new DrillInNavigationTransitionInfo());
+		}
 
-        protected void OnItemGridViewLoaded(object sender, RoutedEventArgs e)
-        {
-            if (_itemId != null)
-            {
-                var gridView = (GridView)sender;
-                var items = gridView.ItemsSource as IEnumerable<ControlInfoDataItem>;
-                var item = items?.FirstOrDefault(s => s.UniqueId == _itemId);
+		protected void OnItemGridViewLoaded(object sender, RoutedEventArgs e)
+		{
+			if (_itemId != null)
+			{
+				var gridView = (GridView)sender;
+				var items = gridView.ItemsSource as IEnumerable<ControlInfoDataItem>;
+				var item = items?.FirstOrDefault(s => s.UniqueId == _itemId);
 
-                if (item != null)
-                {
-                    gridView.ScrollIntoView(item);
-                    ((GridViewItem)gridView.ContainerFromItem(item))?.Focus(FocusState.Programmatic);
-                }
-            }
-        }
+				if (item != null)
+				{
+					gridView.ScrollIntoView(item);
+					((GridViewItem)gridView.ContainerFromItem(item))?.Focus(FocusState.Programmatic);
+				}
+			}
+		}
 
-        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
-        {
-            if (Equals(storage, value)) return false;
+		protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName] string propertyName = null)
+		{
+			if (Equals(storage, value)) return false;
 
-            storage = value;
-            NotifyPropertyChanged(propertyName);
-            return true;
-        }
+			storage = value;
+			NotifyPropertyChanged(propertyName);
+			return true;
+		}
 
-        protected void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
+		protected void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
 }

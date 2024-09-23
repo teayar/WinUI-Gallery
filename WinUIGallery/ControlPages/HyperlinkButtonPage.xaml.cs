@@ -12,13 +12,13 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class HyperlinkButtonPage : Page
-    {
-        public HyperlinkButtonPage() => InitializeComponent();
+	public sealed partial class HyperlinkButtonPage : Page
+	{
+		public HyperlinkButtonPage() => InitializeComponent();
 
-        void GoToHyperlinkButton_Click(object sender, RoutedEventArgs e)
-        {
-            NavigationRootPage.GetForElement(this).Navigate(typeof(ItemPage), "ToggleButton");
-        }
-    }
+		void GoToHyperlinkButton_Click(object sender, RoutedEventArgs e)
+		{
+			NavigationRootPage.GetForElement(this).Navigate(typeof(ItemPage), "ToggleButton");
+		}
+	}
 }

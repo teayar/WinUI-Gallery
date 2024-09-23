@@ -19,24 +19,24 @@ using Windows.Foundation.Collections;
 
 namespace WinUIGalleryUnitTests
 {
-    public partial class UnitTestApp : Application
-    {
-        public UnitTestApp() => InitializeComponent();
+	public partial class UnitTestApp : Application
+	{
+		public UnitTestApp() => InitializeComponent();
 
-        protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
-        {
-            Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.CreateDefaultUI();
+		protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+		{
+			Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.CreateDefaultUI();
 
-            s_window = new UnitTestAppWindow();
-            s_window.Activate();
+			s_window = new UnitTestAppWindow();
+			s_window.Activate();
 
-            UITestMethodAttribute.DispatcherQueue = s_window.DispatcherQueue;
+			UITestMethodAttribute.DispatcherQueue = s_window.DispatcherQueue;
 
-            Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.Run(Environment.CommandLine);
-        }
+			Microsoft.VisualStudio.TestPlatform.TestExecutor.UnitTestClient.Run(Environment.CommandLine);
+		}
 
-        static UnitTestAppWindow s_window;
+		static UnitTestAppWindow s_window;
 
-        public static UnitTestAppWindow UnitTestAppWindow => s_window;
-    }
+		public static UnitTestAppWindow UnitTestAppWindow => s_window;
+	}
 }

@@ -7,48 +7,48 @@ using Microsoft.UI.Xaml.Shapes;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class AcrylicPage : Page
-    {
-        public AcrylicPage()
-        {
-            InitializeComponent();
-            Loaded += AcrylicPage_Loaded;
-        }
+	public sealed partial class AcrylicPage : Page
+	{
+		public AcrylicPage()
+		{
+			InitializeComponent();
+			Loaded += AcrylicPage_Loaded;
+		}
 
-        void AcrylicPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            ColorSelectorInApp.SelectedIndex = 0;
-            FallbackColorSelectorInApp.SelectedIndex = 0;
-            OpacitySliderInApp.Value = OpacitySliderLumin.Value = 0.8;
-            LuminositySlider.Value = 0.8;
-        }
+		void AcrylicPage_Loaded(object sender, RoutedEventArgs e)
+		{
+			ColorSelectorInApp.SelectedIndex = 0;
+			FallbackColorSelectorInApp.SelectedIndex = 0;
+			OpacitySliderInApp.Value = OpacitySliderLumin.Value = 0.8;
+			LuminositySlider.Value = 0.8;
+		}
 
-        void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            Rectangle shape = CustomAcrylicShapeInApp;
+		void Slider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+		{
+			Rectangle shape = CustomAcrylicShapeInApp;
 
-            if ((Slider)sender == OpacitySliderLumin)
-                shape = CustomAcrylicShapeLumin;
+			if ((Slider)sender == OpacitySliderLumin)
+				shape = CustomAcrylicShapeLumin;
 
-            ((Microsoft.UI.Xaml.Media.AcrylicBrush)shape.Fill).TintOpacity = e.NewValue;
-        }
+			((Microsoft.UI.Xaml.Media.AcrylicBrush)shape.Fill).TintOpacity = e.NewValue;
+		}
 
-        void ColorSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Rectangle shape = CustomAcrylicShapeInApp;
-            ((Microsoft.UI.Xaml.Media.AcrylicBrush)shape.Fill).TintColor = ((SolidColorBrush)e.AddedItems.First()).Color;
-        }
+		void ColorSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			Rectangle shape = CustomAcrylicShapeInApp;
+			((Microsoft.UI.Xaml.Media.AcrylicBrush)shape.Fill).TintColor = ((SolidColorBrush)e.AddedItems.First()).Color;
+		}
 
-        void FallbackColorSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Rectangle shape = CustomAcrylicShapeInApp;
-            ((Microsoft.UI.Xaml.Media.AcrylicBrush)shape.Fill).FallbackColor = ((SolidColorBrush)e.AddedItems.First()).Color;
-        }
+		void FallbackColorSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			Rectangle shape = CustomAcrylicShapeInApp;
+			((Microsoft.UI.Xaml.Media.AcrylicBrush)shape.Fill).FallbackColor = ((SolidColorBrush)e.AddedItems.First()).Color;
+		}
 
-        void LuminositySlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            Rectangle shape = CustomAcrylicShapeLumin;
-            ((Microsoft.UI.Xaml.Media.AcrylicBrush)shape.Fill).TintLuminosityOpacity = e.NewValue;
-        }
-    }
+		void LuminositySlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+		{
+			Rectangle shape = CustomAcrylicShapeLumin;
+			((Microsoft.UI.Xaml.Media.AcrylicBrush)shape.Fill).TintLuminosityOpacity = e.NewValue;
+		}
+	}
 }

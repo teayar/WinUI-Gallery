@@ -4,59 +4,59 @@ using Windows.Storage;
 
 namespace WinUIGallery.Helper
 {
-    public static class NavigationOrientationHelper
-    {
-        const string IsLeftModeKey = "NavigationIsOnLeftMode";
-        static bool _isLeftMode = true;
+	public static class NavigationOrientationHelper
+	{
+		const string IsLeftModeKey = "NavigationIsOnLeftMode";
+		static bool _isLeftMode = true;
 
-        public static bool IsLeftMode()
-        {
-            if (NativeHelper.IsAppPackaged)
-            {
-                var valueFromSettings = ApplicationData.Current.LocalSettings.Values[IsLeftModeKey];
+		public static bool IsLeftMode()
+		{
+			if (NativeHelper.IsAppPackaged)
+			{
+				var valueFromSettings = ApplicationData.Current.LocalSettings.Values[IsLeftModeKey];
 
-                if (valueFromSettings == null)
-                {
-                    ApplicationData.Current.LocalSettings.Values[IsLeftModeKey] = true;
-                    valueFromSettings = true;
-                }
+				if (valueFromSettings == null)
+				{
+					ApplicationData.Current.LocalSettings.Values[IsLeftModeKey] = true;
+					valueFromSettings = true;
+				}
 
-                return (bool)valueFromSettings;
-            }
-            else
-            {
-                return _isLeftMode;
-            }
-        }
+				return (bool)valueFromSettings;
+			}
+			else
+			{
+				return _isLeftMode;
+			}
+		}
 
-        public static void IsLeftModeForElement(bool isLeftMode, UIElement element)
-        {
-            UpdateNavigationViewForElement(isLeftMode, element);
+		public static void IsLeftModeForElement(bool isLeftMode, UIElement element)
+		{
+			UpdateNavigationViewForElement(isLeftMode, element);
 
-            if (NativeHelper.IsAppPackaged)
-            {
-                ApplicationData.Current.LocalSettings.Values[IsLeftModeKey] = isLeftMode;
-            }
-            else
-            {
-                _isLeftMode = isLeftMode;
-            }
-        }
+			if (NativeHelper.IsAppPackaged)
+			{
+				ApplicationData.Current.LocalSettings.Values[IsLeftModeKey] = isLeftMode;
+			}
+			else
+			{
+				_isLeftMode = isLeftMode;
+			}
+		}
 
-        public static void UpdateNavigationViewForElement(bool isLeftMode, UIElement element)
-        {
-            NavigationView _navView = NavigationRootPage.GetForElement(element).NavigationView;
+		public static void UpdateNavigationViewForElement(bool isLeftMode, UIElement element)
+		{
+			NavigationView _navView = NavigationRootPage.GetForElement(element).NavigationView;
 
-            if (isLeftMode)
-            {
-                _navView.PaneDisplayMode = NavigationViewPaneDisplayMode.Auto;
-                Grid.SetRow(_navView, 0);
-            }
-            else
-            {
-                _navView.PaneDisplayMode = NavigationViewPaneDisplayMode.Top;
-                Grid.SetRow(_navView, 1);
-            }
-        }
-    }
+			if (isLeftMode)
+			{
+				_navView.PaneDisplayMode = NavigationViewPaneDisplayMode.Auto;
+				Grid.SetRow(_navView, 0);
+			}
+			else
+			{
+				_navView.PaneDisplayMode = NavigationViewPaneDisplayMode.Top;
+				Grid.SetRow(_navView, 1);
+			}
+		}
+	}
 }

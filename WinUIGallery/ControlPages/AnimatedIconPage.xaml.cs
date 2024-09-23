@@ -16,35 +16,35 @@ using Microsoft.UI.Xaml.Controls.AnimatedVisuals;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class AnimatedIconPage : Page
-    {
-        public AnimatedIconPage() => InitializeComponent();
+	public sealed partial class AnimatedIconPage : Page
+	{
+		public AnimatedIconPage() => InitializeComponent();
 
-        void Button_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            AnimatedIcon.SetState(SearchAnimatedIcon, "PointerOver");
-        }
+		void Button_PointerEntered(object sender, PointerRoutedEventArgs e)
+		{
+			AnimatedIcon.SetState(SearchAnimatedIcon, "PointerOver");
+		}
 
-        void Button_PointerExited(object sender, PointerRoutedEventArgs e)
-        {
-            AnimatedIcon.SetState(SearchAnimatedIcon, "Normal");
-        }
+		void Button_PointerExited(object sender, PointerRoutedEventArgs e)
+		{
+			AnimatedIcon.SetState(SearchAnimatedIcon, "Normal");
+		}
 
-        public static IAnimatedVisualSource2 GetAnimationSourceFromString(object selection)
-        {
-            string name = (string)selection;
+		public static IAnimatedVisualSource2 GetAnimationSourceFromString(object selection)
+		{
+			string name = (string)selection;
 
-            switch (name)
-            {
-                case "AnimatedBackVisualSource": return new AnimatedBackVisualSource();
-                case "AnimatedChevronDownSmallVisualSource": return new AnimatedChevronDownSmallVisualSource();
-                case "AnimatedChevronRightDownSmallVisualSource": return new AnimatedChevronRightDownSmallVisualSource();
-                case "AnimatedChevronUpDownSmallVisualSource": return new AnimatedChevronUpDownSmallVisualSource();
-                case "AnimatedFindVisualSource": return new AnimatedFindVisualSource();
-                case "AnimatedGlobalNavigationButtonVisualSource": return new AnimatedGlobalNavigationButtonVisualSource();
-                case "AnimatedSettingsVisualSource": return new AnimatedSettingsVisualSource();
-                default: return null;
-            }
-        }
-    }
+			switch (name)
+			{
+				case "AnimatedBackVisualSource": return new AnimatedBackVisualSource();
+				case "AnimatedChevronDownSmallVisualSource": return new AnimatedChevronDownSmallVisualSource();
+				case "AnimatedChevronRightDownSmallVisualSource": return new AnimatedChevronRightDownSmallVisualSource();
+				case "AnimatedChevronUpDownSmallVisualSource": return new AnimatedChevronUpDownSmallVisualSource();
+				case "AnimatedFindVisualSource": return new AnimatedFindVisualSource();
+				case "AnimatedGlobalNavigationButtonVisualSource": return new AnimatedGlobalNavigationButtonVisualSource();
+				case "AnimatedSettingsVisualSource": return new AnimatedSettingsVisualSource();
+				default: return null;
+			}
+		}
+	}
 }

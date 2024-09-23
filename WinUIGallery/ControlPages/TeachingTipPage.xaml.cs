@@ -13,23 +13,23 @@ using Microsoft.UI.Xaml.Input;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class TeachingTipPage : Page
-    {
-        public TeachingTipPage() => InitializeComponent();
+	public sealed partial class TeachingTipPage : Page
+	{
+		public TeachingTipPage() => InitializeComponent();
 
-        void TestButtonClick1(object sender, RoutedEventArgs e)
-        {
-            ToggleThemeTeachingTip1.IsOpen = true;
-        }
+		void TestButtonClick1(object sender, RoutedEventArgs e)
+		{
+			ToggleThemeTeachingTip1.IsOpen = true;
+		}
 
-        void TestButtonClick2(object sender, RoutedEventArgs e)
-        {
-            ToggleThemeTeachingTip2.IsOpen = true;
-        }
+		void TestButtonClick2(object sender, RoutedEventArgs e)
+		{
+			ToggleThemeTeachingTip2.IsOpen = true;
+		}
 
-        void TestButtonClick3(object sender, RoutedEventArgs e)
-        {
-            ToggleThemeTeachingTip3.IsOpen = true;
-        }
-    }
+		void TestButtonClick3(object sender, RoutedEventArgs e)
+		{
+			ToggleThemeTeachingTip3.IsOpen = true;
+		}
+	}
 }

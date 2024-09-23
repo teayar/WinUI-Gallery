@@ -15,98 +15,98 @@ using System.Collections.ObjectModel;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class SwipeControlPage : Page
-    {
-        bool isArchived, isFlagged, isAccepted;
+	public sealed partial class SwipeControlPage : Page
+	{
+		bool isArchived, isFlagged, isAccepted;
 
-        public SwipeControlPage()
-        {
-            InitializeComponent();
-            var source = @"Swipe Item 1,Swipe Item 2,Swipe Item 3,Swipe Item 4".Split(',');
+		public SwipeControlPage()
+		{
+			InitializeComponent();
+			var source = @"Swipe Item 1,Swipe Item 2,Swipe Item 3,Swipe Item 4".Split(',');
 
-            foreach (var item in source)
-                items.Add(item);
+			foreach (var item in source)
+				items.Add(item);
 
-            lv.ItemsSource = items;
-        }
+			lv.ItemsSource = items;
+		}
 
-        ObservableCollection<object> items = new ObservableCollection<object>();
+		ObservableCollection<object> items = new ObservableCollection<object>();
 
-        void DeleteOne_ItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
-        {
-            isArchived = !isArchived;
+		void DeleteOne_ItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
+		{
+			isArchived = !isArchived;
 
-            if (isArchived)
-            {
-                ((TextBlock)args.SwipeControl.Content).Text = "Archived - Swipe Left";
-            }
-            else
-            {
-                ((TextBlock)args.SwipeControl.Content).Text = "Swipe Left";
-            }
-        }
+			if (isArchived)
+			{
+				((TextBlock)args.SwipeControl.Content).Text = "Archived - Swipe Left";
+			}
+			else
+			{
+				((TextBlock)args.SwipeControl.Content).Text = "Swipe Left";
+			}
+		}
 
-        void DeleteItem_ItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
-        {
-            items.Remove(args.SwipeControl.DataContext);
-        }
+		void DeleteItem_ItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
+		{
+			items.Remove(args.SwipeControl.DataContext);
+		}
 
-        void Accept_ItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
-        {
-            isAccepted = !isAccepted;
-            CheckAcceptFlagBool(args.SwipeControl);
+		void Accept_ItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
+		{
+			isAccepted = !isAccepted;
+			CheckAcceptFlagBool(args.SwipeControl);
 
-            if (isAccepted)
-            {
-                FontIconSource cancelIcon = new FontIconSource() { Glyph = "\ue711" };
-                sender.IconSource = cancelIcon;
-                sender.Text = "Cancel";
-            }
-            else
-            {
-                FontIconSource acceptIcon = new FontIconSource() { Glyph = "\ue10B" };
-                sender.IconSource = acceptIcon;
-                sender.Text = "Accept";
-            }
-        }
+			if (isAccepted)
+			{
+				FontIconSource cancelIcon = new FontIconSource() { Glyph = "\ue711" };
+				sender.IconSource = cancelIcon;
+				sender.Text = "Cancel";
+			}
+			else
+			{
+				FontIconSource acceptIcon = new FontIconSource() { Glyph = "\ue10B" };
+				sender.IconSource = acceptIcon;
+				sender.Text = "Accept";
+			}
+		}
 
-        void Flag_ItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
-        {
-            isFlagged = !isFlagged;
-            CheckAcceptFlagBool(args.SwipeControl);
+		void Flag_ItemInvoked(SwipeItem sender, SwipeItemInvokedEventArgs args)
+		{
+			isFlagged = !isFlagged;
+			CheckAcceptFlagBool(args.SwipeControl);
 
-            if (isFlagged)
-            {
-                FontIconSource filledFlagIcon = new FontIconSource() { Glyph = "\ueB4B" };
-                sender.IconSource = filledFlagIcon;
-                sender.Text = "Unmark";
-            }
-            else
-            {
-                FontIconSource flagIcon = new FontIconSource() { Glyph = "\ue129" };
-                sender.IconSource = flagIcon;
-                sender.Text = "Flag";
-            }
-        }
+			if (isFlagged)
+			{
+				FontIconSource filledFlagIcon = new FontIconSource() { Glyph = "\ueB4B" };
+				sender.IconSource = filledFlagIcon;
+				sender.Text = "Unmark";
+			}
+			else
+			{
+				FontIconSource flagIcon = new FontIconSource() { Glyph = "\ue129" };
+				sender.IconSource = flagIcon;
+				sender.Text = "Flag";
+			}
+		}
 
-        void CheckAcceptFlagBool(SwipeControl swipeCtrl)
-        {
-            if (isAccepted && !isFlagged)
-            {
-                ((TextBlock)swipeCtrl.Content).Text = "Swipe Right - Accepted";
-            }
-            else if (isAccepted && isFlagged)
-            {
-                ((TextBlock)swipeCtrl.Content).Text = "Swipe Right - Accepted & Flagged";
-            }
-            else if (!isAccepted && isFlagged)
-            {
-                ((TextBlock)swipeCtrl.Content).Text = "Swipe Right - Flagged";
-            }
-            else
-            {
-                ((TextBlock)swipeCtrl.Content).Text = "Swipe Right";
-            }
-        }
-    }
+		void CheckAcceptFlagBool(SwipeControl swipeCtrl)
+		{
+			if (isAccepted && !isFlagged)
+			{
+				((TextBlock)swipeCtrl.Content).Text = "Swipe Right - Accepted";
+			}
+			else if (isAccepted && isFlagged)
+			{
+				((TextBlock)swipeCtrl.Content).Text = "Swipe Right - Accepted & Flagged";
+			}
+			else if (!isAccepted && isFlagged)
+			{
+				((TextBlock)swipeCtrl.Content).Text = "Swipe Right - Flagged";
+			}
+			else
+			{
+				((TextBlock)swipeCtrl.Content).Text = "Swipe Right";
+			}
+		}
+	}
 }

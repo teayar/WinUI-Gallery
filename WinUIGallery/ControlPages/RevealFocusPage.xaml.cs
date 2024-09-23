@@ -17,121 +17,121 @@ using Microsoft.UI.Xaml.Media;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class RevealFocusPage : Page
-    {
-        public RevealFocusPage()
-        {
-            InitializeComponent();
+	public sealed partial class RevealFocusPage : Page
+	{
+		public RevealFocusPage()
+		{
+			InitializeComponent();
 
-            // DEMO ONLY: Initialize Color rectangles
-            if (Spring2018 && Application.Current.FocusVisualKind == FocusVisualKind.Reveal)
-            {
-                RevealFocus.IsChecked = true;
-                myPrimaryColorPicker.Color = (Resources["SystemControlRevealFocusVisualBrush"] as SolidColorBrush).Color;
-                mySecondaryColorPicker.Color = (Resources["SystemControlFocusVisualSecondaryBrush"] as SolidColorBrush).Color;
-                primaryColorPickerButton.Background = new SolidColorBrush(myPrimaryColorPicker.Color);
-                secondaryColorPickerButton.Background = new SolidColorBrush(mySecondaryColorPicker.Color);
-            }
-            else
-            {
-                HighVisibility.IsChecked = true;
-                primaryColorPickerButton.Background = new SolidColorBrush(myPrimaryColorPicker.Color);
-                secondaryColorPickerButton.Background = new SolidColorBrush(mySecondaryColorPicker.Color);
-            }
-        }
+			// DEMO ONLY: Initialize Color rectangles
+			if (Spring2018 && Application.Current.FocusVisualKind == FocusVisualKind.Reveal)
+			{
+				RevealFocus.IsChecked = true;
+				myPrimaryColorPicker.Color = (Resources["SystemControlRevealFocusVisualBrush"] as SolidColorBrush).Color;
+				mySecondaryColorPicker.Color = (Resources["SystemControlFocusVisualSecondaryBrush"] as SolidColorBrush).Color;
+				primaryColorPickerButton.Background = new SolidColorBrush(myPrimaryColorPicker.Color);
+				secondaryColorPickerButton.Background = new SolidColorBrush(mySecondaryColorPicker.Color);
+			}
+			else
+			{
+				HighVisibility.IsChecked = true;
+				primaryColorPickerButton.Background = new SolidColorBrush(myPrimaryColorPicker.Color);
+				secondaryColorPickerButton.Background = new SolidColorBrush(mySecondaryColorPicker.Color);
+			}
+		}
 
-        // DEMO ONLY: Change focus visual mode to high visibility
-        void HighVisibility_Checked(object sender, RoutedEventArgs e)
-        {
-            if (exampleButton.ActualTheme == ElementTheme.Light)
-            {
-                myPrimaryColorPicker.Color = Colors.Black;
-                mySecondaryColorPicker.Color = Colors.White;
-            }
-            else if (exampleButton.ActualTheme == ElementTheme.Dark)
-            {
-                myPrimaryColorPicker.Color = Colors.White;
-                mySecondaryColorPicker.Color = Colors.Black;
-            }
+		// DEMO ONLY: Change focus visual mode to high visibility
+		void HighVisibility_Checked(object sender, RoutedEventArgs e)
+		{
+			if (exampleButton.ActualTheme == ElementTheme.Light)
+			{
+				myPrimaryColorPicker.Color = Colors.Black;
+				mySecondaryColorPicker.Color = Colors.White;
+			}
+			else if (exampleButton.ActualTheme == ElementTheme.Dark)
+			{
+				myPrimaryColorPicker.Color = Colors.White;
+				mySecondaryColorPicker.Color = Colors.Black;
+			}
 
-            primaryColorPickerButton.Background = new SolidColorBrush(myPrimaryColorPicker.Color);
-            primaryBrushText.Value = "{StaticResource SystemControlFocusVisualPrimaryBrush}";
-            primaryColorKeyText.Value = "SystemControlFocusVisualPrimaryBrush";
-            Application.Current.FocusVisualKind = FocusVisualKind.HighVisibility;
-            FocusVisualKindSubstitution.Value = "HighVisibility";
-        }
+			primaryColorPickerButton.Background = new SolidColorBrush(myPrimaryColorPicker.Color);
+			primaryBrushText.Value = "{StaticResource SystemControlFocusVisualPrimaryBrush}";
+			primaryColorKeyText.Value = "SystemControlFocusVisualPrimaryBrush";
+			Application.Current.FocusVisualKind = FocusVisualKind.HighVisibility;
+			FocusVisualKindSubstitution.Value = "HighVisibility";
+		}
 
-        // DEMO ONLY: Change focus visual mode to reveal focus
-        void RevealFocus_Checked(object sender, RoutedEventArgs e)
-        {
-            if (Spring2018)
-            {
-                myPrimaryColorPicker.Color = (Resources["SystemControlRevealFocusVisualBrush"] as SolidColorBrush).Color;
-                primaryColorPickerButton.Background = new SolidColorBrush(myPrimaryColorPicker.Color);
-                primaryBrushText.Value = "{StaticResource SystemControlRevealFocusVisualBrush}";
-                primaryColorKeyText.Value = "SystemControlRevealFocusVisualBrush";
-                Application.Current.FocusVisualKind = FocusVisualKind.Reveal;
-                FocusVisualKindSubstitution.Value = "Reveal";
-            }
-        }
+		// DEMO ONLY: Change focus visual mode to reveal focus
+		void RevealFocus_Checked(object sender, RoutedEventArgs e)
+		{
+			if (Spring2018)
+			{
+				myPrimaryColorPicker.Color = (Resources["SystemControlRevealFocusVisualBrush"] as SolidColorBrush).Color;
+				primaryColorPickerButton.Background = new SolidColorBrush(myPrimaryColorPicker.Color);
+				primaryBrushText.Value = "{StaticResource SystemControlRevealFocusVisualBrush}";
+				primaryColorKeyText.Value = "SystemControlRevealFocusVisualBrush";
+				Application.Current.FocusVisualKind = FocusVisualKind.Reveal;
+				FocusVisualKindSubstitution.Value = "Reveal";
+			}
+		}
 
-        void Button_Click(object sender, RoutedEventArgs e)
-        {
-            // Draw the focus visuals at the edge of the control
-            // A negative FocusVisualMargin outsets the focus visual. A positive one insets the focus visual
-            marginSlider.Value = -1 * (primarySlider.Value + secondarySlider.Value);
-        }
+		void Button_Click(object sender, RoutedEventArgs e)
+		{
+			// Draw the focus visuals at the edge of the control
+			// A negative FocusVisualMargin outsets the focus visual. A positive one insets the focus visual
+			marginSlider.Value = -1 * (primarySlider.Value + secondarySlider.Value);
+		}
 
-        void confirmColor_Click(object sender, RoutedEventArgs e)
-        {
-            // DEMO ONLY: Set colors of the buttons to the selected color in ColorPicker
-            primaryColorPickerButton.Background = new SolidColorBrush(myPrimaryColorPicker.Color);
-            secondaryColorPickerButton.Background = new SolidColorBrush(mySecondaryColorPicker.Color);
+		void confirmColor_Click(object sender, RoutedEventArgs e)
+		{
+			// DEMO ONLY: Set colors of the buttons to the selected color in ColorPicker
+			primaryColorPickerButton.Background = new SolidColorBrush(myPrimaryColorPicker.Color);
+			secondaryColorPickerButton.Background = new SolidColorBrush(mySecondaryColorPicker.Color);
 
-            // DEMO ONLY: Close the Flyout.
-            primaryColorPickerButton.Flyout.Hide();
-            secondaryColorPickerButton.Flyout.Hide();
-        }
+			// DEMO ONLY: Close the Flyout.
+			primaryColorPickerButton.Flyout.Hide();
+			secondaryColorPickerButton.Flyout.Hide();
+		}
 
-        /// <summary>
-        /// A property to identify if app is running on Spring2018 version of Windows
-        /// </summary>
-        public bool Spring2018
-        {
-            get
-            {
-                return ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 6);
-            }
-        }
+		/// <summary>
+		/// A property to identify if app is running on Spring2018 version of Windows
+		/// </summary>
+		public bool Spring2018
+		{
+			get
+			{
+				return ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 6);
+			}
+		}
 
-        void Example2_ActualThemeChanged(FrameworkElement sender, object args)
-        {
-            if (Example2.ActualTheme == ElementTheme.Light)
-            {
-                myPrimaryColorPicker.Color = Colors.Black;
-                mySecondaryColorPicker.Color = Colors.White;
-            }
-            else if (Example2.ActualTheme == ElementTheme.Dark)
-            {
-                myPrimaryColorPicker.Color = Colors.White;
-                mySecondaryColorPicker.Color = Colors.Black;
-            }
-        }
+		void Example2_ActualThemeChanged(FrameworkElement sender, object args)
+		{
+			if (Example2.ActualTheme == ElementTheme.Light)
+			{
+				myPrimaryColorPicker.Color = Colors.Black;
+				mySecondaryColorPicker.Color = Colors.White;
+			}
+			else if (Example2.ActualTheme == ElementTheme.Dark)
+			{
+				myPrimaryColorPicker.Color = Colors.White;
+				mySecondaryColorPicker.Color = Colors.Black;
+			}
+		}
 
-        void MoveFocusBtn_Click(object sender, RoutedEventArgs e)
-        {
-            // Set focus to button for better preview/demo of customization
-            exampleButton.Focus(FocusState.Keyboard);
-        }
-    }
+		void MoveFocusBtn_Click(object sender, RoutedEventArgs e)
+		{
+			// Set focus to button for better preview/demo of customization
+			exampleButton.Focus(FocusState.Keyboard);
+		}
+	}
 
-    public class MyConverters
-    {
-        public static Thickness IntToThickness(double UniformLength) => new Thickness(UniformLength);
+	public class MyConverters
+	{
+		public static Thickness IntToThickness(double UniformLength) => new Thickness(UniformLength);
 
-        public static SolidColorBrush ColorToBrush(Windows.UI.Color color)
-        {
-            return new SolidColorBrush(color);
-        }
-    }
+		public static SolidColorBrush ColorToBrush(Windows.UI.Color color)
+		{
+			return new SolidColorBrush(color);
+		}
+	}
 }

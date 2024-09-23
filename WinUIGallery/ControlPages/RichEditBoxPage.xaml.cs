@@ -24,212 +24,212 @@ using WinRT;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class RichEditBoxPage : Page
-    {
-        [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto, PreserveSig = true, SetLastError = false)]
-        public static extern IntPtr GetActiveWindow();
-        Windows.UI.Color currentColor = Microsoft.UI.Colors.Green;
+	public sealed partial class RichEditBoxPage : Page
+	{
+		[DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto, PreserveSig = true, SetLastError = false)]
+		public static extern IntPtr GetActiveWindow();
+		Windows.UI.Color currentColor = Microsoft.UI.Colors.Green;
 
-        public RichEditBoxPage() => InitializeComponent();
+		public RichEditBoxPage() => InitializeComponent();
 
-        void Menu_Opening(object sender, object e)
-        {
-            CommandBarFlyout myFlyout = sender as CommandBarFlyout;
+		void Menu_Opening(object sender, object e)
+		{
+			CommandBarFlyout myFlyout = sender as CommandBarFlyout;
 
-            if (myFlyout != null && myFlyout.Target == REBCustom)
-            {
-                AppBarButton myButton = new AppBarButton
-                {
-                    Command = new StandardUICommand(StandardUICommandKind.Share)
-                };
+			if (myFlyout != null && myFlyout.Target == REBCustom)
+			{
+				AppBarButton myButton = new AppBarButton
+				{
+					Command = new StandardUICommand(StandardUICommandKind.Share)
+				};
 
-                myFlyout.PrimaryCommands.Add(myButton);
-            }
-            else
-            {
-                CommandBarFlyout muxFlyout = sender as CommandBarFlyout;
+				myFlyout.PrimaryCommands.Add(myButton);
+			}
+			else
+			{
+				CommandBarFlyout muxFlyout = sender as CommandBarFlyout;
 
-                if (muxFlyout != null && muxFlyout.Target == REBCustom)
-                {
-                    AppBarButton myButton = new AppBarButton
-                    {
-                        Command = new StandardUICommand(StandardUICommandKind.Share)
-                    };
+				if (muxFlyout != null && muxFlyout.Target == REBCustom)
+				{
+					AppBarButton myButton = new AppBarButton
+					{
+						Command = new StandardUICommand(StandardUICommandKind.Share)
+					};
 
-                    muxFlyout.PrimaryCommands.Add(myButton);
-                }
-            }
-        }
+					muxFlyout.PrimaryCommands.Add(myButton);
+				}
+			}
+		}
 
-        async void OpenButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Open a text file.
-            FileOpenPicker open = new FileOpenPicker();
-            open.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            open.FileTypeFilter.Add(".rtf");
+		async void OpenButton_Click(object sender, RoutedEventArgs e)
+		{
+			// Open a text file.
+			FileOpenPicker open = new FileOpenPicker();
+			open.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
+			open.FileTypeFilter.Add(".rtf");
 
-            // When running on win32, FileOpenPicker needs to know the top-level hwnd via IInitializeWithWindow::Initialize.
-            if (Window.Current == null)
-            {
-                IntPtr hwnd = GetActiveWindow();
-                WinRT.Interop.InitializeWithWindow.Initialize(open, hwnd);
-            }
+			// When running on win32, FileOpenPicker needs to know the top-level hwnd via IInitializeWithWindow::Initialize.
+			if (Window.Current == null)
+			{
+				IntPtr hwnd = GetActiveWindow();
+				WinRT.Interop.InitializeWithWindow.Initialize(open, hwnd);
+			}
 
-            StorageFile file = await open.PickSingleFileAsync();
+			StorageFile file = await open.PickSingleFileAsync();
 
-            if (file != null)
-            {
-                using (Windows.Storage.Streams.IRandomAccessStream randAccStream =
-                    await file.OpenAsync(Windows.Storage.FileAccessMode.Read))
-                    // Load the file into the Document property of the RichEditBox.
-                    editor.Document.LoadFromStream(TextSetOptions.FormatRtf, randAccStream);
-            }
-        }
+			if (file != null)
+			{
+				using (Windows.Storage.Streams.IRandomAccessStream randAccStream =
+					await file.OpenAsync(Windows.Storage.FileAccessMode.Read))
+					// Load the file into the Document property of the RichEditBox.
+					editor.Document.LoadFromStream(TextSetOptions.FormatRtf, randAccStream);
+			}
+		}
 
-        async void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            FileSavePicker savePicker = new FileSavePicker
-            {
-                SuggestedStartLocation = PickerLocationId.DocumentsLibrary
-            };
+		async void SaveButton_Click(object sender, RoutedEventArgs e)
+		{
+			FileSavePicker savePicker = new FileSavePicker
+			{
+				SuggestedStartLocation = PickerLocationId.DocumentsLibrary
+			};
 
-            // Dropdown of file types the user can save the file as
-            savePicker.FileTypeChoices.Add("Rich Text", new List<string>() { ".rtf" });
+			// Dropdown of file types the user can save the file as
+			savePicker.FileTypeChoices.Add("Rich Text", new List<string>() { ".rtf" });
 
-            // Default file name if the user does not type one in or select a file to replace
-            savePicker.SuggestedFileName = "New Document";
+			// Default file name if the user does not type one in or select a file to replace
+			savePicker.SuggestedFileName = "New Document";
 
-            // When running on win32, FileSavePicker needs to know the top-level hwnd via IInitializeWithWindow::Initialize.
-            if (Window.Current == null)
-            {
-                IntPtr hwnd = GetActiveWindow();
-                WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hwnd);
-            }
+			// When running on win32, FileSavePicker needs to know the top-level hwnd via IInitializeWithWindow::Initialize.
+			if (Window.Current == null)
+			{
+				IntPtr hwnd = GetActiveWindow();
+				WinRT.Interop.InitializeWithWindow.Initialize(savePicker, hwnd);
+			}
 
-            StorageFile file = await savePicker.PickSaveFileAsync();
+			StorageFile file = await savePicker.PickSaveFileAsync();
 
-            if (file != null)
-            {
-                // Prevent updates to the remote version of the file until we
-                // finish making changes and call CompleteUpdatesAsync.
-                CachedFileManager.DeferUpdates(file);
-                // write to file
-                using (Windows.Storage.Streams.IRandomAccessStream randAccStream =
-                    await file.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite))
-                    editor.Document.SaveToStream(TextGetOptions.FormatRtf, randAccStream);
+			if (file != null)
+			{
+				// Prevent updates to the remote version of the file until we
+				// finish making changes and call CompleteUpdatesAsync.
+				CachedFileManager.DeferUpdates(file);
+				// write to file
+				using (Windows.Storage.Streams.IRandomAccessStream randAccStream =
+					await file.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite))
+					editor.Document.SaveToStream(TextGetOptions.FormatRtf, randAccStream);
 
-                // Let Windows know that we're finished changing the file so the
-                // other app can update the remote version of the file.
-                FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
+				// Let Windows know that we're finished changing the file so the
+				// other app can update the remote version of the file.
+				FileUpdateStatus status = await CachedFileManager.CompleteUpdatesAsync(file);
 
-                if (status != FileUpdateStatus.Complete)
-                {
-                    Windows.UI.Popups.MessageDialog errorBox =
-                        new Windows.UI.Popups.MessageDialog("File " + file.Name + " couldn't be saved.");
+				if (status != FileUpdateStatus.Complete)
+				{
+					Windows.UI.Popups.MessageDialog errorBox =
+						new Windows.UI.Popups.MessageDialog("File " + file.Name + " couldn't be saved.");
 
-                    await errorBox.ShowAsync();
-                }
-            }
-        }
+					await errorBox.ShowAsync();
+				}
+			}
+		}
 
-        void BoldButton_Click(object sender, RoutedEventArgs e)
-        {
-            editor.Document.Selection.CharacterFormat.Bold = FormatEffect.Toggle;
-        }
+		void BoldButton_Click(object sender, RoutedEventArgs e)
+		{
+			editor.Document.Selection.CharacterFormat.Bold = FormatEffect.Toggle;
+		}
 
-        void ItalicButton_Click(object sender, RoutedEventArgs e)
-        {
-            editor.Document.Selection.CharacterFormat.Italic = FormatEffect.Toggle;
-        }
+		void ItalicButton_Click(object sender, RoutedEventArgs e)
+		{
+			editor.Document.Selection.CharacterFormat.Italic = FormatEffect.Toggle;
+		}
 
-        void ColorButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Extract the color of the button that was clicked.
-            Button clickedColor = (Button)sender;
-            var rectangle = (Microsoft.UI.Xaml.Shapes.Rectangle)clickedColor.Content;
-            var color = ((Microsoft.UI.Xaml.Media.SolidColorBrush)rectangle.Fill).Color;
+		void ColorButton_Click(object sender, RoutedEventArgs e)
+		{
+			// Extract the color of the button that was clicked.
+			Button clickedColor = (Button)sender;
+			var rectangle = (Microsoft.UI.Xaml.Shapes.Rectangle)clickedColor.Content;
+			var color = ((Microsoft.UI.Xaml.Media.SolidColorBrush)rectangle.Fill).Color;
 
-            editor.Document.Selection.CharacterFormat.ForegroundColor = color;
+			editor.Document.Selection.CharacterFormat.ForegroundColor = color;
 
-            fontColorButton.Flyout.Hide();
-            editor.Focus(Microsoft.UI.Xaml.FocusState.Keyboard);
-            currentColor = color;
-        }
+			fontColorButton.Flyout.Hide();
+			editor.Focus(Microsoft.UI.Xaml.FocusState.Keyboard);
+			currentColor = color;
+		}
 
-        void FindBoxHighlightMatches()
-        {
-            FindBoxRemoveHighlights();
+		void FindBoxHighlightMatches()
+		{
+			FindBoxRemoveHighlights();
 
-            Windows.UI.Color highlightBackgroundColor = (Windows.UI.Color)App.Current.Resources["SystemColorHighlightColor"];
-            Windows.UI.Color highlightForegroundColor = (Windows.UI.Color)App.Current.Resources["SystemColorHighlightTextColor"];
+			Windows.UI.Color highlightBackgroundColor = (Windows.UI.Color)App.Current.Resources["SystemColorHighlightColor"];
+			Windows.UI.Color highlightForegroundColor = (Windows.UI.Color)App.Current.Resources["SystemColorHighlightTextColor"];
 
-            string textToFind = findBox.Text;
+			string textToFind = findBox.Text;
 
-            if (textToFind != null)
-            {
-                ITextRange searchRange = editor.Document.GetRange(0, 0);
+			if (textToFind != null)
+			{
+				ITextRange searchRange = editor.Document.GetRange(0, 0);
 
-                while (searchRange.FindText(textToFind, TextConstants.MaxUnitCount, FindOptions.None) > 0)
-                {
-                    searchRange.CharacterFormat.BackgroundColor = highlightBackgroundColor;
-                    searchRange.CharacterFormat.ForegroundColor = highlightForegroundColor;
-                }
-            }
-        }
+				while (searchRange.FindText(textToFind, TextConstants.MaxUnitCount, FindOptions.None) > 0)
+				{
+					searchRange.CharacterFormat.BackgroundColor = highlightBackgroundColor;
+					searchRange.CharacterFormat.ForegroundColor = highlightForegroundColor;
+				}
+			}
+		}
 
-        void FindBoxRemoveHighlights()
-        {
-            ITextRange documentRange = editor.Document.GetRange(0, TextConstants.MaxUnitCount);
-            SolidColorBrush defaultBackground = editor.Background as SolidColorBrush;
-            SolidColorBrush defaultForeground = editor.Foreground as SolidColorBrush;
+		void FindBoxRemoveHighlights()
+		{
+			ITextRange documentRange = editor.Document.GetRange(0, TextConstants.MaxUnitCount);
+			SolidColorBrush defaultBackground = editor.Background as SolidColorBrush;
+			SolidColorBrush defaultForeground = editor.Foreground as SolidColorBrush;
 
-            documentRange.CharacterFormat.BackgroundColor = defaultBackground.Color;
-            documentRange.CharacterFormat.ForegroundColor = defaultForeground.Color;
-        }
+			documentRange.CharacterFormat.BackgroundColor = defaultBackground.Color;
+			documentRange.CharacterFormat.ForegroundColor = defaultForeground.Color;
+		}
 
-        void Editor_GotFocus(object sender, RoutedEventArgs e)
-        {
-            editor.Document.GetText(TextGetOptions.UseCrlf, out _);
+		void Editor_GotFocus(object sender, RoutedEventArgs e)
+		{
+			editor.Document.GetText(TextGetOptions.UseCrlf, out _);
 
-            // reset colors to correct defaults for Focused state
-            ITextRange documentRange = editor.Document.GetRange(0, TextConstants.MaxUnitCount);
-            SolidColorBrush background = (SolidColorBrush)App.Current.Resources["TextControlBackgroundFocused"];
+			// reset colors to correct defaults for Focused state
+			ITextRange documentRange = editor.Document.GetRange(0, TextConstants.MaxUnitCount);
+			SolidColorBrush background = (SolidColorBrush)App.Current.Resources["TextControlBackgroundFocused"];
 
-            if (background != null)
-            {
-                documentRange.CharacterFormat.BackgroundColor = background.Color;
-            }
-        }
+			if (background != null)
+			{
+				documentRange.CharacterFormat.BackgroundColor = background.Color;
+			}
+		}
 
-        void REBCustom_Loaded(object sender, RoutedEventArgs e)
-        {
-            // Prior to UniversalApiContract 7, RichEditBox did not have a default ContextFlyout set.
-            if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 7))
-            {
-                // customize the menu that opens on text selection
-                REBCustom.SelectionFlyout.Opening += Menu_Opening;
+		void REBCustom_Loaded(object sender, RoutedEventArgs e)
+		{
+			// Prior to UniversalApiContract 7, RichEditBox did not have a default ContextFlyout set.
+			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 7))
+			{
+				// customize the menu that opens on text selection
+				REBCustom.SelectionFlyout.Opening += Menu_Opening;
 
-                // also customize the context menu to match selection menu
-                REBCustom.ContextFlyout.Opening += Menu_Opening;
-            }
-        }
+				// also customize the context menu to match selection menu
+				REBCustom.ContextFlyout.Opening += Menu_Opening;
+			}
+		}
 
-        void REBCustom_Unloaded(object sender, RoutedEventArgs e)
-        {
-            // Prior to UniversalApiContract 7, RichEditBox did not have a default ContextFlyout set.
-            if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 7))
-            {
-                REBCustom.SelectionFlyout.Opening -= Menu_Opening;
-                REBCustom.ContextFlyout.Opening -= Menu_Opening;
-            }
-        }
+		void REBCustom_Unloaded(object sender, RoutedEventArgs e)
+		{
+			// Prior to UniversalApiContract 7, RichEditBox did not have a default ContextFlyout set.
+			if (ApiInformation.IsApiContractPresent("Windows.Foundation.UniversalApiContract", 7))
+			{
+				REBCustom.SelectionFlyout.Opening -= Menu_Opening;
+				REBCustom.ContextFlyout.Opening -= Menu_Opening;
+			}
+		}
 
-        void Editor_TextChanged(object sender, RoutedEventArgs e)
-        {
-            if (editor.Document.Selection.CharacterFormat.ForegroundColor != currentColor)
-            {
-                editor.Document.Selection.CharacterFormat.ForegroundColor = currentColor;
-            }
-        }
-    }
+		void Editor_TextChanged(object sender, RoutedEventArgs e)
+		{
+			if (editor.Document.Selection.CharacterFormat.ForegroundColor != currentColor)
+			{
+				editor.Document.Selection.CharacterFormat.ForegroundColor = currentColor;
+			}
+		}
+	}
 }

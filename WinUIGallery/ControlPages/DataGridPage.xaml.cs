@@ -5,24 +5,24 @@ using Windows.System;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class DataGridPage : Page
-    {
-        public DataGridPage() => InitializeComponent();
+	public sealed partial class DataGridPage : Page
+	{
+		public DataGridPage() => InitializeComponent();
 
-        async void LaunchToolkitButton_Click(object sender, RoutedEventArgs e)
-        {
-            // Either open the app if already instealled or the Microsoft Store
+		async void LaunchToolkitButton_Click(object sender, RoutedEventArgs e)
+		{
+			// Either open the app if already instealled or the Microsoft Store
 
-            var isToolkitAvailable = await Windows.System.Launcher.QueryUriSupportAsync(new Uri("uwpct://controls?sample=datagrid"), Windows.System.LaunchQuerySupportType.Uri);
+			var isToolkitAvailable = await Windows.System.Launcher.QueryUriSupportAsync(new Uri("uwpct://controls?sample=datagrid"), Windows.System.LaunchQuerySupportType.Uri);
 
-            if (isToolkitAvailable == LaunchQuerySupportStatus.Available)
-            {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri("uwpct://controls?sample=datagrid"));
-            }
-            else
-            {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri(@"ms-windows-store://pdp/?ProductId=9NBLGGH4TLCQ"));
-            }
-        }
-    }
+			if (isToolkitAvailable == LaunchQuerySupportStatus.Available)
+			{
+				await Windows.System.Launcher.LaunchUriAsync(new Uri("uwpct://controls?sample=datagrid"));
+			}
+			else
+			{
+				await Windows.System.Launcher.LaunchUriAsync(new Uri(@"ms-windows-store://pdp/?ProductId=9NBLGGH4TLCQ"));
+			}
+		}
+	}
 }

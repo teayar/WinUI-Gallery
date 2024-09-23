@@ -19,49 +19,49 @@ using WinUIGallery.Common;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class CalendarViewPage : Page
-    {
-        public CalendarViewPage()
-        {
-            InitializeComponent();
+	public sealed partial class CalendarViewPage : Page
+	{
+		public CalendarViewPage()
+		{
+			InitializeComponent();
 
-            List<string> calendarIdentifiers = new List<string>()
-            {
-                CalendarIdentifiers.Gregorian,
-                CalendarIdentifiers.Hebrew,
-                CalendarIdentifiers.Hijri,
-                CalendarIdentifiers.Japanese,
-                CalendarIdentifiers.Julian,
-                CalendarIdentifiers.Korean,
-                CalendarIdentifiers.Persian,
-                CalendarIdentifiers.Taiwan,
-                CalendarIdentifiers.Thai,
-                CalendarIdentifiers.UmAlQura,
-            };
+			List<string> calendarIdentifiers = new List<string>()
+			{
+				CalendarIdentifiers.Gregorian,
+				CalendarIdentifiers.Hebrew,
+				CalendarIdentifiers.Hijri,
+				CalendarIdentifiers.Japanese,
+				CalendarIdentifiers.Julian,
+				CalendarIdentifiers.Korean,
+				CalendarIdentifiers.Persian,
+				CalendarIdentifiers.Taiwan,
+				CalendarIdentifiers.Thai,
+				CalendarIdentifiers.UmAlQura,
+			};
 
-            calendarIdentifier.ItemsSource = calendarIdentifiers;
-            calendarIdentifier.SelectedItem = CalendarIdentifiers.Gregorian;
+			calendarIdentifier.ItemsSource = calendarIdentifiers;
+			calendarIdentifier.SelectedItem = CalendarIdentifiers.Gregorian;
 
-            var langs = new LanguageList();
-            calendarLanguages.ItemsSource = langs.Languages;
-        }
+			var langs = new LanguageList();
+			calendarLanguages.ItemsSource = langs.Languages;
+		}
 
-        void SelectionMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (Enum.TryParse<CalendarViewSelectionMode>((sender as ComboBox).SelectedItem.ToString(), out CalendarViewSelectionMode selectionMode))
-            {
-                Control1.SelectionMode = selectionMode;
-            }
-        }
+		void SelectionMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (Enum.TryParse<CalendarViewSelectionMode>((sender as ComboBox).SelectedItem.ToString(), out CalendarViewSelectionMode selectionMode))
+			{
+				Control1.SelectionMode = selectionMode;
+			}
+		}
 
-        void calendarLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string selectedLang = calendarLanguages.SelectedValue.ToString();
+		void calendarLanguages_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			string selectedLang = calendarLanguages.SelectedValue.ToString();
 
-            if (Windows.Globalization.Language.IsWellFormed(selectedLang))
-            {
-                Control1.Language = selectedLang;
-            }
-        }
-    }
+			if (Windows.Globalization.Language.IsWellFormed(selectedLang))
+			{
+				Control1.Language = selectedLang;
+			}
+		}
+	}
 }

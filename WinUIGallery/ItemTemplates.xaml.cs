@@ -11,8 +11,8 @@ using Microsoft.UI.Xaml;
 
 namespace WinUIGallery
 {
-    public sealed partial class ItemTemplates : ResourceDictionary
-    {
-        public ItemTemplates() => InitializeComponent();
-    }
+	public sealed partial class ItemTemplates : ResourceDictionary
+	{
+		public ItemTemplates() => InitializeComponent();
+	}
 }

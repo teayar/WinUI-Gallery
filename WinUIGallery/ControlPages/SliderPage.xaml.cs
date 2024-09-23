@@ -25,21 +25,21 @@ using Microsoft.UI;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class SliderPage : Page
-    {
-        public SliderPage() => InitializeComponent();
+	public sealed partial class SliderPage : Page
+	{
+		public SliderPage() => InitializeComponent();
 
-        void SnapsToRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            switch (SnapsToRadioButtons.SelectedItem)
-            {
-                case "StepValues":
-                    Slider3.SnapsTo = SliderSnapsTo.StepValues;
-                    break;
-                default:
-                    Slider3.SnapsTo = SliderSnapsTo.Ticks;
-                    break;
-            }
-        }
-    }
+		void SnapsToRadioButtons_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			switch (SnapsToRadioButtons.SelectedItem)
+			{
+				case "StepValues":
+					Slider3.SnapsTo = SliderSnapsTo.StepValues;
+					break;
+				default:
+					Slider3.SnapsTo = SliderSnapsTo.Ticks;
+					break;
+			}
+		}
+	}
 }

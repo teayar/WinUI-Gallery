@@ -15,8 +15,8 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class ContentDialogContent : Page
-    {
-        public ContentDialogContent() => InitializeComponent();
-    }
+	public sealed partial class ContentDialogContent : Page
+	{
+		public ContentDialogContent() => InitializeComponent();
+	}
 }

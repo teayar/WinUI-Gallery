@@ -15,8 +15,8 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace WinUIGallery.SamplePages
 {
-    public sealed partial class SampleSettingsPage : Page
-    {
-        public SampleSettingsPage() => InitializeComponent();
-    }
+	public sealed partial class SampleSettingsPage : Page
+	{
+		public SampleSettingsPage() => InitializeComponent();
+	}
 }

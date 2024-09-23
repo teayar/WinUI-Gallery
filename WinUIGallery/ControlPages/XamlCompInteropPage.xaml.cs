@@ -11,152 +11,152 @@ using System.Globalization;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class XamlCompInteropPage : Page
-    {
-        public XamlCompInteropPage() => InitializeComponent();
+	public sealed partial class XamlCompInteropPage : Page
+	{
+		public XamlCompInteropPage() => InitializeComponent();
 
-        Compositor _compositor = Microsoft.UI.Xaml.Media.CompositionTarget.GetCompositorForCurrentThread();
-        SpringVector3NaturalMotionAnimation _springAnimation;
+		Compositor _compositor = Microsoft.UI.Xaml.Media.CompositionTarget.GetCompositorForCurrentThread();
+		SpringVector3NaturalMotionAnimation _springAnimation;
 
-        void NaturalMotionExample_Loaded(object sender, RoutedEventArgs e)
-        {
-            UpdateSpringAnimation(1.0f);
-        }
+		void NaturalMotionExample_Loaded(object sender, RoutedEventArgs e)
+		{
+			UpdateSpringAnimation(1.0f);
+		}
 
-        void UpdateSpringAnimation(float finalValue)
-        {
-            if (_springAnimation == null)
-            {
-                _springAnimation = _compositor.CreateSpringVector3Animation();
-                _springAnimation.Target = "Scale";
-            }
+		void UpdateSpringAnimation(float finalValue)
+		{
+			if (_springAnimation == null)
+			{
+				_springAnimation = _compositor.CreateSpringVector3Animation();
+				_springAnimation.Target = "Scale";
+			}
 
-            _springAnimation.FinalValue = new Vector3(finalValue);
-            _springAnimation.DampingRatio = GetDampingRatio();
-            _springAnimation.Period = GetPeriod();
-        }
+			_springAnimation.FinalValue = new Vector3(finalValue);
+			_springAnimation.DampingRatio = GetDampingRatio();
+			_springAnimation.Period = GetPeriod();
+		}
 
-        float GetDampingRatio()
-        {
-            if (DampingStackPanel.SelectedItem != null)
-            {
-                // We need to specify the InvariantCulture since the decimal point depends on the
-                // system language and might parse "0.8" to 8 since the decimal point is a different character
-                return (float)Convert.ToDouble((DampingStackPanel.SelectedItem as RadioButton).Content, CultureInfo.InvariantCulture);
-            }
+		float GetDampingRatio()
+		{
+			if (DampingStackPanel.SelectedItem != null)
+			{
+				// We need to specify the InvariantCulture since the decimal point depends on the
+				// system language and might parse "0.8" to 8 since the decimal point is a different character
+				return (float)Convert.ToDouble((DampingStackPanel.SelectedItem as RadioButton).Content, CultureInfo.InvariantCulture);
+			}
 
-            return 0.6f;
-        }
+			return 0.6f;
+		}
 
-        TimeSpan GetPeriod() => TimeSpan.FromMilliseconds(PeriodSlider.Value);
+		TimeSpan GetPeriod() => TimeSpan.FromMilliseconds(PeriodSlider.Value);
 
-        void StartAnimationIfAPIPresent(UIElement sender, Microsoft.UI.Composition.CompositionAnimation animation)
-        {
-            (sender as UIElement).StartAnimation(animation);
-        }
+		void StartAnimationIfAPIPresent(UIElement sender, Microsoft.UI.Composition.CompositionAnimation animation)
+		{
+			(sender as UIElement).StartAnimation(animation);
+		}
 
-        void element_PointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            UpdateSpringAnimation(1.5f);
+		void element_PointerEntered(object sender, PointerRoutedEventArgs e)
+		{
+			UpdateSpringAnimation(1.5f);
 
-            StartAnimationIfAPIPresent((sender as UIElement), _springAnimation);
-        }
+			StartAnimationIfAPIPresent((sender as UIElement), _springAnimation);
+		}
 
-        void element_PointerExited(object sender, PointerRoutedEventArgs e)
-        {
-            UpdateSpringAnimation(1f);
+		void element_PointerExited(object sender, PointerRoutedEventArgs e)
+		{
+			UpdateSpringAnimation(1f);
 
-            StartAnimationIfAPIPresent((sender as UIElement), _springAnimation);
-        }
+			StartAnimationIfAPIPresent((sender as UIElement), _springAnimation);
+		}
 
-        void ExpressionSample_Loaded(object sender, RoutedEventArgs e)
-        {
-            var anim = _compositor.CreateExpressionAnimation();
-            anim.Expression = "Vector3(1/scaleElement.Scale.X, 1/scaleElement.Scale.Y, 1)";
-            anim.Target = "Scale";
+		void ExpressionSample_Loaded(object sender, RoutedEventArgs e)
+		{
+			var anim = _compositor.CreateExpressionAnimation();
+			anim.Expression = "Vector3(1/scaleElement.Scale.X, 1/scaleElement.Scale.Y, 1)";
+			anim.Target = "Scale";
 
-            anim.SetExpressionReferenceParameter("scaleElement", rectangle);
+			anim.SetExpressionReferenceParameter("scaleElement", rectangle);
 
-            StartAnimationIfAPIPresent(ellipse, anim);
-        }
+			StartAnimationIfAPIPresent(ellipse, anim);
+		}
 
-        void StackedButtonsExample_Loaded(object sender, RoutedEventArgs e)
-        {
-            var anim = _compositor.CreateExpressionAnimation();
-            anim.Expression = "(above.Scale.Y - 1) * 50 + above.Translation.Y % (50 * index)";
-            anim.Target = "Translation.Y";
+		void StackedButtonsExample_Loaded(object sender, RoutedEventArgs e)
+		{
+			var anim = _compositor.CreateExpressionAnimation();
+			anim.Expression = "(above.Scale.Y - 1) * 50 + above.Translation.Y % (50 * index)";
+			anim.Target = "Translation.Y";
 
-            anim.SetExpressionReferenceParameter("above", ExpressionButton1);
-            anim.SetScalarParameter("index", 1);
-            ExpressionButton2.StartAnimation(anim);
+			anim.SetExpressionReferenceParameter("above", ExpressionButton1);
+			anim.SetScalarParameter("index", 1);
+			ExpressionButton2.StartAnimation(anim);
 
-            anim.SetExpressionReferenceParameter("above", ExpressionButton2);
-            anim.SetScalarParameter("index", 2);
-            ExpressionButton3.StartAnimation(anim);
+			anim.SetExpressionReferenceParameter("above", ExpressionButton2);
+			anim.SetScalarParameter("index", 2);
+			ExpressionButton3.StartAnimation(anim);
 
-            anim.SetExpressionReferenceParameter("above", ExpressionButton3);
-            anim.SetScalarParameter("index", 3);
-            ExpressionButton4.StartAnimation(anim);
-        }
+			anim.SetExpressionReferenceParameter("above", ExpressionButton3);
+			anim.SetScalarParameter("index", 3);
+			ExpressionButton4.StartAnimation(anim);
+		}
 
-        void ActualSizeExample_Loaded(object sender, RoutedEventArgs e)
-        {
-            // We will lay out some buttons in a circle.
-            // The formulas we will use are:
-            //   X = radius * cos(theta) + xOffset
-            //   Y = radius * sin(theta) + yOffset
-            //   radius = 1/2 the width and height of the parent container
-            //   theta = the angle for each element. The starting value of theta depends on both the number of elements and the relative index of each element.
-            //   xOffset = The starting horizontal offset for the element. 
-            //   yOffset = The starting vertical offset for the element.
+		void ActualSizeExample_Loaded(object sender, RoutedEventArgs e)
+		{
+			// We will lay out some buttons in a circle.
+			// The formulas we will use are:
+			//   X = radius * cos(theta) + xOffset
+			//   Y = radius * sin(theta) + yOffset
+			//   radius = 1/2 the width and height of the parent container
+			//   theta = the angle for each element. The starting value of theta depends on both the number of elements and the relative index of each element.
+			//   xOffset = The starting horizontal offset for the element. 
+			//   yOffset = The starting vertical offset for the element.
 
-            string radius = "(source.ActualSize.X / 2)"; // Since the layout is a circle, width and height are equivalent meaning we could use X or Y. We'll use X.
-            string theta = ".02 * " + radius + " + ((2 * Pi)/total)*index"; // The first value is the rate of angular change based on radius. The last value spaces the buttons equally.
-            string xOffset = radius; // We offset x by radius because the buttons naturally layout along the left edge. We need to move them to center of the circle first.
-            string yOffset = "0"; // We don't need to offset y because the buttons naturally layout vertically centered.
+			string radius = "(source.ActualSize.X / 2)"; // Since the layout is a circle, width and height are equivalent meaning we could use X or Y. We'll use X.
+			string theta = ".02 * " + radius + " + ((2 * Pi)/total)*index"; // The first value is the rate of angular change based on radius. The last value spaces the buttons equally.
+			string xOffset = radius; // We offset x by radius because the buttons naturally layout along the left edge. We need to move them to center of the circle first.
+			string yOffset = "0"; // We don't need to offset y because the buttons naturally layout vertically centered.
 
-            // We combine X, Y, and Z subchannels into a single animation because we can only start a single animation on Translation.
-            string expression = string.Format("Vector3({0}*cos({1})+{2}, {0}*sin({1})+{3},0)", radius, theta, xOffset, yOffset);
+			// We combine X, Y, and Z subchannels into a single animation because we can only start a single animation on Translation.
+			string expression = string.Format("Vector3({0}*cos({1})+{2}, {0}*sin({1})+{3},0)", radius, theta, xOffset, yOffset);
 
-            int totalElements = 8;
+			int totalElements = 8;
 
-            for (int i = 0; i < totalElements; i++)
-            {
-                Button element = new Button() { Content = "Button" };
-                AutomationProperties.SetName(element, "Button " + i);
+			for (int i = 0; i < totalElements; i++)
+			{
+				Button element = new Button() { Content = "Button" };
+				AutomationProperties.SetName(element, "Button " + i);
 
-                LayoutPanel.Children.Add(element);
+				LayoutPanel.Children.Add(element);
 
-                var anim = _compositor.CreateExpressionAnimation();
+				var anim = _compositor.CreateExpressionAnimation();
 
-                anim.Expression = expression;
-                anim.SetScalarParameter("index", i + 1);
-                anim.SetScalarParameter("total", totalElements);
-                anim.Target = "Translation";
-                anim.SetExpressionReferenceParameter("source", LayoutPanel);
+				anim.Expression = expression;
+				anim.SetScalarParameter("index", i + 1);
+				anim.SetScalarParameter("total", totalElements);
+				anim.Target = "Translation";
+				anim.SetExpressionReferenceParameter("source", LayoutPanel);
 
-                element.StartAnimation(anim);
-            }
-        }
+				element.StartAnimation(anim);
+			}
+		}
 
-        void RadiusSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
-        {
-            if (LayoutPanel == null) return;
-            LayoutPanel.Width = LayoutPanel.Height = e.NewValue;
-        }
+		void RadiusSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
+		{
+			if (LayoutPanel == null) return;
+			LayoutPanel.Width = LayoutPanel.Height = e.NewValue;
+		}
 
-        void ActualOffsetExample_Loaded(object sender, RoutedEventArgs e)
-        {
-            // This sample positions a popup relative to a block of text that has variable layout size based on font size.
-            var anim = _compositor.CreateExpressionAnimation();
+		void ActualOffsetExample_Loaded(object sender, RoutedEventArgs e)
+		{
+			// This sample positions a popup relative to a block of text that has variable layout size based on font size.
+			var anim = _compositor.CreateExpressionAnimation();
 
-            anim.Expression = "Vector3(source.ActualOffset.X + source.ActualSize.X, source.ActualOffset.Y + source.ActualSize.Y / 2 - 25, 0)";
-            anim.Target = "Translation";
-            anim.SetExpressionReferenceParameter("source", PopupTarget);
+			anim.Expression = "Vector3(source.ActualOffset.X + source.ActualSize.X, source.ActualOffset.Y + source.ActualSize.Y / 2 - 25, 0)";
+			anim.Target = "Translation";
+			anim.SetExpressionReferenceParameter("source", PopupTarget);
 
-            Popup.StartAnimation(anim);
+			Popup.StartAnimation(anim);
 
-            Popup.IsOpen = true;
-        }
-    }
+			Popup.IsOpen = true;
+		}
+	}
 }

@@ -16,85 +16,85 @@ using WinUIGallery.SamplePages;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class SelectorBarPage : Page
-    {
-        int previousSelectedIndex;
+	public sealed partial class SelectorBarPage : Page
+	{
+		int previousSelectedIndex;
 
-        public ObservableCollection<SolidColorBrush> PinkColorCollection = new ObservableCollection<SolidColorBrush>();
-        public ObservableCollection<SolidColorBrush> PlumColorCollection = new ObservableCollection<SolidColorBrush>();
-        public ObservableCollection<SolidColorBrush> PowderBlueColorCollection = new ObservableCollection<SolidColorBrush>();
+		public ObservableCollection<SolidColorBrush> PinkColorCollection = new ObservableCollection<SolidColorBrush>();
+		public ObservableCollection<SolidColorBrush> PlumColorCollection = new ObservableCollection<SolidColorBrush>();
+		public ObservableCollection<SolidColorBrush> PowderBlueColorCollection = new ObservableCollection<SolidColorBrush>();
 
-        public SelectorBarPage()
-        {
-            InitializeComponent();
+		public SelectorBarPage()
+		{
+			InitializeComponent();
 
-            PopulateColorCollections();
-        }
+			PopulateColorCollections();
+		}
 
-        void SelectorBar2_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
-        {
-            SelectorBarItem selectedItem = sender.SelectedItem;
-            int currentSelectedIndex = sender.Items.IndexOf(selectedItem);
-            System.Type pageType;
+		void SelectorBar2_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+		{
+			SelectorBarItem selectedItem = sender.SelectedItem;
+			int currentSelectedIndex = sender.Items.IndexOf(selectedItem);
+			System.Type pageType;
 
-            switch (currentSelectedIndex)
-            {
-                case 0:
-                    pageType = typeof(SamplePage1);
-                    break;
-                case 1:
-                    pageType = typeof(SamplePage2);
-                    break;
-                case 2:
-                    pageType = typeof(SamplePage3);
-                    break;
-                case 3:
-                    pageType = typeof(SamplePage4);
-                    break;
-                default:
-                    pageType = typeof(SamplePage5);
-                    break;
-            }
+			switch (currentSelectedIndex)
+			{
+				case 0:
+					pageType = typeof(SamplePage1);
+					break;
+				case 1:
+					pageType = typeof(SamplePage2);
+					break;
+				case 2:
+					pageType = typeof(SamplePage3);
+					break;
+				case 3:
+					pageType = typeof(SamplePage4);
+					break;
+				default:
+					pageType = typeof(SamplePage5);
+					break;
+			}
 
-            var slideNavigationTransitionEffect = currentSelectedIndex - previousSelectedIndex > 0 ? SlideNavigationTransitionEffect.FromRight : SlideNavigationTransitionEffect.FromLeft;
+			var slideNavigationTransitionEffect = currentSelectedIndex - previousSelectedIndex > 0 ? SlideNavigationTransitionEffect.FromRight : SlideNavigationTransitionEffect.FromLeft;
 
-            ContentFrame.Navigate(pageType, null, new SlideNavigationTransitionInfo() { Effect = slideNavigationTransitionEffect });
+			ContentFrame.Navigate(pageType, null, new SlideNavigationTransitionInfo() { Effect = slideNavigationTransitionEffect });
 
-            previousSelectedIndex = currentSelectedIndex;
-        }
+			previousSelectedIndex = currentSelectedIndex;
+		}
 
-        void SelectorBar3_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
-        {
-            if (sender.SelectedItem == SelectorBarItemPink)
-            {
-                ItemsView3.ItemsSource = PinkColorCollection;
-            }
-            else if (sender.SelectedItem == SelectorBarItemPlum)
-            {
-                ItemsView3.ItemsSource = PlumColorCollection;
-            }
-            else
-            {
-                ItemsView3.ItemsSource = PowderBlueColorCollection;
-            }
-        }
+		void SelectorBar3_SelectionChanged(SelectorBar sender, SelectorBarSelectionChangedEventArgs args)
+		{
+			if (sender.SelectedItem == SelectorBarItemPink)
+			{
+				ItemsView3.ItemsSource = PinkColorCollection;
+			}
+			else if (sender.SelectedItem == SelectorBarItemPlum)
+			{
+				ItemsView3.ItemsSource = PlumColorCollection;
+			}
+			else
+			{
+				ItemsView3.ItemsSource = PowderBlueColorCollection;
+			}
+		}
 
-        void PopulateColorCollections()
-        {
-            SolidColorBrush solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.Pink);
+		void PopulateColorCollections()
+		{
+			SolidColorBrush solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.Pink);
 
-            for (int colorInstance = 0; colorInstance < 5; colorInstance++)
-                PinkColorCollection.Add(solidColorBrush);
+			for (int colorInstance = 0; colorInstance < 5; colorInstance++)
+				PinkColorCollection.Add(solidColorBrush);
 
-            solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.Plum);
+			solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.Plum);
 
-            for (int colorInstance = 0; colorInstance < 7; colorInstance++)
-                PlumColorCollection.Add(solidColorBrush);
+			for (int colorInstance = 0; colorInstance < 7; colorInstance++)
+				PlumColorCollection.Add(solidColorBrush);
 
-            solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.PowderBlue);
+			solidColorBrush = new SolidColorBrush(Microsoft.UI.Colors.PowderBlue);
 
-            for (int colorInstance = 0; colorInstance < 4; colorInstance++)
-                PowderBlueColorCollection.Add(solidColorBrush);
-        }
-    }
+			for (int colorInstance = 0; colorInstance < 4; colorInstance++)
+				PowderBlueColorCollection.Add(solidColorBrush);
+		}
+	}
 }

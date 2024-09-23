@@ -16,18 +16,18 @@ using Microsoft.UI.Xaml.Documents;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class ImagePage : Page
-    {
-        public ImagePage() => InitializeComponent();
+	public sealed partial class ImagePage : Page
+	{
+		public ImagePage() => InitializeComponent();
 
-        void ImageStretch_Checked(object sender, RoutedEventArgs e)
-        {
-            if (StretchImage != null)
-            {
-                var strStretch = (sender as RadioButton).Content.ToString();
-                var stretch = (Stretch)Enum.Parse(typeof(Stretch), strStretch);
-                StretchImage.Stretch = stretch;
-            }
-        }
-    }
+		void ImageStretch_Checked(object sender, RoutedEventArgs e)
+		{
+			if (StretchImage != null)
+			{
+				var strStretch = (sender as RadioButton).Content.ToString();
+				var stretch = (Stretch)Enum.Parse(typeof(Stretch), strStretch);
+				StretchImage.Stretch = stretch;
+			}
+		}
+	}
 }

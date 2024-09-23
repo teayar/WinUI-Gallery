@@ -16,83 +16,83 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class PageTransitionPage : Page
-    {
-        NavigationTransitionInfo _transitionInfo;
+	public sealed partial class PageTransitionPage : Page
+	{
+		NavigationTransitionInfo _transitionInfo;
 
-        public PageTransitionPage()
-        {
-            InitializeComponent();
+		public PageTransitionPage()
+		{
+			InitializeComponent();
 
-            ContentFrame.Navigate(typeof(SamplePages.SamplePage1));
-        }
+			ContentFrame.Navigate(typeof(SamplePages.SamplePage1));
+		}
 
-        void ForwardButton1_Click(object sender, RoutedEventArgs e)
-        {
-            var pageToNavigateTo = ContentFrame.BackStackDepth % 2 == 1 ? typeof(SamplePages.SamplePage1) : typeof(SamplePages.SamplePage2);
+		void ForwardButton1_Click(object sender, RoutedEventArgs e)
+		{
+			var pageToNavigateTo = ContentFrame.BackStackDepth % 2 == 1 ? typeof(SamplePages.SamplePage1) : typeof(SamplePages.SamplePage2);
 
-            if (_transitionInfo == null)
-            {
-                // Default behavior, no transition set or used.
-                ContentFrame.Navigate(pageToNavigateTo, null);
-            }
-            else
-            {
-                // Explicit transition info used.
-                ContentFrame.Navigate(pageToNavigateTo, null, _transitionInfo);
-            }
-        }
+			if (_transitionInfo == null)
+			{
+				// Default behavior, no transition set or used.
+				ContentFrame.Navigate(pageToNavigateTo, null);
+			}
+			else
+			{
+				// Explicit transition info used.
+				ContentFrame.Navigate(pageToNavigateTo, null, _transitionInfo);
+			}
+		}
 
-        void BackwardButton1_Click(object sender, RoutedEventArgs e)
-        {
-            if (ContentFrame.BackStackDepth > 0)
-            {
-                ContentFrame.GoBack();
-            }
-        }
+		void BackwardButton1_Click(object sender, RoutedEventArgs e)
+		{
+			if (ContentFrame.BackStackDepth > 0)
+			{
+				ContentFrame.GoBack();
+			}
+		}
 
-        void TransitionRadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            var pageTransitionString = "";
+		void TransitionRadioButton_Checked(object sender, RoutedEventArgs e)
+		{
+			var pageTransitionString = "";
 
-            var senderTransitionString = (sender as RadioButton).Content.ToString();
+			var senderTransitionString = (sender as RadioButton).Content.ToString();
 
-            if (senderTransitionString != "Default")
-            {
-                pageTransitionString = ", new " + senderTransitionString + "NavigationTransitionInfo()";
+			if (senderTransitionString != "Default")
+			{
+				pageTransitionString = ", new " + senderTransitionString + "NavigationTransitionInfo()";
 
-                if (senderTransitionString == "Entrance")
-                {
-                    _transitionInfo = new EntranceNavigationTransitionInfo();
-                }
-                else if (senderTransitionString == "DrillIn")
-                {
-                    _transitionInfo = new DrillInNavigationTransitionInfo();
-                }
-                else if (senderTransitionString == "Suppress")
-                {
-                    _transitionInfo = new SuppressNavigationTransitionInfo();
-                }
-                else if (senderTransitionString == "Slide from Right")
-                {
-                    _transitionInfo = new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight };
-                    pageTransitionString = ", new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight }";
-                }
-                else if (senderTransitionString == "Slide from Left")
-                {
-                    _transitionInfo = new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft };
-                    pageTransitionString = ", new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft }";
-                }
-            }
-            else
-            {
-                _transitionInfo = null;
-            }
+				if (senderTransitionString == "Entrance")
+				{
+					_transitionInfo = new EntranceNavigationTransitionInfo();
+				}
+				else if (senderTransitionString == "DrillIn")
+				{
+					_transitionInfo = new DrillInNavigationTransitionInfo();
+				}
+				else if (senderTransitionString == "Suppress")
+				{
+					_transitionInfo = new SuppressNavigationTransitionInfo();
+				}
+				else if (senderTransitionString == "Slide from Right")
+				{
+					_transitionInfo = new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight };
+					pageTransitionString = ", new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromRight }";
+				}
+				else if (senderTransitionString == "Slide from Left")
+				{
+					_transitionInfo = new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft };
+					pageTransitionString = ", new SlideNavigationTransitionInfo() { Effect = SlideNavigationTransitionEffect.FromLeft }";
+				}
+			}
+			else
+			{
+				_transitionInfo = null;
+			}
 
-            if (TransitionValue != null)
-            {
-                TransitionValue.Value = pageTransitionString;
-            }
-        }
-    }
+			if (TransitionValue != null)
+			{
+				TransitionValue.Value = pageTransitionString;
+			}
+		}
+	}
 }

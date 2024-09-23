@@ -15,14 +15,14 @@ using Windows.Foundation.Collections;
 
 namespace WinUIGalleryUnitTests
 {
-    public sealed partial class UnitTestAppWindow : Window
-    {
-        public UnitTestAppWindow() => InitializeComponent();
+	public sealed partial class UnitTestAppWindow : Window
+	{
+		public UnitTestAppWindow() => InitializeComponent();
 
-        public Grid RootGrid => rootGrid;
+		public Grid RootGrid => rootGrid;
 
-        public void AddToVisualTree(UIElement element) => RootGrid.Children.Add(element);
+		public void AddToVisualTree(UIElement element) => RootGrid.Children.Add(element);
 
-        public void CleanupVisualTree() => RootGrid.Children.Clear();
-    }
+		public void CleanupVisualTree() => RootGrid.Children.Clear();
+	}
 }

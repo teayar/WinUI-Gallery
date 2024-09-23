@@ -24,8 +24,8 @@ using Microsoft.UI.Xaml.Navigation;
 
 namespace WinUIGallery.ControlPages
 {
-    public sealed partial class GridPage : Page
-    {
-        public GridPage() => InitializeComponent();
-    }
+	public sealed partial class GridPage : Page
+	{
+		public GridPage() => InitializeComponent();
+	}
 }

@@ -6,72 +6,72 @@ using Windows.Storage;
 
 namespace WinUIGallery.Helper
 {
-    /// <summary>
-    /// Class providing functionality to support generating and copying protocol activation URIs.
-    /// </summary>
-    public static class ProtocolActivationClipboardHelper
-    {
-        const string ShowCopyLinkTeachingTipKey = "ShowCopyLinkTeachingTip";
-        static bool _showCopyLinkTeachingTip = true;
+	/// <summary>
+	/// Class providing functionality to support generating and copying protocol activation URIs.
+	/// </summary>
+	public static class ProtocolActivationClipboardHelper
+	{
+		const string ShowCopyLinkTeachingTipKey = "ShowCopyLinkTeachingTip";
+		static bool _showCopyLinkTeachingTip = true;
 
-        public static bool ShowCopyLinkTeachingTip
-        {
-            get
-            {
-                if (NativeHelper.IsAppPackaged)
-                {
-                    object valueFromSettings = ApplicationData.Current.LocalSettings.Values[ShowCopyLinkTeachingTipKey];
+		public static bool ShowCopyLinkTeachingTip
+		{
+			get
+			{
+				if (NativeHelper.IsAppPackaged)
+				{
+					object valueFromSettings = ApplicationData.Current.LocalSettings.Values[ShowCopyLinkTeachingTipKey];
 
-                    if (valueFromSettings == null)
-                    {
-                        ApplicationData.Current.LocalSettings.Values[ShowCopyLinkTeachingTipKey] = true;
-                        valueFromSettings = true;
-                    }
+					if (valueFromSettings == null)
+					{
+						ApplicationData.Current.LocalSettings.Values[ShowCopyLinkTeachingTipKey] = true;
+						valueFromSettings = true;
+					}
 
-                    return (bool)valueFromSettings;
-                }
-                else
-                {
-                    return _showCopyLinkTeachingTip;
-                }
-            }
+					return (bool)valueFromSettings;
+				}
+				else
+				{
+					return _showCopyLinkTeachingTip;
+				}
+			}
 
-            set
-            {
-                if (NativeHelper.IsAppPackaged)
-                {
-                    ApplicationData.Current.LocalSettings.Values[ShowCopyLinkTeachingTipKey] = value;
-                }
-                else
-                {
-                    _showCopyLinkTeachingTip = value;
-                }
-            }
-        }
+			set
+			{
+				if (NativeHelper.IsAppPackaged)
+				{
+					ApplicationData.Current.LocalSettings.Values[ShowCopyLinkTeachingTipKey] = value;
+				}
+				else
+				{
+					_showCopyLinkTeachingTip = value;
+				}
+			}
+		}
 
-        public static void Copy(ControlInfoDataItem item)
-        {
-            var uri = new Uri($"winui3gallery://item/{item.UniqueId}", UriKind.Absolute);
-            ProtocolActivationClipboardHelper.Copy(uri, $"{Package.Current.DisplayName} - {item.Title} Sample");
-        }
+		public static void Copy(ControlInfoDataItem item)
+		{
+			var uri = new Uri($"winui3gallery://item/{item.UniqueId}", UriKind.Absolute);
+			ProtocolActivationClipboardHelper.Copy(uri, $"{Package.Current.DisplayName} - {item.Title} Sample");
+		}
 
-        public static void Copy(ControlInfoDataGroup group)
-        {
-            var uri = new Uri($"winui3gallery://category/{group.UniqueId}", UriKind.Absolute);
-            ProtocolActivationClipboardHelper.Copy(uri, $"{Package.Current.DisplayName} - {group.Title} Samples");
-        }
+		public static void Copy(ControlInfoDataGroup group)
+		{
+			var uri = new Uri($"winui3gallery://category/{group.UniqueId}", UriKind.Absolute);
+			ProtocolActivationClipboardHelper.Copy(uri, $"{Package.Current.DisplayName} - {group.Title} Samples");
+		}
 
-        static void Copy(Uri uri, string displayName)
-        {
-            string htmlFormat = HtmlFormatHelper.CreateHtmlFormat($"<a href='{uri}'>{displayName}</a>");
+		static void Copy(Uri uri, string displayName)
+		{
+			string htmlFormat = HtmlFormatHelper.CreateHtmlFormat($"<a href='{uri}'>{displayName}</a>");
 
-            var dataPackage = new DataPackage();
-            dataPackage.SetApplicationLink(uri);
-            dataPackage.SetWebLink(uri);
-            dataPackage.SetText(uri.ToString());
-            dataPackage.SetHtmlFormat(htmlFormat);
+			var dataPackage = new DataPackage();
+			dataPackage.SetApplicationLink(uri);
+			dataPackage.SetWebLink(uri);
+			dataPackage.SetText(uri.ToString());
+			dataPackage.SetHtmlFormat(htmlFormat);
 
-            Clipboard.SetContentWithOptions(dataPackage, null);
-        }
-    }
+			Clipboard.SetContentWithOptions(dataPackage, null);
+		}
+	}
 }
