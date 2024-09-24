@@ -27,174 +27,174 @@ using WASDK = Microsoft.WindowsAppSDK;
 
 namespace WinUIGallery.Data
 {
-    public class Root
-    {
-        public ObservableCollection<ControlInfoDataGroup> Groups { get; set; }
-    }
-    [JsonSourceGenerationOptions(PropertyNameCaseInsensitive = true)]
-    [JsonSerializable(typeof(Root))]
-    internal partial class RootContext : JsonSerializerContext
-    {
-    }
+	public class Root
+	{
+		public ObservableCollection<ControlInfoDataGroup> Groups { get; set; }
+	}
+	[JsonSourceGenerationOptions(PropertyNameCaseInsensitive = true)]
+	[JsonSerializable(typeof(Root))]
+	internal partial class RootContext : JsonSerializerContext
+	{
+	}
 
-    /// <summary>
-    /// Generic item data model.
-    /// </summary>
-    public class ControlInfoDataItem
-    {
-        public string UniqueId { get; set; }
-        public string Title { get; set; }
-        public string ApiNamespace { get; set; }
-        public string Subtitle { get; set; }
-        public string Description { get; set; }
-        public string ImagePath { get; set; }
-        public string IconGlyph { get; set; }
-        public string BadgeString { get; set; }
-        public string Content { get; set; }
-        public bool IsNew { get; set; }
-        public bool IsUpdated { get; set; }
-        public bool IsPreview { get; set; }
-        public ObservableCollection<ControlInfoDocLink> Docs { get; set; }
-        public ObservableCollection<string> RelatedControls { get; set; }
+	/// <summary>
+	/// Generic item data model.
+	/// </summary>
+	public class ControlInfoDataItem
+	{
+		public string UniqueId { get; set; }
+		public string Title { get; set; }
+		public string ApiNamespace { get; set; }
+		public string Subtitle { get; set; }
+		public string Description { get; set; }
+		public string ImagePath { get; set; }
+		public string IconGlyph { get; set; }
+		public string BadgeString { get; set; }
+		public string Content { get; set; }
+		public bool IsNew { get; set; }
+		public bool IsUpdated { get; set; }
+		public bool IsPreview { get; set; }
+		public ObservableCollection<ControlInfoDocLink> Docs { get; set; }
+		public ObservableCollection<string> RelatedControls { get; set; }
 
-        public bool IncludedInBuild { get; set; }
+		public bool IncludedInBuild { get; set; }
 
-        public string SourcePath { get; set; }
+		public string SourcePath { get; set; }
 
-        public override string ToString() => Title;
-    }
+		public override string ToString() => Title;
+	}
 
-    public class ControlInfoDocLink
-    {
-        public ControlInfoDocLink(string title, string uri)
-        {
-            Title = title;
-            Uri = uri.Replace("X.Y", string.Format("{0}.{1}", WASDK.Release.Major, WASDK.Release.Minor));
-        }
-        public string Title { get; set; }
-        public string Uri { get; set; }
-    }
+	public class ControlInfoDocLink
+	{
+		public ControlInfoDocLink(string title, string uri)
+		{
+			Title = title;
+			Uri = uri.Replace("X.Y", string.Format("{0}.{1}", WASDK.Release.Major, WASDK.Release.Minor));
+		}
+		public string Title { get; set; }
+		public string Uri { get; set; }
+	}
 
-    /// <summary>
-    /// Generic group data model.
-    /// </summary>
-    public class ControlInfoDataGroup
-    {
-        public string UniqueId { get; set; }
-        public string Title { get; set; }
-        public string Subtitle { get; set; }
-        public string Description { get; set; }
-        public string ImagePath { get; set; }
-        public string IconGlyph { get; set; }
-        public string ApiNamespace { get; set; }
-        public bool IsSpecialSection { get; set; }
-        public string Folder { get; set; }
-        public ObservableCollection<ControlInfoDataItem> Items { get; set; }
+	/// <summary>
+	/// Generic group data model.
+	/// </summary>
+	public class ControlInfoDataGroup
+	{
+		public string UniqueId { get; set; }
+		public string Title { get; set; }
+		public string Subtitle { get; set; }
+		public string Description { get; set; }
+		public string ImagePath { get; set; }
+		public string IconGlyph { get; set; }
+		public string ApiNamespace { get; set; }
+		public bool IsSpecialSection { get; set; }
+		public string Folder { get; set; }
+		public ObservableCollection<ControlInfoDataItem> Items { get; set; }
 
-        public override string ToString() => Title;
-    }
+		public override string ToString() => Title;
+	}
 
-    /// <summary>
-    /// Creates a collection of groups and items with content read from a static json file.
-    ///
-    /// ControlInfoSource initializes with data read from a static json file included in the
-    /// project.  This provides sample data at both design-time and run-time.
-    /// </summary>
-    public sealed class ControlInfoDataSource
-    {
-        static readonly object _lock = new();
+	/// <summary>
+	/// Creates a collection of groups and items with content read from a static json file.
+	///
+	/// ControlInfoSource initializes with data read from a static json file included in the
+	/// project.  This provides sample data at both design-time and run-time.
+	/// </summary>
+	public sealed class ControlInfoDataSource
+	{
+		static readonly object _lock = new();
 
-        #region Singleton
+		#region Singleton
 
-        static readonly ControlInfoDataSource _instance;
+		static readonly ControlInfoDataSource _instance;
 
-        public static ControlInfoDataSource Instance => _instance;
+		public static ControlInfoDataSource Instance => _instance;
 
-        static ControlInfoDataSource() => _instance = new ControlInfoDataSource();
+		static ControlInfoDataSource() => _instance = new ControlInfoDataSource();
 
-        private ControlInfoDataSource() { }
+		private ControlInfoDataSource() { }
 
-        #endregion
+		#endregion
 
-        readonly IList<ControlInfoDataGroup> _groups = new List<ControlInfoDataGroup>();
-        public IList<ControlInfoDataGroup> Groups => _groups;
+		readonly IList<ControlInfoDataGroup> _groups = new List<ControlInfoDataGroup>();
+		public IList<ControlInfoDataGroup> Groups => _groups;
 
-        public async Task<IEnumerable<ControlInfoDataGroup>> GetGroupsAsync()
-        {
-            await _instance.GetControlInfoDataAsync();
+		public async Task<IEnumerable<ControlInfoDataGroup>> GetGroupsAsync()
+		{
+			await _instance.GetControlInfoDataAsync();
 
-            return _instance.Groups;
-        }
+			return _instance.Groups;
+		}
 
-        public static async Task<ControlInfoDataGroup> GetGroupAsync(string uniqueId)
-        {
-            await _instance.GetControlInfoDataAsync();
-            // Simple linear search is acceptable for small data sets
-            var matches = _instance.Groups.Where((group) => group.UniqueId.Equals(uniqueId));
-            if (matches.Count() == 1) return matches.First();
-            return null;
-        }
+		public static async Task<ControlInfoDataGroup> GetGroupAsync(string uniqueId)
+		{
+			await _instance.GetControlInfoDataAsync();
+			// Simple linear search is acceptable for small data sets
+			var matches = _instance.Groups.Where((group) => group.UniqueId.Equals(uniqueId));
+			if (matches.Count() == 1) return matches.First();
+			return null;
+		}
 
-        public static async Task<ControlInfoDataItem> GetItemAsync(string uniqueId)
-        {
-            await _instance.GetControlInfoDataAsync();
-            // Simple linear search is acceptable for small data sets
-            var matches = _instance.Groups.SelectMany(group => group.Items).Where((item) => item.UniqueId.Equals(uniqueId));
-            if (matches.Count() > 0) return matches.First();
-            return null;
-        }
+		public static async Task<ControlInfoDataItem> GetItemAsync(string uniqueId)
+		{
+			await _instance.GetControlInfoDataAsync();
+			// Simple linear search is acceptable for small data sets
+			var matches = _instance.Groups.SelectMany(group => group.Items).Where((item) => item.UniqueId.Equals(uniqueId));
+			if (matches.Count() > 0) return matches.First();
+			return null;
+		}
 
-        public static async Task<ControlInfoDataGroup> GetGroupFromItemAsync(string uniqueId)
-        {
-            await _instance.GetControlInfoDataAsync();
-            var matches = _instance.Groups.Where((group) => group.Items.FirstOrDefault(item => item.UniqueId.Equals(uniqueId)) != null);
-            if (matches.Count() == 1) return matches.First();
-            return null;
-        }
+		public static async Task<ControlInfoDataGroup> GetGroupFromItemAsync(string uniqueId)
+		{
+			await _instance.GetControlInfoDataAsync();
+			var matches = _instance.Groups.Where((group) => group.Items.FirstOrDefault(item => item.UniqueId.Equals(uniqueId)) != null);
+			if (matches.Count() == 1) return matches.First();
+			return null;
+		}
 
-        async Task GetControlInfoDataAsync()
-        {
-            lock (_lock)
-                if (Groups.Count() != 0) return;
+		async Task GetControlInfoDataAsync()
+		{
+			lock (_lock)
+				if (Groups.Count() != 0) return;
 
-            var jsonText = await FileLoader.LoadText("DataModel/ControlInfoData.json");
-            var controlInfoDataGroup = JsonSerializer.Deserialize(jsonText, typeof(Root), RootContext.Default) as Root;
+			var jsonText = await FileLoader.LoadText("DataModel/ControlInfoData.json");
+			var controlInfoDataGroup = JsonSerializer.Deserialize(jsonText, typeof(Root), RootContext.Default) as Root;
 
-            lock (_lock)
-            {
-                string pageRoot = "WinUIGallery.ControlPages.";
+			lock (_lock)
+			{
+				string pageRoot = "WinUIGallery.ControlPages.";
 
-                controlInfoDataGroup.Groups
-                    .SelectMany(g => g.Items)
-                    .ToList()
-                    .ForEach(item =>
-                {
+				controlInfoDataGroup.Groups
+				    .SelectMany(g => g.Items)
+				    .ToList()
+				    .ForEach(item =>
+				{
 #nullable enable
-                    string? badgeString = item switch
-                    {
-                        { IsNew: true } => "New",
-                        { IsUpdated: true } => "Updated",
-                        { IsPreview: true } => "Preview",
-                        _ => null
-                    };
+					string? badgeString = item switch
+					{
+						{ IsNew: true } => "New",
+						{ IsUpdated: true } => "Updated",
+						{ IsPreview: true } => "Preview",
+						_ => null
+					};
 
-                    string pageString = $"{pageRoot}{item.UniqueId}Page";
-                    Type? pageType = Type.GetType(pageString);
+					string pageString = $"{pageRoot}{item.UniqueId}Page";
+					Type? pageType = Type.GetType(pageString);
 
-                    item.BadgeString = badgeString;
-                    item.IncludedInBuild = pageType is not null;
-                    item.ImagePath ??= "ms-appx:///Assets/ControlImages/Placeholder.png";
+					item.BadgeString = badgeString;
+					item.IncludedInBuild = pageType is not null;
+					item.ImagePath ??= "ms-appx:///Assets/ControlImages/Placeholder.png";
 #nullable disable
-                });
+				});
 
-                foreach (var group in controlInfoDataGroup.Groups)
-                {
-                    if (!Groups.Any(g => g.Title == group.Title))
-                    {
-                        Groups.Add(group);
-                    }
-                }
-            }
-        }
-    }
+				foreach (var group in controlInfoDataGroup.Groups)
+				{
+					if (!Groups.Any(g => g.Title == group.Title))
+					{
+						Groups.Add(group);
+					}
+				}
+			}
+		}
+	}
 }
